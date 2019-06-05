@@ -10,5 +10,8 @@ export default {
         defaultAvatar(){
             return this.$store.getters.getDefaultAvatar;
         },
+        userOnline(){
+            return this.$store.getters.getOnlineState;
+        }
     }
 }

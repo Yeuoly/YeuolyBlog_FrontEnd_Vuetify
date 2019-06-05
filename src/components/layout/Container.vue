@@ -1,12 +1,12 @@
 <template>
-    <VContainer style="padding: 0">
-        <VSlideYTransition mode="out-in">
-            <RouterView v-if="$route.meta.keepAlive"></RouterView>
-            <KeepAlive>
+    <VSlideYTransition group mode="out-in">
+        <div key="1">
+            <KeepAlive key="1">
                 <RouterView v-if="$route.meta.keepAlive"></RouterView>
             </KeepAlive>
-        </VSlideYTransition>
-    </VContainer>
+        </div>
+        <RouterView key="2" v-if="!$route.meta.keepAlive"></RouterView>
+    </VSlideYTransition>
 </template>
 
 <script>

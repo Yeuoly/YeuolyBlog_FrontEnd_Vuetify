@@ -3,10 +3,24 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter);
 
+//按需加载
+const ViewIndex = () => import('./components/views/ViewIndex');
+const ViewLogin = () => import('./components/views/ViewLogin');
+const ViewSignIn = () => import('./components/views/ViewSignIn');
+
 export default new VueRouter({
     mode : 'history',
     routes : [{
         name : 'index',
-        path : '/'
+        path : '/',
+        component : ViewIndex
+    },{
+        name : 'login',
+        path : '/login',
+        component : ViewLogin
+    },{
+        name : 'signin',
+        path : '/signin',
+        component : ViewSignIn
     }]
-})
+});

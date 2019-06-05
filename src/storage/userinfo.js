@@ -22,6 +22,9 @@ export default {
         },
         setLoginTime(state,loginTime){
             state.login_time = loginTime;
+        },
+        setUserClass(state,userClass){
+            state.class = userClass;
         }
     },
     getters : {
