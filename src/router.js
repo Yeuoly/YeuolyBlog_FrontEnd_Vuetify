@@ -4,10 +4,10 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter);
 
 //按需加载
-const ViewIndex = () => import('./components/views/ViewIndex');
-const ViewLogin = () => import('./components/views/ViewLogin');
-const ViewSignIn = () => import('./components/views/ViewSignIn');
-const ViewHome = () => import('./components/views/ViewHome');
+const ViewIndex = () => import('./components/views/ViewIndex.vue');
+const ViewLogin = () => import('./components/views/ViewLogin.vue');
+const ViewSignIn = () => import('./components/views/ViewSignIn.vue');
+const ViewHome = () => import('./components/views/ViewHome.vue');
 
 export default new VueRouter({
     mode : 'history',
@@ -26,6 +26,9 @@ export default new VueRouter({
     },{
         name : 'home',
         path : '/home',
-        component : ViewHome
+        component : ViewHome,
+        meta : {
+            keepAlive : true
+        }
     }]
 });

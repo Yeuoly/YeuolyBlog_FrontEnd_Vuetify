@@ -1,9 +1,9 @@
 <template>
-    <VDialog v-model="p__show"
+    <YDialog v-model="p__show"
              :width="width"
              v-on="$listeners"
     >
-        <VCard class="grey lighten-5">
+        <VCard slot="inner" class="grey lighten-5">
             <VAlert v-model="True"
                     :type="PopType"
                     class="mb-3"
@@ -24,12 +24,14 @@
                 >我知道啦</VBtn>
             </VCardActions>
         </VCard>
-    </VDialog>
+    </YDialog>
 </template>
 
 <script>
+    import YDialog from "./YDialog";
     export default {
         name: "PopDialog",
+        components: {YDialog},
         model : {
             prop : 'show',
             event : 'change'

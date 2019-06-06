@@ -1,48 +1,45 @@
 <template>
-    <div>
-        <VBtn  @click="show = !show"
-               fixed
-               right
-               fab
-               dark
-               color="green"
-               class="float-button"
+    <div class="position-relative">
+        <VBtn @click="show = !show"
+              fixed
+              right
+              fab
+              dark
+              color="green"
+              class="float-button"
         >
             <YIcon style="font-size: 30px">
                 iconset0143
             </YIcon>
         </VBtn>
-        <VDialog v-model="show" width="500">
-            <VFadeTransition mode="out-in">
-                <MaterialCard v-show="show1" title="有问题联系我">
-                    <li>邮箱：admin@srmxy.cn</li>
-                    <li>QQ:1845958331</li>
-                </MaterialCard>
-            </VFadeTransition>
-        </VDialog>
+        <YDialog v-model="show" width="500">
+            <MaterialCard slot="inner" title="有问题请联系我">
+                <li>邮箱：admin@srmxy.cn</li>
+                <li>QQ:1845958331</li>
+                <VCardActions>
+                    <VSpacer></VSpacer>
+                    <VBtn flat
+                          text
+                          color="primary"
+                          @click="show = !show"
+                    >
+                        我知道啦
+                    </VBtn>
+                </VCardActions>
+            </MaterialCard>
+        </YDialog>
     </div>
 </template>
 
 <script>
     import YIcon from "../common/YIcon";
+    import YDialog from "../common/YDialog";
     export default {
         name: "FloatHelper",
-        components: {YIcon},
+        components: {YDialog, YIcon},
         data(){
             return{
-                show : false,
-                show1 : false
-            }
-        },
-        watch : {
-            show(newVal){
-                if(newVal){
-                    setTimeout(() => {
-                        this.show1 = true;
-                    },150);
-                }else{
-                    this.show1 = false;
-                }
+                show : false
             }
         }
     }
