@@ -69,8 +69,6 @@
 
 <style lang="scss">
 
-  @import "./style/index.scss";
-
   .position-relative{
     position: relative;
   }

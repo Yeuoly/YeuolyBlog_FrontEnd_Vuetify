@@ -7,6 +7,7 @@ Vue.use(VueRouter);
 const ViewIndex = () => import('./components/views/ViewIndex');
 const ViewLogin = () => import('./components/views/ViewLogin');
 const ViewSignIn = () => import('./components/views/ViewSignIn');
+const ViewHome = () => import('./components/views/ViewHome');
 
 export default new VueRouter({
     mode : 'history',
@@ -22,5 +23,9 @@ export default new VueRouter({
         name : 'signin',
         path : '/signin',
         component : ViewSignIn
+    },{
+        name : 'home',
+        path : '/home',
+        component : ViewHome
     }]
 });

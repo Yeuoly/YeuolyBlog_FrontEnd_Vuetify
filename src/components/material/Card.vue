@@ -119,6 +119,9 @@ export default {
 </script>
 
 <style lang="scss">
+
+  @import "../../style/index";
+
 .v-card--material {
   &__header {
     &.v-card {
