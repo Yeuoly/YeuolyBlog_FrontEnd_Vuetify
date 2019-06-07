@@ -1,12 +1,12 @@
 <template>
-    <VCarousel hide-controls :height="carouselHeight">
+    <VCarousel hide-controls :height="carouselHeight" :cycle="false">
         <VCarouselItem v-for="t in items"
                        :key="t.src"
                        :src="t.src"
                        class="position-relative"
         >
             <div class="index-items__box">
-                <VCard flat class="mx-5 index-items__card">
+                <VCard class="mx-5 index-items__card">
                     <VLayout row wrap>
                         <p class="index-items__spacer"></p>
                         <VFlex xs12 class="index-items__title">
@@ -125,6 +125,8 @@
 
     .index-items__card{
         width: calc(100% - 96px);
+        background: transparent !important;
+        box-shadow: none !important;
     }
 
     .index-items__spacer{

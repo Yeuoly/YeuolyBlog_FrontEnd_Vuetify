@@ -1,5 +1,5 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
-    <VContainer class="position-relative register__container">
+    <VContainer class="position-relative passport__container register__container">
         <PopDialog v-model="dialog_show"
                    :pop-type="dialog_type"
                    :title="dialog_title"
@@ -8,7 +8,7 @@
         ></PopDialog>
         <MaterialCard title="注册"
                       :width="cardWidth"
-                      class="position-absolute login__card"
+                      class="position-absolute passport__card"
                       ref="card"
         >
             <VCard>
@@ -64,7 +64,8 @@
                         <template v-slot:append-outer>
                             <VTooltip bottom>
                                 <template v-slot:activator="{ on }">
-                                    <VImg v-on="on" width="100"
+                                    <VImg v-on="on"
+                                          width="100"
                                           @click="refreshCaptcha"
                                           :src="getImageCaptcha"
                                     ></VImg>
@@ -93,7 +94,7 @@
                     </VTextField>
 
 
-                    <div v-if="mdAndUp" class="login__btn-group pb-2">
+                    <div v-if="mdAndUp" class="passport__btn-group pb-2">
                         <VBtn class="left"
                               :disabled="!submit_valid"
                               @click.stop="signIn"
@@ -128,12 +129,13 @@
 
 <script>
     import passportBase from './../../mixins/passport';
-    import PopDialog from "../common/PopDialog";
     import popdialog from './../../mixins/popdialog';
+    import MaterialCard from '../material/Card';
+    import PopDialog from '../common/PopDialog';
 
     export default {
         name: "ViewSignIn",
-        components: {PopDialog},
+        components: {PopDialog, MaterialCard},
         mixins : [passportBase,popdialog],
         computed : {
             cardWidth(){
@@ -224,16 +226,7 @@
     }
 </script>
 
-<style scoped>
-
-    .register__container{
-        height: calc(100vh - 50px);
-    }
-
-    @media (max-width: 930px) {
-        .register__container{
-            height: 830px;
-        }
-    }
+<style>
+    @import "./style/passport.css";
 
 </style>

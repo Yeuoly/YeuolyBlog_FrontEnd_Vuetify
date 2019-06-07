@@ -4,9 +4,6 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import qs from 'querystring'
 
-//注册组件
-import './components'
-
 //加载应用
 import App from './App.vue'
 
@@ -17,7 +14,6 @@ import router from './router'
 import store from './storage'
 
 //使用axios
-
 axios.defaults.baseURL = process.env.VUE_APP_API_ROOT;
 Vue.use(VueAxios, axios);
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
@@ -26,6 +22,9 @@ axios.defaults.withCredentials = true;
 Vue.config.productionTip = false;
 
 Vue.prototype.$qs = qs;
+Vue.prototype.$importComponent = path => {
+  return () => import(path);
+};
 
 new Vue({
   router,

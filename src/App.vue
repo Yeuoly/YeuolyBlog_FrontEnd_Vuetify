@@ -1,6 +1,7 @@
 <template>
   <VApp>
     <LayoutHeader></LayoutHeader>
+    <FloatHelper />
     <LayoutSideMenu></LayoutSideMenu>
     <VSlideYTransition>
       <LayoutContainer v-if="server_state"></LayoutContainer>
@@ -18,10 +19,12 @@
   import LayoutSideMenu from "./components/layout/SideMenu";
   import LayoutContainer from "./components/layout/Container";
   import LayoutFooter from "./components/layout/Footer";
+  import FloatHelper from "./components/items/FloatHelper";
 
   export default {
     name: 'App',
     components: {
+      FloatHelper,
       LayoutFooter,
       LayoutContainer,
       LayoutSideMenu,

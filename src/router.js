@@ -8,6 +8,7 @@ const ViewIndex = () => import('./components/views/ViewIndex.vue');
 const ViewLogin = () => import('./components/views/ViewLogin.vue');
 const ViewSignIn = () => import('./components/views/ViewSignIn.vue');
 const ViewHome = () => import('./components/views/ViewHome.vue');
+const ViewEditor = () => import('./components/views/ViewEditor.vue');
 
 export default new VueRouter({
     mode : 'history',
@@ -30,5 +31,9 @@ export default new VueRouter({
         meta : {
             keepAlive : true
         }
+    },{
+        name : 'editor',
+        path : '/editor',
+        component : ViewEditor,
     }]
 });

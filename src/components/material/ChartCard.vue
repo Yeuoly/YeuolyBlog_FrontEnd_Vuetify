@@ -17,9 +17,12 @@
 </template>
 
 <script>
+
+  import MaterialCard from './Card'
+
 export default {
   inheritAttrs: false,
-
+  components : {MaterialCard},
   props: {
     options: {
       type: Object,

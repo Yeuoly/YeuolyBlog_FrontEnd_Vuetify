@@ -1,6 +1,5 @@
 <template>
     <div>
-        <FloatHelper />
         <PopDialog />
         <VLayout class="mt-4"
                  :class=" $vuetify.breakpoint.mdAndUp ? 'mx-5' : 'mx-0' "

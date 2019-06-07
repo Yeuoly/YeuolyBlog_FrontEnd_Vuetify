@@ -1,12 +1,12 @@
 <template>
-    <VContainer :heigth="containerHeight" class="position-relative login__container">
+    <VContainer :heigth="containerHeight" class="position-relative passport__container">
         <PopDialog v-model="dialog_show"
                    :pop-type="dialog_type"
                    :title="dialog_title"
                    :text="dialog_text"
                    :subtext="dialog_subtext"
         ></PopDialog>
-        <MaterialCard title="登录" :width="cardWidth" class="position-absolute login__card">
+        <MaterialCard title="登录" :width="cardWidth" class="position-absolute passport__card">
             <VCard>
                 <VCardText>
                     使用您的YS账号登录，YS账号为Yeuoly相关产品的通用账号
@@ -28,7 +28,7 @@
                                 @click:append="password_show = !password_show"
                                 v-model="password"
                     ></VTextField>
-                    <div class="login__btn-group pb-2">
+                    <div class="passport__btn-group pb-2">
                         <VBtn class="left"
                               :disabled="!submit_valid"
                               @click.stop="login"
@@ -51,10 +51,11 @@
     import passportBase from './../../mixins/passport'
     import PopDialog from "../common/PopDialog"
     import popdialog from './../../mixins/popdialog'
+    import MaterialCard from '../material/Card';
 
     export default {
         name: "ViewLogin",
-        components: {PopDialog},
+        components: {PopDialog, MaterialCard},
         computed : {
             cardWidth(){
                 return this.$vuetify.breakpoint.smAndUp ? 400 : 300;
@@ -100,25 +101,5 @@
 </script>
 
 <style>
-
-    .login__card{
-        left: calc((100% - 400px) / 2);
-    }
-
-    .login__container{
-        min-height: calc(100vh - 50px);
-    }
-
-    @media (max-width: 599px) {
-        .login__card{
-            left: calc((100% - 300px) / 2);
-        }
-    }
-
-    .login__btn-group{
-        overflow: auto;
-        margin: 0 auto;
-        width: 60%;
-    }
-
+    @import "./style/passport.css";
 </style>

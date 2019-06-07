@@ -1,0 +1,23 @@
+.passport__card{
+    left: calc((100% - 400px) / 2);
+}
+
+.passport__container{
+    min-height: calc(100vh - 50px);
+}
+
+@media (max-width: 599px) {
+    .passport__card{
+        left: calc((100% - 300px) / 2);
+    }
+}
+
+.register__container{
+    height: 830px !important;
+}
+
+.passport__btn-group{
+    overflow: auto;
+    margin: 0 auto;
+    width: 60%;
+}

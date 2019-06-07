@@ -58,9 +58,11 @@
 </template>
 
 <script>
+  import HelperOffset from '../helper/Offset'
+
 export default {
   inheritAttrs: false,
-
+  components : { HelperOffset },
   props: {
     color: {
       type: String,

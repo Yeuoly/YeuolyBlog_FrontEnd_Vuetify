@@ -22,7 +22,7 @@
                        v-for="t in menuList"
                        :key="t.routeName"
                        @click.stop="router(t.routeName)"
-                       v-show="t.show"
+                       v-show="t.show_helper"
             >
                 <VListTileAvatar>
                     <YIcon class="menu-icon">{{t.icon}}</YIcon>
@@ -52,17 +52,17 @@
                     routeName : 'index',
                     text : '网站主页',
                     icon : 'zhuye',
-                    show : true
+                    show_helper : true
                 },{
                     routeName : 'home',
                     text : '我的主页',
                     icon : 'MyHome',
-                    show : true
+                    show_helper : true
                 },{
                     routeName : 'login',
                     text : '登录',
                     icon : 'denglu',
-                    show : this.userOnline
+                    show_helper : this.userOnline
                 }]
             }
         },
