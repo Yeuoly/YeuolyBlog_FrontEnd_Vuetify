@@ -1,6 +1,6 @@
 <template>
     <div>
-        <PopDialog />
+        <PopDialog v-model="dialog_show" />
         <VLayout class="mt-4"
                  :class=" $vuetify.breakpoint.mdAndUp ? 'mx-5' : 'mx-0' "
                  :style="'min-height:' + ( $vuetify.breakpoint.height - 75 ) +'px'"
@@ -26,8 +26,6 @@
 </template>
 
 <script>
-    import FloatHelper from "../items/FloatHelper";
-    import PopDialog from "../common/PopDialog";
     import popdialog from "../../mixins/popdialog";
     import HomePostCard from "../items/HomePostCard";
 
@@ -36,7 +34,7 @@
 
     export default {
         name: "ViewHome",
-        components: {HomePostCardMini, PopDialog, FloatHelper,HomePostCard},
+        components: {HomePostCardMini, HomePostCard},
         mixins : [popdialog],
         methods : {
             deleteLocalCard(post_id){
@@ -55,7 +53,7 @@
                     user_name : 'Yeuoly',
                     user_uid : 1,
                     introduction : '哦啊啦啦',
-                    text : '咳'
+                    text : '<a href="javascript:alert()">awd</a><script></s' + 'cript>'
                 }]
             }
         },

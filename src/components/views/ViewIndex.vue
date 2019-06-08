@@ -67,7 +67,7 @@
             let vm = this;
             return{
                 items:[{
-                    src : 'https://i.loli.net/2019/06/06/5cf896dec4dc734199.png',
+                    src : 'https://s2.ax1x.com/2019/06/08/VDuHG8.png',
                     detail : {
                         title : 'YeuolyBlog',
                         subtext : '这是一个以精简便捷为设计核心的博客系统',
@@ -81,14 +81,14 @@
                         }]
                     }
                 },{
-                    src : 'https://i.loli.net/2019/06/06/5cf8bef8cea4735092.jpg',
+                    src : 'https://s2.ax1x.com/2019/06/08/VDuXrj.png',
                     detail : {
                         title : 'YeuolySystem',
                         subtext : '账号系统基于YeuolySystem，这是由Yeuoly制作的账号' +
                             '管理系统。'
                     }
                 },{
-                    src : 'https://i.loli.net/2019/06/06/5cf8c059b5aac77365.jpg',
+                    src : 'https://s2.ax1x.com/2019/06/08/VDuqxg.jpg',
                     detail : {
                         title : 'GitHub',
                         subtext : '前端开源在GitHub',

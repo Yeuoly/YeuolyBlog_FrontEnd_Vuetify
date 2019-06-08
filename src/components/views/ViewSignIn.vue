@@ -131,11 +131,10 @@
     import passportBase from './../../mixins/passport';
     import popdialog from './../../mixins/popdialog';
     import MaterialCard from '../material/Card';
-    import PopDialog from '../common/PopDialog';
 
     export default {
         name: "ViewSignIn",
-        components: {PopDialog, MaterialCard},
+        components: { MaterialCard },
         mixins : [passportBase,popdialog],
         computed : {
             cardWidth(){

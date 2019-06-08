@@ -1,15 +1,18 @@
 <template>
   <VApp>
-    <LayoutHeader></LayoutHeader>
+    <LayoutHeader />
     <FloatHelper />
-    <LayoutSideMenu></LayoutSideMenu>
+    <LayoutSideMenu />
     <VSlideYTransition>
-      <LayoutContainer v-if="server_state"></LayoutContainer>
+      <LayoutContainer v-if="allowContainer" />
     </VSlideYTransition>
     <VContainer v-if="working">
       <h1>服务器维护中……</h1>
     </VContainer>
-    <LayoutFooter v-show="!loading"></LayoutFooter>
+    <VContainer v-if="browserVersionTooLow">
+      <BrowserVersionTooLow />
+    </VContainer>
+    <LayoutFooter v-show="!loading" />
   </VApp>
 </template>
 
@@ -20,6 +23,7 @@
   import LayoutContainer from "./components/layout/Container";
   import LayoutFooter from "./components/layout/Footer";
   import FloatHelper from "./components/items/FloatHelper";
+  const BrowserVersionTooLow = () => import('./components/views/ViewBrowserTooLow');
 
   export default {
     name: 'App',
@@ -28,7 +32,8 @@
       LayoutFooter,
       LayoutContainer,
       LayoutSideMenu,
-      LayoutHeader
+      LayoutHeader,
+      BrowserVersionTooLow : BrowserVersionTooLow
     },
     data(){
       return{
@@ -39,6 +44,20 @@
     computed : {
       working(){
         return !this.server_state && !this.loading;
+      },
+      browserVersionTooLow(){
+        let theUA = window.navigator.userAgent.toLowerCase();
+        if ((theUA.match(/msie\s\d+/) && theUA.match(/msie\s\d+/)[0]) || (theUA.match(/trident\s?\d+/) && theUA.match(/trident\s?\d+/)[0])) {
+          let ieVersion = ~~theUA.match(/msie\s\d+/)[0].match(/\d+/)[0] || theUA.match(/trident\s?\d+/)[0];
+          console.log(ieVersion);
+          if (ieVersion <= 10) {
+            return true;
+          }
+        }
+        return false;
+      },
+      allowContainer(){
+        return !this.working && !this.browserVersionTooLow;
       }
     },
     methods : {

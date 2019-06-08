@@ -31,9 +31,7 @@
                 </VList>
             </VMenu>
             <VFlex xs12>
-                <VCardText>
-                    {{ text }}
-                </VCardText>
+                <YHtmlCompiler :html="text" />
             </VFlex>
         </VLayout>
     </VCard>
@@ -42,10 +40,12 @@
 <script>
     import { communicate } from "../../communicate";
     import YIcon from "../common/YIcon";
+    import YHtmlCompiler from "../common/YHtmlCompiler";
 
     export default {
         name: "PostCard",
         components : {
+            YHtmlCompiler,
             YIcon
 
         },

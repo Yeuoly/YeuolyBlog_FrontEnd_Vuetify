@@ -53,7 +53,7 @@
                 type : String,
                 default : ''
             },
-            show_helper : {
+            show : {
                 type : Boolean,
                 default : false
             }
@@ -76,8 +76,8 @@
             }
         },
         watch : {
-            show_helper(){
-                this.p__show = this.show_helper;
+            show(){
+                this.p__show = this.show;
             },
             p__show(){
                 this.change();

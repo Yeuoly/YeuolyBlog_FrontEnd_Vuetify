@@ -48,14 +48,13 @@
 </template>
 
 <script>
-    import passportBase from './../../mixins/passport'
-    import PopDialog from "../common/PopDialog"
-    import popdialog from './../../mixins/popdialog'
+    import passportBase from './../../mixins/passport';
+    import popdialog from './../../mixins/popdialog';
     import MaterialCard from '../material/Card';
 
     export default {
         name: "ViewLogin",
-        components: {PopDialog, MaterialCard},
+        components: { MaterialCard },
         computed : {
             cardWidth(){
                 return this.$vuetify.breakpoint.smAndUp ? 400 : 300;

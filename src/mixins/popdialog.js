@@ -1,4 +1,7 @@
+import PopDialog from '../components/common/PopDialog'
+
 export default {
+    components : { PopDialog },
     data(){
         return{
             dialog_title : '',

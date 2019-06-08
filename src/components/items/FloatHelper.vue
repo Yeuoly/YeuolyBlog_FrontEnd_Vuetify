@@ -41,7 +41,7 @@
         <YDialog v-model="show_helper" width="500">
             <MaterialCard slot="inner" title="有问题请联系我">
                 <li>邮箱：admin@srmxy.cn</li>
-                <li>QQ:1845958331</li>
+                <li>QQ：1845958331</li>
                 <VCardActions>
                     <VSpacer></VSpacer>
                     <VBtn flat
@@ -78,7 +78,7 @@
                 });
             },
             btn_show_2(){
-                let list = ['login','signin','index'];
+                let list = ['login','signin','index','editor'];
                 return !list.some(item => {
                     return item === this.$route.name;
                 });
