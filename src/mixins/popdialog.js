@@ -18,6 +18,9 @@ export default {
             this.dialog_type = type || 'info';
             this.dialog_subtext = subtext || '';
             this.dialog_show = true;
+            setTimeout(() => {
+
+            },50);
         },
         closeDialog(){
             this.dialog_show = false;

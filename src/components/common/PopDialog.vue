@@ -20,7 +20,7 @@
                 <VSpacer></VSpacer>
                 <VBtn flat
                       text
-                      @click="p__show = false"
+                      @click="click"
                 >我知道啦</VBtn>
             </VCardActions>
         </VCard>
@@ -56,7 +56,7 @@
             show : {
                 type : Boolean,
                 default : false
-            }
+            },
         },
         data(){
             return{
@@ -68,6 +68,12 @@
         methods: {
             change(){
                 this.$emit('change',this.p__show);
+            },
+            click(){
+                this.p__show = false;
+                setTimeout(() => {
+                    this.$emit(`hook-${this.PopType}`);
+                },500);
             }
         },
         computed : {
@@ -81,6 +87,9 @@
             },
             p__show(){
                 this.change();
+                setTimeout(() => {
+
+                },500);
             }
         },
         mounted() {

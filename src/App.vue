@@ -49,7 +49,6 @@
         let theUA = window.navigator.userAgent.toLowerCase();
         if ((theUA.match(/msie\s\d+/) && theUA.match(/msie\s\d+/)[0]) || (theUA.match(/trident\s?\d+/) && theUA.match(/trident\s?\d+/)[0])) {
           let ieVersion = ~~theUA.match(/msie\s\d+/)[0].match(/\d+/)[0] || theUA.match(/trident\s?\d+/)[0];
-          console.log(ieVersion);
           if (ieVersion <= 10) {
             return true;
           }

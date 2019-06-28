@@ -5,6 +5,7 @@
                    :title="dialog_title"
                    :text="dialog_text"
                    :subtext="dialog_subtext"
+                   @hook-success="afterSuccess"
         ></PopDialog>
         <MaterialCard title="注册"
                       :width="cardWidth"
@@ -155,6 +156,7 @@
         },
         data(){
             return{
+                successType : '',
                 repeat_password : String(),
                 repeat_password_show : false,
                 captcha_email : '',
@@ -183,7 +185,32 @@
                 this.$router.push({name : 'login'});
             },
             signIn(){
+                this.axios.post('v1/account/reg',this.$qs.stringify({
+                    username : this.account,
+                    password : this.password,
+                    captcha : this.captcha_email
+                })).then( response => {
+                    let _data = response.data;
+                    if(_data['data']['res'] === 666){
+                        this.successType = 'reg';
+                        this.openDialog(
+                            '注册成功！',
+                            '主人的账号已经准备就绪了哟~主人点击确认后0.5秒会跳转到登录界面哟~',
+                            '',
+                            'success'
+                        );
 
+                    }else{
+                        this.openDialog()
+                    }
+                }).catch(() => {
+
+                })
+            },
+            afterSuccess(){
+                if(this.successType === 'reg'){
+                    this.$router.push({name : 'login'});
+                }
             },
             getEmailCaptcha(){
                 this.captcha_email_btn = false;

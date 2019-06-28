@@ -19,20 +19,60 @@
         </VCard>
         <VList dense>
             <VListTile class="nav-list"
-                       v-for="t in menuList"
-                       :key="t.routeName"
-                       @click.stop="router(t.routeName)"
-                       v-show="t.show_helper"
+                       @click="router('index')"
             >
                 <VListTileAvatar>
-                    <YIcon class="menu-icon">{{t.icon}}</YIcon>
+                    <YIcon class="menu-icon">zhuye</YIcon>
                 </VListTileAvatar>
                 <VListTileContent>
                     <VListTileTitle>
-                        {{t.text}}
+                        网站主页
                     </VListTileTitle>
                 </VListTileContent>
             </VListTile>
+
+
+            <VListTile class="nav-list"
+                       @click="router('home')"
+            >
+                <VListTileAvatar>
+                    <YIcon class="menu-icon">MyHome</YIcon>
+                </VListTileAvatar>
+                <VListTileContent>
+                    <VListTileTitle>
+                        我的主页
+                    </VListTileTitle>
+                </VListTileContent>
+            </VListTile>
+
+            <VListTile class="nav-list"
+                       @click="router('login')"
+                       v-show="!userOnline"
+            >
+                <VListTileAvatar>
+                    <YIcon class="menu-icon">denglu</YIcon>
+                </VListTileAvatar>
+                <VListTileContent>
+                    <VListTileTitle>
+                        登录
+                    </VListTileTitle>
+                </VListTileContent>
+            </VListTile>
+
+            <VListTile class="nav-list"
+                       @click="router('editor')"
+                       v-show="userOnline"
+            >
+                <VListTileAvatar>
+                    <YIcon class="menu-icon">denglu</YIcon>
+                </VListTileAvatar>
+                <VListTileContent>
+                    <VListTileTitle>
+                        编辑
+                    </VListTileTitle>
+                </VListTileContent>
+            </VListTile>
+
         </VList>
     </VNavigationDrawer>
 </template>
@@ -47,23 +87,7 @@
         components: {YIcon},
         data(){
             return {
-                open : false,
-                menuList : [{
-                    routeName : 'index',
-                    text : '网站主页',
-                    icon : 'zhuye',
-                    show_helper : true
-                },{
-                    routeName : 'home',
-                    text : '我的主页',
-                    icon : 'MyHome',
-                    show_helper : true
-                },{
-                    routeName : 'login',
-                    text : '登录',
-                    icon : 'denglu',
-                    show_helper : this.userOnline
-                }]
+                open: false,
             }
         },
         methods : {

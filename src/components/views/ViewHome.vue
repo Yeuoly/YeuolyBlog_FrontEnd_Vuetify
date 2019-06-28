@@ -38,7 +38,7 @@
         mixins : [popdialog],
         methods : {
             deleteLocalCard(post_id){
-                console.log('删除本地post'+post_id);
+
             },
             avatarUrl(uid){
                 return process.env.VUE_APP_API_ROOT + '/v1/account/avatar?uid=' + uid;
