@@ -36,6 +36,23 @@
                         <span>新建博客</span>
                     </VTooltip>
                 </VFlex>
+                <VFlex xs12>
+                    <VTooltip v-if="btn_show_3" left>
+                        <template v-slot:activator="{ on }">
+                            <VBtn @click="refresh"
+                                  v-on="on"
+                                  fab
+                                  dark
+                                  color="#ecde60"
+                            >
+                                <YIcon style="font-size: 30px;">
+                                    shuaxin
+                                </YIcon>
+                            </VBtn>
+                        </template>
+                        <span>刷新</span>
+                    </VTooltip>
+                </VFlex>
             </VLayout>
         </div>
         <YDialog v-model="show_helper" width="500">
@@ -62,6 +79,8 @@
     import YDialog from "../common/YDialog";
     import MaterialCard from "../material/Card";
 
+    import { communicate } from "../../communicate";
+
     export default {
         name : "FloatHelper",
         components : {YDialog, YIcon, MaterialCard},
@@ -82,11 +101,20 @@
                 return !list.some(item => {
                     return item === this.$route.name;
                 });
-            }
+            },
+            btn_show_3(){
+                let list = ['editor'];
+                return !list.some(item => {
+                    return item === this.$route.name;
+                });
+            },
         },
         methods : {
             toEditor(){
                 this.$router.push({ name : 'editor' });
+            },
+            refresh() {
+                communicate.$emit('refreshHome');
             }
         }
     }

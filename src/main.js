@@ -13,6 +13,10 @@ import router from './router'
 //安装vuex
 import store from './storage'
 
+//加载工具类
+import utils from './lib/utils';
+Vue.prototype.$utils = utils;
+
 //使用axios
 axios.defaults.baseURL = process.env.VUE_APP_API_ROOT;
 Vue.use(VueAxios, axios);

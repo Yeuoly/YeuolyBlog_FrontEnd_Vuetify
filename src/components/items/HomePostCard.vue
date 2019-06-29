@@ -8,7 +8,10 @@
             </VFlex>
             <VFlex lg10 md9 sm9 xs8>
                 <VCardTitle>
-                    <span class="text-xs-center">
+                    <span class="mr-2">
+                        {{ date }}
+                    </span>
+                    <span>
                         {{ title }}
                     </span>
                 </VCardTitle>
@@ -23,7 +26,7 @@
                 </template>
                 <VList>
                     <VBtn block flat @click="editPost">
-                        删除
+                        编辑
                     </VBtn>
                     <VBtn block flat @click="deletePost">
                         删除
@@ -31,7 +34,7 @@
                 </VList>
             </VMenu>
             <VFlex xs12>
-                <YHtmlCompiler :html="text" />
+                <YHtmlCompiler class="px-3" :html="text" />
             </VFlex>
         </VLayout>
     </VCard>
@@ -50,54 +53,26 @@
 
         },
         props : {
-            postID: String,
+            post_id: String,
             title : String,
             avatar : String,
             user : String,
-            introduction : String,
-            text : String
+            text : String,
+            time : Number
+        },
+        computed : {
+            date(){
+                return this.$utils.date('M-D',this.time);
+            }
         },
         methods : {
             deletePost () {
-                this.axios.post('v1/post/private/delete',this.$qs.stringify({
-                    postID : this.postID
-                })).then( response => {
-                    let _data = response.data;
-                    if(_data['data']['res'] === 666)
-                    {
-                        communicate.$emit(
-                            'HomeMessage',
-                            '成功啦',
-                            '已经删掉刚刚的那篇博客了哦~',
-                            '',
-                            'success'
-                        );
-                        communicate.$emit(
-                            'Home',
-                            this.postID
-                        );
-                    }else{
-                        communicate.$emit(
-                            'HomeMessage',
-                            '哦呀，好像出了一点点事情',
-                            _data['data']['error'],
-                            '',
-                            'error'
-                        );
-                    }
-                }).catch(() =>{
-                    communicate.$emit(
-                        'HomeMessage',
-                        '哦呀，好像出了一点点事情',
-                        '服务器坏掉惹o(╥﹏╥)o',
-                        '',
-                        'error'
-                    );
-                });
+                communicate.$emit('HomeDelete',this.post_id);
             },
             //跳转编辑界面
             editPost () {
-                this.$router.push({ name : 'edit' , params : { pid : this.postID } })
+                let post_id = this.post_id;
+                this.$router.push({ name : 'editor' , query : { post_id : post_id } });
             },
         }
     }

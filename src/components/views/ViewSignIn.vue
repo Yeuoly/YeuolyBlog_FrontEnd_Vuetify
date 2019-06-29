@@ -201,10 +201,10 @@
                         );
 
                     }else{
-                        this.openDialog()
+                        this.openDialog('失败惹',_data['data']['error']);
                     }
                 }).catch(() => {
-
+                    this.openDialog('注册失败','与服务器的连接似乎出现了一些问题','','error');
                 })
             },
             afterSuccess(){

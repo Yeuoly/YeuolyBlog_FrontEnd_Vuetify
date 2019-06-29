@@ -56,7 +56,6 @@
                 title : '',
                 content : '',
                 post_id : '',
-                last : []
             }
         },
         methods : {
@@ -75,7 +74,8 @@
                     let _data = response.data;
                     if(_data['data']['res'] === 666){
                         this.post_id = _data['data']['data']['post_id'];
-                        this.last = [ this.content , this.title ];
+                        let vm = this;
+                        this.$router.push({ query : { post_id : vm.post_id } });
                         this.openDialog('保存成功','主人的博客保存成功啦~','','success');
                     }else{
                         this.openDialog('失败惹','似乎出现了一些问题',_data['data']['error'],'error');
@@ -83,7 +83,37 @@
                 }).catch(() => {
                     this.openDialog('失败惹','与服务器的连接似乎出现了一些问题','','error');
                 });
+            },
+            init(){
+                let query_pid = this.$route.query.post_id;
+                if(query_pid){
+                    this.post_id = query_pid;
+                    this.$router.push({ query : { post_id : query_pid } });
+                    this.get(query_pid);
+                }
+            },
+            load(dist){
+                this.title = dist['title'];
+                this.content = dist['content'];
+                this.post_id = dist['post_id'];
+            },
+            get(post_id){
+                this.axios.post('/v1/post/private/get',this.$qs.stringify({
+                    post_id : post_id
+                })).then( response => {
+                    let _data = response.data;
+                    if(_data['data']['res'] === 666){
+                        this.load(_data['data']['data']);
+                    }else{
+                        this.openDialog('获取博客失败',_data['data']['error'],'','error');
+                    }
+                }).catch(() => {
+                    this.openDialog('获取博客失败','与服务器的连接似乎出现了一些问题','','error');
+                });
             }
+        },
+        mounted(){
+            this.init();
         }
     }
 </script>

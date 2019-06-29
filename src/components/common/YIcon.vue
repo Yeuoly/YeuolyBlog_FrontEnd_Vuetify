@@ -18,12 +18,12 @@
 <style>
     @font-face {
         font-family: 'iconfont';  /* project id 1090944 */
-        src: url('//at.alicdn.com/t/font_1090944_3fot87666yv.eot');
-        src: url('//at.alicdn.com/t/font_1090944_3fot87666yv.eot?#iefix') format('embedded-opentype'),
-        url('//at.alicdn.com/t/font_1090944_3fot87666yv.woff2') format('woff2'),
-        url('//at.alicdn.com/t/font_1090944_3fot87666yv.woff') format('woff'),
-        url('//at.alicdn.com/t/font_1090944_3fot87666yv.ttf') format('truetype'),
-        url('//at.alicdn.com/t/font_1090944_3fot87666yv.svg#iconfont') format('svg');
+        src: url('//at.alicdn.com/t/font_1090944_t4bu5qd60a.eot');
+        src: url('//at.alicdn.com/t/font_1090944_t4bu5qd60a.eot?#iefix') format('embedded-opentype'),
+        url('//at.alicdn.com/t/font_1090944_t4bu5qd60a.woff2') format('woff2'),
+        url('//at.alicdn.com/t/font_1090944_t4bu5qd60a.woff') format('woff'),
+        url('//at.alicdn.com/t/font_1090944_t4bu5qd60a.ttf') format('truetype'),
+        url('//at.alicdn.com/t/font_1090944_t4bu5qd60a.svg#iconfont') format('svg');
     }
 
     .iconfont {
@@ -32,6 +32,10 @@
         font-style: normal;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
+    }
+
+    .iconshuaxin:before{
+        content: "\e666" !important;
     }
 
     .iconjia:before{
