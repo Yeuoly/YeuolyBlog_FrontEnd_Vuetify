@@ -1,5 +1,5 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
-    <div class="position-relative">
+    <div class="position-relative" id="float-btn-group">
         <div class="helper-btn-group">
             <VLayout column wrap>
                 <VFlex xs12>
@@ -103,7 +103,7 @@
                 });
             },
             btn_show_3(){
-                let list = ['editor'];
+                let list = ['index','editor','login','signin'];
                 return !list.some(item => {
                     return item === this.$route.name;
                 });
@@ -121,6 +121,10 @@
 </script>
 
 <style>
+
+    #float-btn-group{
+        z-index: 500 !important;
+    }
 
     .float-button {
         bottom: 48px;

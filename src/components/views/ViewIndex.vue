@@ -83,7 +83,7 @@
                 },{
                     src : 'https://s2.ax1x.com/2019/06/08/VDuXrj.png',
                     detail : {
-                        title : 'YeuolySystem',
+                        title : 'YS',
                         subtext : '账号系统基于YeuolySystem，这是由Yeuoly制作的账号' +
                             '管理系统。'
                     }
@@ -137,6 +137,7 @@
     .index-items__title{
         height: 200px;
         margin-bottom: 30px;
+        word-break: revert;
     }
 
     .index-items__box > * h2{

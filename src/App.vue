@@ -1,18 +1,26 @@
 <template>
   <VApp>
-    <LayoutHeader />
-    <FloatHelper />
-    <LayoutSideMenu />
-    <VSlideYTransition>
-      <LayoutContainer v-if="allowContainer" />
-    </VSlideYTransition>
-    <VContainer v-if="working">
-      <h1>服务器维护中……</h1>
-    </VContainer>
-    <VContainer v-if="browserVersionTooLow">
-      <BrowserVersionTooLow />
-    </VContainer>
-    <LayoutFooter v-show="!loading" />
+    <div v-if="ready">
+      <LayoutHeader />
+      <FloatHelper />
+      <LayoutSideMenu />
+      <VSlideYTransition>
+        <LayoutContainer v-if="allowContainer" />
+      </VSlideYTransition>
+      <VContainer v-if="working">
+        <h1>服务器维护中……</h1>
+      </VContainer>
+      <VContainer v-if="browserVersionTooLow">
+        <BrowserVersionTooLow />
+      </VContainer>
+      <LayoutFooter v-show="!loading" />
+    </div>
+    <div v-else class="text-xs-center app-items__loading">
+      <VProgressCircular color="grey"
+                         indeterminate
+                         size="100"
+      ></VProgressCircular>
+    </div>
   </VApp>
 </template>
 
@@ -38,7 +46,8 @@
     data(){
       return{
         server_state : false,
-        loading : true
+        loading : true,
+        ready : false
       }
     },
     computed : {
@@ -76,15 +85,17 @@
             this.server_state = false;
             this.loading = false;
           }
+          this.ready = true;
         }).catch(() => {
           this.server_state = false;
           this.loading = false;
+          this.ready = true;
         });
       }
     },
-    created() {
+    created(){
       setTimeout(this.user);
-    }
+    },
   }
 </script>
 
@@ -96,6 +107,13 @@
 
   .position-absolute{
     position: absolute;
+  }
+
+  .app-items__loading{
+    position: fixed;
+    height: 100px;
+    width: 100%;
+    top: calc((100% - 200px) / 2);
   }
 
 </style>

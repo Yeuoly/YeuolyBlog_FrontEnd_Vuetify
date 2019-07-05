@@ -1,15 +1,24 @@
+//提供一个Vue以外我的访问接口
+export const state_user = {
+    online : false,
+    name : '游客',
+    uid : Number(),
+    class : Number(),
+    exp : Number(),
+    login_time : Number()
+};
+
+let afterChangeOnline = [];
+
+export const addOnlineHook = hook => {
+    afterChangeOnline.push(hook);
+};
+
 export default {
-    state : {
-        online : false,
-        name : '游客',
-        uid : Number(),
-        class : Number(),
-        exp : Number(),
-        login_time : Number()
-    },
+    state : state_user,
     mutations : {
         setOnlineState(state,val){
-            state.online = val
+            state.online = val;
         },
         setUserName(state,name){
             state.name = name;
@@ -46,5 +55,5 @@ export default {
         getLoginTime(state){
             return state.login_time;
         }
-    }
+    },
 }
