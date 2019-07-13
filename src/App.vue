@@ -1,6 +1,6 @@
 <template>
   <VApp>
-    <div v-if="ready">
+    <div v-if="!checking">
       <LayoutHeader />
       <FloatHelper />
       <LayoutSideMenu />
@@ -10,12 +10,12 @@
       <VContainer v-if="working">
         <h1>服务器维护中……</h1>
       </VContainer>
-      <VContainer v-if="browserVersionTooLow">
+      <VContainer v-else-if="browserVersionTooLow">
         <BrowserVersionTooLow />
       </VContainer>
-      <LayoutFooter v-show="!loading" />
+      <LayoutFooter />
     </div>
-    <div v-else class="text-xs-center app-items__loading">
+    <div v-else-if="checking" class="text-xs-center app-items__loading">
       <VProgressCircular color="grey"
                          indeterminate
                          size="100"
@@ -31,7 +31,8 @@
   import LayoutContainer from "./components/layout/Container";
   import LayoutFooter from "./components/layout/Footer";
   import FloatHelper from "./components/items/FloatHelper";
-  const BrowserVersionTooLow = () => import('./components/views/ViewBrowserTooLow');
+  import BrowserVersionTooLow from './components/views/ViewBrowserTooLow';
+
 
   export default {
     name: 'App',
@@ -46,14 +47,11 @@
     data(){
       return{
         server_state : false,
-        loading : true,
-        ready : false
+        checking : true,
+        working : false
       }
     },
     computed : {
-      working(){
-        return !this.server_state && !this.loading;
-      },
       browserVersionTooLow(){
         let theUA = window.navigator.userAgent.toLowerCase();
         if ((theUA.match(/msie\s\d+/) && theUA.match(/msie\s\d+/)[0]) || (theUA.match(/trident\s?\d+/) && theUA.match(/trident\s?\d+/)[0])) {
@@ -69,33 +67,19 @@
       }
     },
     methods : {
-      user(){
-        this.axios.post('v1/account/user',null).then(response => {
-          let _data = response['data'];
-          if(_data['data']['res'] === 666){
-            let data = _data['data']['data'];
-            this.$store.commit('setOnlineState',true);
-            this.$store.commit('setUserName',data['user_id']);
-            this.$store.commit('setLoginTime',data['login_time']);
-            this.$store.commit('setUid',data['user_uid']);
-            this.$store.commit('setUserClass',data['user_class']);
-            this.server_state = true;
-            this.loading = false;
-          }else if(_data['data']['error'] === '101'){
-            this.server_state = false;
-            this.loading = false;
-          }
-          this.ready = true;
+      getApiState(){
+        this.axios.get('/v1/state/api').then( response => {
+          this.working = response.data !== 'OK' ;
         }).catch(() => {
-          this.server_state = false;
-          this.loading = false;
-          this.ready = true;
+          this.working = true;
+        }).finally(() => {
+          this.checking = false;
         });
       }
     },
-    created(){
-      setTimeout(this.user);
-    },
+    mounted() {
+      this.getApiState();
+    }
   }
 </script>
 

@@ -1,3 +1,5 @@
+import axios from "axios";
+
 //提供一个Vue以外我的访问接口
 export const state_user = {
     online : false,
@@ -8,11 +10,7 @@ export const state_user = {
     login_time : Number()
 };
 
-let afterChangeOnline = [];
-
-export const addOnlineHook = hook => {
-    afterChangeOnline.push(hook);
-};
+axios.defaults.withCredentials = true;
 
 export default {
     state : state_user,

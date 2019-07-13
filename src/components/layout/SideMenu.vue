@@ -1,4 +1,4 @@
-<template>
+<template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
     <VNavigationDrawer v-model="open"
                        fixed
                        temporary
@@ -45,9 +45,41 @@
                 </VListTileContent>
             </VListTile>
 
+            <VDivider />
+
+            <div v-if="userOnline">
+                <VListTile class="nav-list"
+                           @click="router('editor')"
+                >
+                    <VListTileAvatar>
+                        <YIcon class="menu-icon">fawenzi</YIcon>
+                    </VListTileAvatar>
+                    <VListTileContent>
+                        <VListTileTitle>
+                            编辑
+                        </VListTileTitle>
+                    </VListTileContent>
+                </VListTile>
+                <VDivider />
+            </div>
+
+            <VListTile class="nav-list"
+                       @click="router('history')"
+            >
+                <VListTileAvatar>
+                    <YIcon class="menu-icon">iconset0142</YIcon>
+                </VListTileAvatar>
+                <VListTileContent>
+                    <VListTileTitle>
+                        开发日志
+                    </VListTileTitle>
+                </VListTileContent>
+            </VListTile>
+            <VDivider />
+
             <VListTile class="nav-list"
                        @click="router('login')"
-                       v-show="!userOnline"
+                       v-if="!userOnline"
             >
                 <VListTileAvatar>
                     <YIcon class="menu-icon">denglu</YIcon>
@@ -60,19 +92,19 @@
             </VListTile>
 
             <VListTile class="nav-list"
-                       @click="router('editor')"
-                       v-show="userOnline"
+                       @click="logout"
+                       v-else
             >
                 <VListTileAvatar>
-                    <YIcon class="menu-icon">denglu</YIcon>
+                    <YIcon class="menu-icon">-dengchu</YIcon>
                 </VListTileAvatar>
                 <VListTileContent>
                     <VListTileTitle>
-                        编辑
+                        登出
                     </VListTileTitle>
                 </VListTileContent>
             </VListTile>
-
+            <VDivider />
         </VList>
     </VNavigationDrawer>
 </template>
@@ -99,6 +131,11 @@
             },
             router(name){
                 this.$router.push({name : name});
+            },
+            logout(){
+                this.$cookies.remove('srm_jct');
+                this.$cookies.remove('uid');
+                location.href = '/';
             }
         },
         mixins : [base],
@@ -130,7 +167,7 @@
     }
 
     .menu-icon {
-        font-size: 20px;
+        font-size: 18px;
     }
 
     .nav-list-tile {

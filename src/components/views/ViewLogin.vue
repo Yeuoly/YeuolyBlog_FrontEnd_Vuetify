@@ -28,7 +28,8 @@
                                 @click:append="password_show = !password_show"
                                 v-model="password"
                     ></VTextField>
-                    <div class="passport__btn-group pb-2">
+
+                    <div v-if="mdAndUp" class="passport__btn-group pb-2">
                         <VBtn class="left"
                               :disabled="!submit_valid"
                               @click.stop="login"
@@ -40,6 +41,23 @@
                         >
                             注册
                         </VBtn>
+                    </div>
+                    <div v-else>
+                        <VFlex xs12>
+                            <VBtn :disabled="!submit_valid"
+                                  @click.stop="login"
+                                  block
+                            >
+                                登录
+                            </VBtn>
+                        </VFlex>
+                        <VFlex xs12>
+                            <VBtn @click.stop="signIn"
+                                  block
+                            >
+                                注册
+                            </VBtn>
+                        </VFlex>
                     </div>
                 </VForm>
             </div>
@@ -61,6 +79,9 @@
             },
             containerHeight(){
                 return this.$vuetify.breakpoint.height - 50;
+            },
+            mdAndUp(){
+                return this.$vuetify.breakpoint.mdAndUp;
             }
         },
         mixins : [passportBase,popdialog],

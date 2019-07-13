@@ -61,6 +61,7 @@
   import HelperOffset from '../helper/Offset'
 
 export default {
+  name : 'MaterialCard',
   inheritAttrs: false,
   components : { HelperOffset },
   props: {

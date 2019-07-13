@@ -1,16 +1,12 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-
-Vue.use(VueRouter);
-
 //按需加载
 const ViewIndex = () => import('./components/views/ViewIndex.vue');
 const ViewLogin = () => import('./components/views/ViewLogin.vue');
 const ViewSignIn = () => import('./components/views/ViewSignIn.vue');
 const ViewHome = () => import('./components/views/ViewHome.vue');
 const ViewEditor = () => import('./components/views/ViewEditor.vue');
+const ViewHistory = () => import('./components/views/ViewHistory.vue');
 
-const router = new VueRouter({
+export default {
     mode : 'history',
     routes : [{
         name : 'index',
@@ -56,27 +52,14 @@ const router = new VueRouter({
             login_required : true,
             offline_required : false
         }
-    }]
-});
-
-import { state_user } from "./storage/userinfo";
-import { addOnlineHook } from "./storage/userinfo";
-
-let first_loaded = false;
-
-
-router.beforeEach( (to , from , next) => {
-    let _next = null;
-    to.matched.some( item => {
-        if(!state_user.online && item.meta.login_required)
-            _next = '/login';
-        else if(state_user.online && item.meta.offline_required){
-            _next = '/';
+    },{
+        name : 'history',
+        path : '/devlog',
+        component : ViewHistory,
+        meta : {
+            keepAlive : false,
+            login_required : false,
+            offline_required : false
         }
-    });
-    if(_next)
-        next(_next);
-    next();
-});
-
-export default router;
+    }]
+};

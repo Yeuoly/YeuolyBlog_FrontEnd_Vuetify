@@ -23,9 +23,6 @@
                               class="mb-3"
                 />
             </VFlex>
-            <VFlex sm12 xs12 md4 lg4 :class="$vuetify.breakpoint.mdAndUp ? 'pl-2' : 'pl-0'">
-                <HomePostCardMini />
-            </VFlex>
         </VLayout>
     </div>
 </template>
@@ -35,11 +32,10 @@
     import HomePostCard from "../items/HomePostCard";
 
     import { communicate } from "../../communicate";
-    import HomePostCardMini from "../items/HomePostCardMini";
 
     export default {
         name: "ViewHome",
-        components: {HomePostCardMini, HomePostCard},
+        components: { HomePostCard},
         mixins : [popdialog],
         methods : {
             deleteLocalCard(post_id){
@@ -81,17 +77,28 @@
                 return process.env.VUE_APP_API_ROOT + '/v1/account/avatar?uid=' + uid;
             },
             getRecent(){
+                if(this.end){
+                    this.openDialog('消息','这就是主人的全部啦！','','info');
+                    return;
+                }
                 this.axios.post('v1/post/private/getrecent',this.$qs.stringify({
                     page : this.page + 1
                 })).then( response => {
                     let _data = response.data;
                     if(_data['data']['res'] === 666){
                         this.load(_data['data']['data']);
+                        this.page++;
+                        if(_data['data']['data'].length < 5){
+                            this.end = true;
+                            if(_data['data']['data'].length === 0){
+                                this.openDialog('消息','这就是主人的全部啦！','','info');
+                            }
+                        }
                     }
                 });
             },
             load(dist){
-                this.postCollections = [...dist,...this.postCollections];
+                this.postCollections = [...this.postCollections,...dist];
             },
             refresh(){
                 this.postCollections = [];
@@ -102,17 +109,20 @@
         data(){
             return{
                 postCollections : [],
-                page : 0
+                page : 0,
+                end : false
             }
         },
         mounted(){
             communicate.$on('HomeDelete',this.deleteLocalCard);
             communicate.$on('refreshHome',this.refresh);
+            communicate.$on('loadMoreHome',this.getRecent);
             this.getRecent();
         },
         destroyed(){
             communicate.$off('HomeDelete',this.deleteLocalCard);
             communicate.$off('refreshHome',this.refresh);
+            communicate.$off('loadMoreHome',this.getRecent);
         }
     }
 </script>

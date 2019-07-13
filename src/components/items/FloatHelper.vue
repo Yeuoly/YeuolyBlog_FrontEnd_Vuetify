@@ -53,6 +53,24 @@
                         <span>刷新</span>
                     </VTooltip>
                 </VFlex>
+
+                <VFlex xs12>
+                    <VTooltip v-if="btn_show_3" left>
+                        <template v-slot:activator="{ on }">
+                            <VBtn @click="loadMore"
+                                  v-on="on"
+                                  fab
+                                  dark
+                                  color="blue"
+                            >
+                                <YIcon style="font-size: 30px;">
+                                    dianji
+                                </YIcon>
+                            </VBtn>
+                        </template>
+                        <span>我要更多！</span>
+                    </VTooltip>
+                </VFlex>
             </VLayout>
         </div>
         <YDialog v-model="show_helper" width="500">
@@ -97,13 +115,19 @@
                 });
             },
             btn_show_2(){
-                let list = ['login','signin','index','editor'];
+                let list = ['login','signin','index','editor','history'];
                 return !list.some(item => {
                     return item === this.$route.name;
                 });
             },
             btn_show_3(){
-                let list = ['index','editor','login','signin'];
+                let list = ['index','editor','login','signin','history'];
+                return !list.some(item => {
+                    return item === this.$route.name;
+                });
+            },
+            btn_show_4(){
+                let list = ['index','editor','login','signin','history'];
                 return !list.some(item => {
                     return item === this.$route.name;
                 });
@@ -115,6 +139,9 @@
             },
             refresh() {
                 communicate.$emit('refreshHome');
+            },
+            loadMore(){
+                communicate.$emit('loadMoreHome');
             }
         }
     }
