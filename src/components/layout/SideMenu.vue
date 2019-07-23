@@ -91,19 +91,34 @@
                 </VListTileContent>
             </VListTile>
 
-            <VListTile class="nav-list"
-                       @click="logout"
-                       v-else
-            >
-                <VListTileAvatar>
-                    <YIcon class="menu-icon">-dengchu</YIcon>
-                </VListTileAvatar>
-                <VListTileContent>
-                    <VListTileTitle>
-                        登出
-                    </VListTileTitle>
-                </VListTileContent>
-            </VListTile>
+            <div v-else>
+                <VListTile class="nav-list"
+                           @click="router('setting')"
+                >
+                    <VListTileAvatar>
+                        <YIcon class="menu-icon">shezhi</YIcon>
+                    </VListTileAvatar>
+                    <VListTileContent>
+                        <VListTileTitle>
+                            设置
+                        </VListTileTitle>
+                    </VListTileContent>
+                </VListTile>
+
+                <VListTile class="nav-list"
+                           @click="logout"
+                >
+                    <VListTileAvatar>
+                        <YIcon class="menu-icon">-dengchu</YIcon>
+                    </VListTileAvatar>
+                    <VListTileContent>
+                        <VListTileTitle>
+                            登出
+                        </VListTileTitle>
+                    </VListTileContent>
+                </VListTile>
+            </div>
+
             <VDivider />
         </VList>
     </VNavigationDrawer>
@@ -133,9 +148,16 @@
                 this.$router.push({name : name});
             },
             logout(){
-                this.$cookies.remove('srm_jct');
-                this.$cookies.remove('uid');
-                location.href = '/';
+                this.axios.post('v1/account/logout').then( response => {
+                    let _data = response.data;
+                    if(_data['data']['res'] === 666){
+                        location.href = '/';
+                    }else{
+                        alert('失败');
+                    }
+                }).catch( () => {
+                    alert('失败');
+                })
             }
         },
         mixins : [base],

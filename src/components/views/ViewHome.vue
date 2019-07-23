@@ -103,6 +103,7 @@
             refresh(){
                 this.postCollections = [];
                 this.page = 0;
+                this.end = false;
                 this.getRecent();
             }
         },

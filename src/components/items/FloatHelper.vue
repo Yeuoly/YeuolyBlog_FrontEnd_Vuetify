@@ -150,7 +150,7 @@
 <style>
 
     #float-btn-group{
-        z-index: 500 !important;
+        z-index: 100 !important;
     }
 
     .float-button {

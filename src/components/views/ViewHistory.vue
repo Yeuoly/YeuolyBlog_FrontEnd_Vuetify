@@ -34,6 +34,13 @@
             return{
                 history :  [
                     {
+                        title   : '修复bug，新功能',
+                        version : '2.0.1.00-α',
+                        content : '修复主页刷新错误、无法登出等bug，添加设置页面，优化代码结构',
+                        date    : '2019/7/23',
+                        color   : 'green'
+                    },
+                    {
                         title   : '双端重构',
                         version : '2.0.0.00-α',
                         content : '使用Vuetify ThinkPHP重构双端，安全性能、美观度、用户体验大大提升。',

@@ -19,7 +19,7 @@ Vue.use(VueCookies);
 import store from './storage'
 
 //加载路由
-import routes from './routes';
+import routes from './router/main';
 
 //加载工具类
 import utils from './lib/utils';
