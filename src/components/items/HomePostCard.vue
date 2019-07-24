@@ -50,7 +50,6 @@
         components : {
             YHtmlCompiler,
             YIcon
-
         },
         props : {
             post_id: String,

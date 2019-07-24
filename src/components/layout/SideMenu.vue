@@ -45,6 +45,19 @@
                 </VListTileContent>
             </VListTile>
 
+            <VListTile class="nav-list"
+                       @click="router('search')"
+            >
+                <VListTileAvatar>
+                    <YIcon class="menu-icon">MyHome</YIcon>
+                </VListTileAvatar>
+                <VListTileContent>
+                    <VListTileTitle>
+                        搜索
+                    </VListTileTitle>
+                </VListTileContent>
+            </VListTile>
+
             <VDivider />
 
             <div v-if="userOnline">

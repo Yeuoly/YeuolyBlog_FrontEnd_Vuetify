@@ -4,7 +4,8 @@
                    :pop-type="dialog_type"
                    :title="dialog_title"
                    :text="dialog_text"
-                   :subtext="dialog_subtext" />
+                   :subtext="dialog_subtext"
+        />
         <VLayout class="mt-4"
                  :class=" $vuetify.breakpoint.mdAndUp ? 'mx-5' : 'mx-0' "
                  :style="'min-height:' + ( $vuetify.breakpoint.height - 75 ) +'px'"

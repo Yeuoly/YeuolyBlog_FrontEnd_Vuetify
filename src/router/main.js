@@ -6,6 +6,8 @@ const ViewHome = () => import('../components/views/ViewHome.vue');
 const ViewEditor = () => import('../components/views/ViewEditor.vue');
 const ViewHistory = () => import('../components/views/ViewHistory.vue');
 const ViewSetting = () => import('../components/views/ViewSetting.vue');
+const ViewVisit = () => import('../components/views/ViewVisit.vue');
+const ViewSearch = () => import('../components/views/ViewSearch.vue');
 
 const NotFound = () => import('../components/views/View404.vue');
 
@@ -97,6 +99,24 @@ export default {
             offline_required : false
         },
         children : setting_routes
+    },{
+        name : 'visit',
+        path : '/visit',
+        component : ViewVisit,
+        meta : {
+            keepAlive : false,
+            login_required : false,
+            offline_required : false
+        }
+    },{
+        name : 'search',
+        path : '/search',
+        component : ViewSearch,
+        meta : {
+            keepAlive : false,
+            login_required : false,
+            offline_required : false
+        }
     },{
         path : '*',
         component : NotFound,
