@@ -1,16 +1,22 @@
 <template>
     <div class="y-html__controller">
-        <div v-html="clean_html"></div>
+        <div class="w-e-text" v-html="clean_html"></div>
     </div>
 </template>
 
 <script>
+
     let XSS = require('xss');
     let XSSFilterXSS = new XSS.FilterXSS({
         css : {
             whiteList : {
                 color : true,
-                'background-color': true
+                'background-color': true,
+                top : true,
+                left : true,
+                'text-decoration-line' : true,
+                'font-family' : true,
+                'font-size' : true,
             }
         },
         whiteList : {
@@ -34,7 +40,8 @@
             s : ['class'],
             u : ['class'],
             strong : ['class'],
-            pre : ['class','spellcheck']
+            pre : ['class','spellcheck'],
+            font : ['class']
         }
     });
 
@@ -54,8 +61,15 @@
     }
 </script>
 
-<style scoped>
+<style>
+    @import "~wangeditor/release/wangEditor.css";
+
     .y-html__controller{
         width: 100%;
     }
+
+    .y-html__controller .w-e-text{
+        overflow-y: hidden !important;
+    }
+
 </style>

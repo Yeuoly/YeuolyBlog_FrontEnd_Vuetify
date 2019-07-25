@@ -9,15 +9,20 @@
         name: 'editor',
         model : {
             event : 'change',
+            prop : 'hostValue'
+        },
+        props : {
+            hostValue : String
         },
         data () {
             return {
-                editorContent: ''
+                editorContent: '',
+                handler : null
             }
         },
-        methods: {
-            getContent: function () {
-                alert(this.editorContent);
+        methods : {
+            change(val){
+                this.handler.txt.html(val);
             }
         },
         mounted() {
@@ -27,6 +32,12 @@
                 this.$emit('change',html);
             };
             editor.create();
+            this.handler = editor;
+        },
+        watch : {
+            hostValue(newVal){
+                this.change(newVal);
+            }
         }
     }
 </script>
