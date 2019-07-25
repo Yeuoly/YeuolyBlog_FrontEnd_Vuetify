@@ -68,10 +68,11 @@
                             this.end = true;
                         }
                     }else{
-                        this.openDialog('发送了一些错误',_data['data']['error'],'','error');
+                        this.openDialog('发生了一些错误',_data['data']['error'],'','error');
+                        this.end = true;
                     }
                 }).catch( () => {
-                    this.openDialog('发送了一些错误','服务器大姨妈了','','error');
+                    this.openDialog('发生了一些错误','服务器大姨妈了','','error');
                 }).finally( () => {
                     this.firstLoaded = true;
                     setTimeout(() => {

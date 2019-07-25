@@ -168,7 +168,7 @@
                 rule2 : {
                     captcha : v => !!v.match(/^[0-9]*$/g) || '验证码可不长这样',
                     captcha_l : v => v.length === 6 || '长度不对哦~',
-                    account : v => !!v.match(/^[0-9a-zA-Z]*$/g) || '用户名怪怪的哦~',
+                    account : v => !!v.match(/^[0-9a-zA-Z\u4E00-\u9FA5\u0800-\u4E00]*$/g) || '用户名怪怪的哦~',
                     account_max : v => v.length <= 16 || '好。。好长。。',
                     account_min : v => v.length >= 6 || '好~短~喔~'
                 },
