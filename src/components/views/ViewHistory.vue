@@ -34,6 +34,13 @@
             return{
                 history :  [
                     {
+                        title   : '新功能',
+                        version : '2.0.2.00-α',
+                        content : '新增搜索、访问功能，新增用户权限系统',
+                        date    : '2019/7/25',
+                        color   : 'green'
+                    },
+                    {
                         title   : '修复bug，新功能',
                         version : '2.0.1.00-α',
                         content : '修复主页刷新错误、无法登出等bug，添加设置页面，优化代码结构',
@@ -52,7 +59,7 @@
                         version : '1.2.1.02-β',
                         content : '添加前端界面平滑切换动画，优化路由判断逻辑',
                         date    : '2019/4/20',
-                        color   : 'green'
+                        color   : 'blue'
                     },
                     {
                         title   : '修复bug，新功能，美化',

@@ -100,4 +100,8 @@
     top: calc((100% - 200px) / 2);
   }
 
+  .clickable{
+    cursor: pointer;
+  }
+
 </style>

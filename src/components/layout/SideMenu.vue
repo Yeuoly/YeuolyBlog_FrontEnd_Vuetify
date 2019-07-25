@@ -49,7 +49,7 @@
                        @click="router('search')"
             >
                 <VListTileAvatar>
-                    <YIcon class="menu-icon">MyHome</YIcon>
+                    <YIcon class="menu-icon">sousuo</YIcon>
                 </VListTileAvatar>
                 <VListTileContent>
                     <VListTileTitle>

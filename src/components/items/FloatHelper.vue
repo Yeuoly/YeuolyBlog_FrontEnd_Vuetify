@@ -121,13 +121,13 @@
                 });
             },
             btn_show_3(){
-                let list = ['index','editor','login','signin','history'];
+                let list = ['index','editor','login','signin','history','visit','search'];
                 return !list.some(item => {
                     return item === this.$route.name;
                 });
             },
             btn_show_4(){
-                let list = ['index','editor','login','signin','history'];
+                let list = ['index','editor','login','signin','history','visit','search'];
                 return !list.some(item => {
                     return item === this.$route.name;
                 });
