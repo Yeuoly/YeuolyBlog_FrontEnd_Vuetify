@@ -53,11 +53,15 @@
     }
 
     .w-e-text-container{
-        z-index: 100 !important;
+        z-index: 3 !important;
     }
 
     .w-e-menu{
-        z-index: 101 !important;
+        z-index: 4 !important;
+    }
+
+    .v-overlay{
+        z-index: 5;
     }
 
 </style>
