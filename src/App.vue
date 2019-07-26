@@ -25,15 +25,12 @@
 </template>
 
 <script>
-
   import LayoutHeader from "./components/layout/Header";
   import LayoutSideMenu from "./components/layout/SideMenu";
   import LayoutContainer from "./components/layout/Container";
   import LayoutFooter from "./components/layout/Footer";
   import FloatHelper from "./components/items/FloatHelper";
   import BrowserVersionTooLow from './components/views/ViewBrowserTooLow';
-
-
   export default {
     name: 'App',
     components: {
@@ -84,24 +81,19 @@
 </script>
 
 <style lang="scss">
-
   .position-relative{
     position: relative;
   }
-
   .position-absolute{
     position: absolute;
   }
-
   .app-items__loading{
     position: fixed;
     height: 100px;
     width: 100%;
     top: calc((100% - 200px) / 2);
   }
-
   .clickable{
     cursor: pointer;
   }
-
 </style>
