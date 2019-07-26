@@ -111,9 +111,9 @@
         computed : {
             placeholder(){
                 switch (this.search_type) {
-                    case 1:
+                    case 'user':
                         return 'uid、用户名';
-                    case 2:
+                    case 'post':
                         return 'pid、标题';
                     default:
                         return '任意';
@@ -135,7 +135,7 @@
             },
             avatar(){
                 return (uid) => {
-                    return `${process.env.VUE_APP_API_ROOT}/v1/account/avatar?uid=${uid}`;
+                    return `${process.env.VUE_APP_API_ROOT}/v1/account/avatar?size=75&uid=${uid}`;
                 }
             }
         }

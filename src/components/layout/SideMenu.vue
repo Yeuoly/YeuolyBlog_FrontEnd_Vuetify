@@ -6,7 +6,7 @@
         <VCard flat
                height="130"
                class="menu-header"
-               style="background-color: #68cbf8 !important;"
+               style="background-color: rgb(100,100,100) !important;"
         >
             <VAvatar size="74"
                      class="menu-avatar"

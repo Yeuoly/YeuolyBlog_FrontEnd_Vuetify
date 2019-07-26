@@ -12,7 +12,7 @@
         <VFlex xs12 sm9 md8 lg8>
             <VContainer class="mt-2 editor-items__title">
                 <VTextField v-model="title" placeholder="标题"></VTextField>
-                <RichEditor v-model="content"></RichEditor>
+                <RichEditor v-model="content" :locked="disabled_edit" @loaded="loaded"></RichEditor>
                 <VLayout wrap row>
                     <VFlex xs5 sm4 md3 lg2>
                         <VBtn text color="primary" block @click="save">保存</VBtn>
@@ -56,9 +56,13 @@
                 title : '',
                 content : '',
                 post_id : '',
+                disabled_edit : true
             }
         },
         methods : {
+            loaded(){
+                this.disabled_edit = true;
+            },
             save(){
                 let url = 'v1/post/private/';
                 if(!this.post_id){
@@ -90,12 +94,15 @@
                     this.post_id = query_pid;
                     this.$router.push({ query : { post_id : query_pid } });
                     this.get(query_pid);
+                }else{
+                    this.disabled_edit = false;
                 }
             },
             load(dist){
                 this.title = dist['title'];
                 this.content = dist['content'];
                 this.post_id = dist['post_id'];
+                this.disabled_edit = false;
             },
             get(post_id){
                 this.axios.post('/v1/post/private/get',this.$qs.stringify({

@@ -5,13 +5,13 @@ export default {
         },
         userAvatar(){
             return process.env.VUE_APP_API_ROOT +
-                '/v1/account/avatar?uid=' + this.$store.getters.getUid;
-        },
-        defaultAvatar(){
-            return this.$store.getters.getDefaultAvatar;
+                '/v1/account/avatar?size=75&uid=' + this.$store.getters.getUid;
         },
         userOnline(){
             return this.$store.getters.getOnlineState;
+        },
+        userUid(){
+            return this.$store.getters.getUid;
         }
     }
 }

@@ -75,7 +75,7 @@
                 });
             },
             avatarUrl(uid){
-                return process.env.VUE_APP_API_ROOT + '/v1/account/avatar?uid=' + uid;
+                return `${process.env.VUE_APP_API_ROOT}/v1/account/avatar?size=75&uid=${uid}`;
             },
             getRecent(){
                 if(this.end){

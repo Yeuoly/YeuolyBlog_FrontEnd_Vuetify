@@ -1,18 +1,21 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
     <VContainer>
         <VLayout row wrap>
-            <VFlex xs6 sm5 md4 lg3>
-                <VList style="margin-right: 5px;background-color: transparent;box-shadow: rgba(0,0,0,.12) 1px 0px 0px 0px;">
+            <VFlex xs12 sm4 md4 lg3>
+                <VList style="margin-right: 5px;background-color: transparent;box-shadow: rgba(0,0,0,.12) 0px 0px 1px;">
                     <VListGroup v-for="( t , key ) in items"
                                 :key="key"
                                 v-model="t.active"
                                 no-action
                     >
                         <template v-slot:activator>
-                            <div style="padding: 10px">
-                                <YIcon style="font-size: 30px;padding-right: 10px">
+                            <div style="padding: 10px;position: relative">
+                                <YIcon style="font-size: 30px;padding-right: 30px;top: 5px;position: inherit">
                                     {{t.icon}}
                                 </YIcon>
+                                <span>
+                                    {{t.title}}
+                                </span>
                             </div>
                         </template>
                         <VListTile v-for="i in t.children"
@@ -28,7 +31,7 @@
                     </VListGroup>
                 </VList>
             </VFlex>
-            <VFlex xs6 sm7 md8 lg9>
+            <VFlex xs12 sm7 md8 lg9>
                 <VCard flat>
                     <RouterView></RouterView>
                 </VCard>
