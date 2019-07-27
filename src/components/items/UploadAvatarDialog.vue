@@ -5,14 +5,12 @@
                 <VImg :src="img_path"></VImg>
             </VAvatar>
         </VCard>
-        <VTextField placeholder="选择头像"
-                    label="上传"
-                    @click="onclick"
-                    ref="text"
-                    @focus="unFocus"
-                    v-model="file_name"
-        ></VTextField>
-        <input type="file" ref="file_button" style="display: none" @change="selectFile">
+        <YFileInput label="上传"
+                    placeholder="选择头像"
+                    v-model="file"
+                    max-size="2"
+                    ref="upload_handler"
+        />
         <VCardActions>
             <VBtn :disabled="!img_path" color="primary" @click="upload">确定上传</VBtn>
             <VBtn :disabled="!img_path" color="white" @click="onclick">不行我再看看</VBtn>
@@ -23,9 +21,10 @@
 
 <script>
     import MaterialCard from "../material/Card";
+    import YFileInput from "../common/YFileInput";
     export default {
         name: 'UploadAvatarDialog',
-        components: {MaterialCard},
+        components: {YFileInput, MaterialCard},
         data () {
             return {
                 file_name : '',
@@ -34,21 +33,6 @@
             }
         },
         methods: {
-            selectFile(e){
-                try {
-                    let file = e.target.files[0];
-                    this.file_name = file.name;
-                    let file_size = file.size;
-                    if(file_size > 2 * 1024 * 1024){
-                        alert('文件过大(要求2M以下)');
-                        return;
-                    }
-                    this.img_path = window.URL.createObjectURL(file);
-                    this.file = file;
-                }catch(e){
-                    return 0;
-                }
-            },
             upload(){
                 let requestError = () => {
                     alert('服务器大姨妈了');
@@ -72,15 +56,14 @@
 
             },
             onclick(){
-                this.$refs.file_button.click();
-            },
-            unFocus(){
-                setTimeout(() => {
-                    this.$refs.text.blur();
-                },600);
+                this.$refs.upload_handler.$emit('select');
+            }
+        },
+        watch : {
+            file(newVal){
+                this.img_path = window.URL.createObjectURL(newVal);
             }
         }
-
     }
 </script>
 
