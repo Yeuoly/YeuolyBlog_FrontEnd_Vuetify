@@ -13,6 +13,7 @@
              @mousemove="move($event,1)"
              @mousedown="lineDown(1)"
              @mouseup="lineUp(1)"
+             @mouseleave="lineUp(1)"
         ></div>
         <div v-if="!!img_path"
              ref="line_t"
@@ -20,6 +21,7 @@
              @mousemove="move($event,2)"
              @mousedown="lineDown(2)"
              @mouseup="lineUp(2)"
+             @mouseleave="lineUp(2)"
         ></div>
         <div v-if="!!img_path"
              ref="line_b"
@@ -27,15 +29,16 @@
              @mousemove="move($event,3)"
              @mousedown="lineDown(3)"
              @mouseup="lineUp(3)"
+             @mouseleave="lineUp(3)"
         ></div>
         <div v-if="!!img_path"
              ref="overlay"
              class="v-overlay"
         ></div>
         <VResponsive>
-            <div ref="img_holder">
-                <img v-if="!!img_path" :src="img_path" alt="" style="width: 100%"/>
-            </div>
+            <VResponsive>
+                <VImg v-if="!!img_path" :src="img_path"/>
+            </VResponsive>
             <VCardActions>
                 <VLayout wrap row>
                     <VFlex xs12>
@@ -66,13 +69,23 @@
                 img_path : '',
                 img_w : Number,
                 img_h : Number,
-                img_h_eq_w : false,
-
                 img_file : null,
                 mouse_info : [ false , false , false , false],
                 block_info : {
                     width : 0,
                     height : 0
+                },
+                origin_info : {
+                    width : 0,
+                    height : 0,
+                },
+                anchor : {
+                    x : 0,
+                    y : 0
+                },
+                margin : {
+                    t : 0,
+                    l : 0
                 }
             }
         },
@@ -88,30 +101,41 @@
                 if(!this.mouse_info[controller])
                     return;
                 switch (controller) {
+                    case 0:
+                        this.setPosition(0,event.pageX - this.margin.l);
+                        break;
                     case 1:
-
+                        this.setPosition(1,event.pageX - this.margin.l);
                         break;
                     case 2:
+                        this.setPosition(2,event.pageY - this.margin.t);
                         break;
                     case 3:
+                        this.setPosition(3,event.pageY - this.margin.t);
                         break;
                     case 4:
-                        break
                 }
             },
-            setPosition(controller,p,l){
+            setPosition(controller,p){
+                let movement = 0;
                 switch (controller) {
                     case 0:
-                        this.$refs.line_l.style.left = p + 8 + 'px';
+                        movement = this.anchor.x;
+                        this.anchor.x = p + 8;
+                        movement = this.anchor.x - movement;
+                        this.block_info.width -= movement;
                         break;
                     case 1:
-                        this.$refs.line_r.style.left = p + 8 + 'px';
+                        this.block_info.width += this.anchor.x + this.block_info.width - p;
                         break;
                     case 2:
-                        this.$refs.line_t.style.top = p + 8 + 'px';
+                        movement = this.anchor.y;
+                        this.anchor.y = p + 8;
+                        movement = this.anchor.y - movement;
+                        this.block_info.height -= movement;
                         break;
                     case 3:
-                        this.$refs.line_b.style.top = p + 8 + 'px';
+                        this.block_info.height += this.anchor.y + this.block_info.height - p;
                         break;
                     case 4:
                         break;
@@ -121,7 +145,7 @@
         watch : {
             img(newVal){
                 this.img_path = window.URL.createObjectURL(newVal);
-                let img_controller = new Image();
+                const img_controller = new Image();
                 img_controller.src = this.img_path;
                 img_controller.onload = () => {
                     this.img_file = img_controller;
@@ -129,19 +153,46 @@
                     this.img_h = img_controller.height;
                     this.block_info.width = this.$refs.master.$el.offsetWidth - 16;
                     this.block_info.height = ( this.img_h / this.img_w ) * this.block_info.width;
-                    this.$refs.line_l.style.height = this.block_info.height + 'px';
-                    this.$refs.line_r.style.height = this.block_info.height + 'px';
-                    this.$refs.line_t.style.width = this.block_info.width + 'px';
-                    this.$refs.line_b.style.width = this.block_info.width + 'px';
-                    this.setPosition(0,0);
-                    this.setPosition(1,this.block_info.width);
-                    this.setPosition(2,0);
-                    this.setPosition(3,this.block_info.height);
-                    if(this.img_h > this.img_w){
-                        this.img_h_eq_w = true;
-                    }
+                    this.origin_info.width = this.block_info.width;
+                    this.origin_info.height = this.block_info.height;
+                    this.anchor.x = 8;
+                    this.anchor.y = 8;
+                }
+            },
+            'block_info.width' : {
+                handler(newVal){
+                    this.$refs.line_t.style.width = newVal + 'px';
+                    this.$refs.line_b.style.width = newVal + 'px';
+                    console.log(newVal);
+                }
+            },
+            'block_info.height' : {
+                handler(newVal){
+                    this.$refs.line_l.style.height = newVal + 'px';
+                    this.$refs.line_r.style.height = newVal + 'px';
+                }
+            },
+            'anchor.x' : {
+                handler(newVal){
+                    this.$refs.line_l.style.left = newVal + 'px';
+                    this.$refs.line_t.style.left = newVal + 'px';
+                    this.$refs.line_b.style.left = newVal + 'px';
+                    this.$refs.line_r.style.left = newVal + this.block_info.width + 'px';
+                }
+            },
+            'anchor.y' : {
+                handler(newVal) {
+                    this.$refs.line_t.style.top = newVal + 'px';
+                    this.$refs.line_l.style.top = newVal + 'px';
+                    this.$refs.line_r.style.top = newVal + 'px';
+                    this.$refs.line_b.style.top = newVal + this.block_info.height + 'px';
                 }
             }
+        },
+        mounted() {
+            const pos = this.$refs.master.$el.getBoundingClientRect();
+            this.margin.l = pos.x + 8;
+            this.margin.t = pos.y + 8;
         }
     }
 </script>
