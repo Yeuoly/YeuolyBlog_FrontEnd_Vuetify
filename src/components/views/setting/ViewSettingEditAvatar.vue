@@ -1,146 +1,90 @@
-<template>
-    <VCard ref="master" class="px-2 py-2" style="position: relative">
-        <div v-if="!!img_path"
-             ref="line_l"
-             class="controller-img controller-y"
-             @mousemove="move($event,0)"
-             @mousedown="lineDown(0)"
-             @mouseup="lineUp(0)"
-        ></div>
-        <div v-if="!!img_path"
-             ref="line_r"
-             class="controller-img controller-y"
-             @mousemove="move($event,1)"
-             @mousedown="lineDown(1)"
-             @mouseup="lineUp(1)"
-             @mouseleave="lineUp(1)"
-        ></div>
-        <div v-if="!!img_path"
-             ref="line_t"
-             class="controller-img controller-x"
-             @mousemove="move($event,2)"
-             @mousedown="lineDown(2)"
-             @mouseup="lineUp(2)"
-             @mouseleave="lineUp(2)"
-        ></div>
-        <div v-if="!!img_path"
-             ref="line_b"
-             class="controller-img controller-x"
-             @mousemove="move($event,3)"
-             @mousedown="lineDown(3)"
-             @mouseup="lineUp(3)"
-             @mouseleave="lineUp(3)"
-        ></div>
-        <div v-if="!!img_path"
-             ref="overlay"
-             class="v-overlay"
-        ></div>
+<template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
+    <VCard flat ref="master" class="px-2 py-2" style="position: relative">
         <VResponsive>
-            <VResponsive>
-                <VImg v-if="!!img_path" :src="img_path"/>
-            </VResponsive>
-            <VCardActions>
-                <VLayout wrap row>
-                    <VFlex xs12>
-                        <YFileInput label="选择头像"
-                                    placeholder="选择头像"
-                                    v-model="img"
-                                    max-size="5"
-                                    ref="input_handler"
-                        ></YFileInput>
-                    </VFlex>
-                    <VFlex xs12>
-                        <VBtn color="primary" :disabled="!img_path">保存</VBtn>
-                    </VFlex>
-                </VLayout>
-            </VCardActions>
+            <VueCropper ref="cropper"
+                        output-type="jpeg || png || webp"
+                        :can-move="true"
+                        :can-move-box="true"
+                        :img="img_path"
+                        :fixed="true"
+                        :fixed-number="[1,1]"
+                        :info="true"
+                        :output-size="quality / 100"
+            ></VueCropper>
         </VResponsive>
+        <YFileInput label="选择头像"
+                    placeholder="选择头像"
+                    v-model="img"
+                    max-size="5"
+                    ref="input_handler"
+        ></YFileInput>
+        <VSlider v-model="quality"
+                 label="质量"
+                 min="1"
+                 max="100"
+        >
+            <template v-slot:prepend>
+                <VBtn color="primary"
+                      :disabled="!img_path"
+                      @click.stop="over('blob')"
+                >
+                    保存到本地
+                </VBtn>
+            </template>
+            <template v-slot:append>
+                <v-text-field
+                        v-model="quality"
+                        class="mt-0 pt-0"
+                        hide-details
+                        single-line
+                        type="number"
+                        style="width: 60px"
+                ></v-text-field>
+            </template>
+        </VSlider>
+        <VCardText>
+            <li>因为是头像编辑，迫于一些不可抗因素，图片比例将保持在1:1</li>
+            <li>点击保存到本地将会下载剪切后的图片到本地</li>
+            <li>调整质量大小可以调整图片的质量与大小，由于最高支持2M上传，建议适当调小质量大小</li>
+        </VCardText>
     </VCard>
 </template>
 
 <script>
+    import { VueCropper } from 'vue-cropper';
     import YFileInput from "../../common/YFileInput";
+
     export default {
         name: "ViewSettingEditAvatar",
-        components: { YFileInput },
+        components : {YFileInput, VueCropper },
         data(){
             return{
                 img: null,
                 img_path : '',
-                img_w : Number,
-                img_h : Number,
-                img_file : null,
-                mouse_info : [ false , false , false , false],
+                img_name : '',
                 block_info : {
                     width : 0,
                     height : 0
                 },
-                origin_info : {
-                    width : 0,
-                    height : 0,
-                },
-                anchor : {
-                    x : 0,
-                    y : 0
-                },
-                margin : {
-                    t : 0,
-                    l : 0
-                }
+                quality : 100
             }
         },
         methods : {
-            lineDown(id){
-                this.mouse_info[id] = true;
+            start(){
+                this.$refs.cropper.startCrop();
             },
-            lineUp(id){
-                this.mouse_info[id] = false;
+            stopCrop(){
+                this.$refs.cropper.stopCrop();
             },
-            move(event,controller){
-                console.log(event);
-                if(!this.mouse_info[controller])
-                    return;
-                switch (controller) {
-                    case 0:
-                        this.setPosition(0,event.pageX - this.margin.l);
-                        break;
-                    case 1:
-                        this.setPosition(1,event.pageX - this.margin.l);
-                        break;
-                    case 2:
-                        this.setPosition(2,event.pageY - this.margin.t);
-                        break;
-                    case 3:
-                        this.setPosition(3,event.pageY - this.margin.t);
-                        break;
-                    case 4:
-                }
+            over() {
+                let aLink = document.createElement('a');
+                aLink.download = this.img_name;
+                this.$refs.cropper.getCropBlob( data => {
+                    this.downImg = window.URL.createObjectURL(data);
+                    aLink.href = window.URL.createObjectURL(data);
+                    aLink.click();
+                });
             },
-            setPosition(controller,p){
-                let movement = 0;
-                switch (controller) {
-                    case 0:
-                        movement = this.anchor.x;
-                        this.anchor.x = p + 8;
-                        movement = this.anchor.x - movement;
-                        this.block_info.width -= movement;
-                        break;
-                    case 1:
-                        this.block_info.width += this.anchor.x + this.block_info.width - p;
-                        break;
-                    case 2:
-                        movement = this.anchor.y;
-                        this.anchor.y = p + 8;
-                        movement = this.anchor.y - movement;
-                        this.block_info.height -= movement;
-                        break;
-                    case 3:
-                        this.block_info.height += this.anchor.y + this.block_info.height - p;
-                        break;
-                    case 4:
-                        break;
-                }
-            }
         },
         watch : {
             img(newVal){
@@ -153,63 +97,24 @@
                     this.img_h = img_controller.height;
                     this.block_info.width = this.$refs.master.$el.offsetWidth - 16;
                     this.block_info.height = ( this.img_h / this.img_w ) * this.block_info.width;
-                    this.origin_info.width = this.block_info.width;
-                    this.origin_info.height = this.block_info.height;
-                    this.anchor.x = 8;
-                    this.anchor.y = 8;
+                    this.img_name = this.img.name;
+                    this.start();
                 }
             },
             'block_info.width' : {
                 handler(newVal){
-                    this.$refs.line_t.style.width = newVal + 'px';
-                    this.$refs.line_b.style.width = newVal + 'px';
-                    console.log(newVal);
+                    this.$refs.cropper.$el.style.width = newVal + 'px';
                 }
             },
             'block_info.height' : {
                 handler(newVal){
-                    this.$refs.line_l.style.height = newVal + 'px';
-                    this.$refs.line_r.style.height = newVal + 'px';
-                }
-            },
-            'anchor.x' : {
-                handler(newVal){
-                    this.$refs.line_l.style.left = newVal + 'px';
-                    this.$refs.line_t.style.left = newVal + 'px';
-                    this.$refs.line_b.style.left = newVal + 'px';
-                    this.$refs.line_r.style.left = newVal + this.block_info.width + 'px';
-                }
-            },
-            'anchor.y' : {
-                handler(newVal) {
-                    this.$refs.line_t.style.top = newVal + 'px';
-                    this.$refs.line_l.style.top = newVal + 'px';
-                    this.$refs.line_r.style.top = newVal + 'px';
-                    this.$refs.line_b.style.top = newVal + this.block_info.height + 'px';
+                    this.$refs.cropper.$el.style.height = newVal + 'px';
                 }
             }
-        },
-        mounted() {
-            const pos = this.$refs.master.$el.getBoundingClientRect();
-            this.margin.l = pos.x + 8;
-            this.margin.t = pos.y + 8;
         }
     }
 </script>
 
 <style scoped>
-    .controller-img{
-        position: absolute;
-        z-index: 3;
-    }
 
-    .controller-y{
-        width: 3px;
-        background-color: #00acc1;
-    }
-
-    .controller-x{
-        height: 3px;
-        background-color: #00acc1;
-    }
 </style>

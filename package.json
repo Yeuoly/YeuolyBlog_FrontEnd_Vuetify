@@ -17,6 +17,8 @@
     "vue": "^2.6.10",
     "vue-axios": "^2.1.4",
     "vue-cookies": "^1.5.13",
+    "vue-core-image-upload": "^2.4.11",
+    "vue-cropper": "^0.4.9",
     "vue-echarts": "^4.0.3",
     "vue-mugen-scroll": "^0.2.6",
     "vue-router": "^3.0.7",

@@ -34,6 +34,13 @@
             return{
                 history :  [
                     {
+                        title   : '新功能',
+                        version : '2.0.4.00-α',
+                        content : '新增头像编辑功能',
+                        date    : '2019/7/29',
+                        color   : 'green'
+                    },
+                    {
                         title   : '新功能，修复bug',
                         version : '2.0.3.00-α',
                         content : '新增更改头像功能，修复编辑框的魔性bug，顺便把编辑框换成了wangEditor',
