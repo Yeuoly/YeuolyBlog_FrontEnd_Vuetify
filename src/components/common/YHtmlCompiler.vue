@@ -41,7 +41,12 @@
             u : ['class'],
             strong : ['class'],
             pre : ['class','spellcheck'],
-            font : ['class']
+            font : ['class'],
+            table : ['border','width','cellpadding','cellspacing'],
+            tbody : [],
+            tr : [],
+            th : [],
+            td : []
         }
     });
 
