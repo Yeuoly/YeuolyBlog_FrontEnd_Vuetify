@@ -113,7 +113,7 @@ export default {
         path : '/search',
         component : ViewSearch,
         meta : {
-            keepAlive : false,
+            keepAlive : true,
             login_required : false,
             offline_required : false
         }
