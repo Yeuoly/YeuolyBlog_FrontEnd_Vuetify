@@ -35,6 +35,13 @@
                 history :  [
                     {
                         title   : '新功能',
+                        version : '2.0.5.00-α',
+                        content : '新增标签',
+                        date    : '2019/8/30',
+                        color   : 'green'
+                    },
+                    {
+                        title   : '新功能',
                         version : '2.0.4.00-α',
                         content : '新增头像编辑功能',
                         date    : '2019/7/29',

@@ -70,7 +70,14 @@
                 return this.$utils.date('M-D',this.time);
             },
             tags_array(){
-                return this.tags.split(/[\r\n ]/);
+                let temp = this.tags.split(/[\r\n ]/);
+                let ary = [];
+                temp.forEach( item => {
+                    if (item !== ' '){
+                        ary.push(item);
+                    }
+                });
+                return ary;
             }
         },
         methods : {

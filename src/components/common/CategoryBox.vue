@@ -4,6 +4,7 @@
               :key="t"
               class="category-box__item"
               :class="display ? 'category-box__item-extend-display' : ''"
+              v-show="t !== ' '"
         >
             <button v-if="canOperate" class="category-box__item-delete" @click="deleteCategory(t)">×</button>
             {{t}}
