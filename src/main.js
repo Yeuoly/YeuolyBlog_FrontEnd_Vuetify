@@ -11,6 +11,12 @@ import App from './App.vue'
 import VueRouter from 'vue-router'
 Vue.use(VueRouter);
 
+//解决router的路径报错
+const originalPush = VueRouter.prototype.push;
+VueRouter.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+};
+
 //启用cookie
 import VueCookies from 'vue-cookies'
 Vue.use(VueCookies);
@@ -19,7 +25,7 @@ Vue.use(VueCookies);
 import store from './storage'
 
 //加载路由
-import routes from './router/main';
+import routes from './routes/routes';
 
 //加载工具类
 import utils from './lib/utils';

@@ -21,22 +21,29 @@
                               :text="t.content"
                               :post_id="t.post_id"
                               :time="t.time"
+                              :tags="t.tags"
                               class="mb-3"
                 />
             </VFlex>
         </VLayout>
+        <MugenScroll :handler="getRecent"
+                     :should-handle="!loading"
+                     scroll-container="noCharge"
+                     v-if="firstLoaded && !end"
+        ></MugenScroll>
     </div>
 </template>
 
 <script>
     import popdialog from "../../mixins/popdialog";
     import HomePostCard from "../items/HomePostCard";
+    import MugenScroll from 'vue-mugen-scroll';
 
     import { communicate } from "../../communicate";
 
     export default {
         name: "ViewHome",
-        components: { HomePostCard},
+        components: { HomePostCard,MugenScroll},
         mixins : [popdialog],
         methods : {
             deleteLocalCard(post_id){
@@ -82,6 +89,7 @@
                     this.openDialog('消息','这就是主人的全部啦！','','info');
                     return;
                 }
+                this.loading = true;
                 this.axios.post('v1/post/private/getrecent',this.$qs.stringify({
                     page : this.page + 1
                 })).then( response => {
@@ -96,6 +104,11 @@
                             }
                         }
                     }
+                }).finally( () => {
+                    this.firstLoaded = true;
+                    setTimeout(() => {
+                        this.loading = false;
+                    },500);
                 });
             },
             load(dist){
@@ -105,6 +118,7 @@
                 this.postCollections = [];
                 this.page = 0;
                 this.end = false;
+                this.firstLoaded = false;
                 this.getRecent();
             }
         },
@@ -112,7 +126,9 @@
             return{
                 postCollections : [],
                 page : 0,
-                end : false
+                firstLoaded : false,
+                end : false,
+                loading : false,
             }
         },
         mounted(){

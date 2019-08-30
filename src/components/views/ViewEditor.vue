@@ -21,7 +21,7 @@
             </VContainer>
         </VFlex>
         <VFlex xs12 sm3 md4 lg4>
-            <VContainer class="mt-5">
+            <VContainer class="pt-5">
                 <VCard>
                     <VCardTitle>
                         须知
@@ -32,8 +32,10 @@
                         <li>我们对会对攻击者的输入内容进行多次过滤转译以确保网站的安全性，但仍存在有漏洞的可能。</li>
                         <li>您的输入内容将会被按加密等级进行加密，默认加密等级为0，您可以向站长申请更高的加密等级。</li>
                         <li>由于服务器比较烂，图片还是采用外链吧QAQ，暂时不支持上传图片哒，以后有更好的服务器了可能可以叭（</li>
+                        <li>在标签输入框按空格可以添加标签</li>
                     </VCardText>
                 </VCard>
+                <TagsBox class="mt-2" v-model="tags" />
             </VContainer>
         </VFlex>
     </VLayout>
@@ -46,17 +48,19 @@
     import PopDialog from "../common/PopDialog";
 
     import popdialog from '../../mixins/popdialog';
+    import TagsBox from "../items/TagsBox";
 
     export default {
         name: "ViewEditor",
-        components: {PopDialog, RichEditor },
+        components: {TagsBox, PopDialog, RichEditor },
         mixins: [base , popdialog],
         data(){
             return{
                 title : '',
                 content : '',
                 post_id : '',
-                disabled_edit : true
+                disabled_edit : true,
+                tags : []
             }
         },
         methods : {
@@ -73,7 +77,8 @@
                 this.axios.post(url,this.$qs.stringify({
                     post_data : this.content,
                     post_title : this.title,
-                    post_id : this.post_id
+                    post_id : this.post_id,
+                    post_tags : `[${this.tags.join(' ')}]`
                 })).then( response => {
                     let _data = response.data;
                     if(_data['data']['res'] === 666){
@@ -102,6 +107,7 @@
                 this.title = dist['title'];
                 this.content = dist['content'];
                 this.post_id = dist['post_id'];
+                this.tags = dist['tags'].split(/[\r\n ]/);
                 this.disabled_edit = false;
             },
             get(post_id){

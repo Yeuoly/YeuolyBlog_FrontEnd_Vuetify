@@ -36,6 +36,9 @@
             <VFlex xs12>
                 <YHtmlCompiler class="px-3" :html="text" />
             </VFlex>
+            <VFlex xs12>
+                <CategoryBox v-model="tags_array" />
+            </VFlex>
         </VLayout>
     </VCard>
 </template>
@@ -44,10 +47,12 @@
     import { communicate } from "../../communicate";
     import YIcon from "../common/YIcon";
     import YHtmlCompiler from "../common/YHtmlCompiler";
+    import CategoryBox from "../common/CategoryBox";
 
     export default {
         name: "PostCard",
         components : {
+            CategoryBox,
             YHtmlCompiler,
             YIcon
         },
@@ -57,11 +62,15 @@
             avatar : String,
             user : String,
             text : String,
-            time : Number
+            time : Number,
+            tags : String
         },
         computed : {
             date(){
                 return this.$utils.date('M-D',this.time);
+            },
+            tags_array(){
+                return this.tags.split(/[\r\n ]/);
             }
         },
         methods : {

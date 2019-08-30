@@ -21,7 +21,12 @@ const setting_routes = [{
         meta : {
             login_required : true,
             offline_required : false,
-            keepAlive : false
+            keepAlive : false,
+            btns : {
+                help : true,
+                new_post : true,
+                refresh : false
+            }
         }
 },{
         name : 'st-avt-et',
@@ -30,7 +35,12 @@ const setting_routes = [{
         meta : {
             login_required : true,
             offline_required : false,
-            keepAlive : false
+            keepAlive : false,
+            btns : {
+                help : true,
+                new_post : true,
+                refresh : false
+            }
         }
 },];
 
@@ -42,7 +52,12 @@ export default {
         component : ViewIndex,
         meta : {
             keepAlive : true,
-            login_required : false
+            login_required : false,
+            btns : {
+                help : false,
+                new_post : false,
+                refresh : false
+            }
         }
     },{
         name : 'login',
@@ -51,7 +66,12 @@ export default {
         meta : {
             keepAlive : true,
             login_required : false,
-            offline_required : true
+            offline_required : true,
+            btns : {
+                help : true,
+                new_post : false,
+                refresh : false
+            }
         }
     },{
         name : 'signin',
@@ -60,7 +80,12 @@ export default {
         meta : {
             keepAlive : true,
             login_required : false,
-            offline_required : false
+            offline_required : false,
+            btns : {
+                help : true,
+                new_post : false,
+                refresh : false
+            }
         }
     },{
         name : 'home',
@@ -69,7 +94,12 @@ export default {
         meta : {
             keepAlive : true,
             login_required : true,
-            offline_required : false
+            offline_required : false,
+            btns : {
+                help : true,
+                new_post : true,
+                refresh : true
+            }
         }
     },{
         name : 'editor',
@@ -78,7 +108,12 @@ export default {
         meta : {
             keepAlive : false,
             login_required : true,
-            offline_required : false
+            offline_required : false,
+            btns : {
+                help : true,
+                new_post : false,
+                refresh : false
+            }
         }
     },{
         name : 'history',
@@ -87,7 +122,12 @@ export default {
         meta : {
             keepAlive : false,
             login_required : false,
-            offline_required : false
+            offline_required : false,
+            btns : {
+                help : true,
+                new_post : true,
+                refresh : false
+            }
         }
     },{
         name : 'setting',
@@ -96,7 +136,12 @@ export default {
         meta : {
             keepAlive : false,
             login_required : true,
-            offline_required : false
+            offline_required : false,
+            btns : {
+                help : true,
+                new_post : true,
+                refresh : false
+            }
         },
         children : setting_routes
     },{
@@ -106,7 +151,12 @@ export default {
         meta : {
             keepAlive : false,
             login_required : false,
-            offline_required : false
+            offline_required : false,
+            btns : {
+                help : true,
+                new_post : true,
+                refresh : false
+            }
         }
     },{
         name : 'search',
@@ -115,7 +165,12 @@ export default {
         meta : {
             keepAlive : true,
             login_required : false,
-            offline_required : false
+            offline_required : false,
+            btns : {
+                help : true,
+                new_post : false,
+                refresh : false
+            }
         }
     },{
         path : '*',
@@ -123,7 +178,12 @@ export default {
         meta : {
             keepAlive : false,
             login_required : false,
-            offline_required : false
+            offline_required : false,
+            btns : {
+                help : true,
+                new_post : false,
+                refresh : false
+            }
         }
     }],
 };

@@ -3,7 +3,7 @@
         <div class="helper-btn-group">
             <VLayout column wrap>
                 <VFlex xs12>
-                    <VTooltip v-if="btn_show_1" left>
+                    <VTooltip v-if="$route.meta.btns.help" left>
                         <template v-slot:activator="{ on }">
                             <VBtn @click="show_helper = !show_helper"
                                   v-on="on"
@@ -20,7 +20,7 @@
                     </VTooltip>
                 </VFlex>
                 <VFlex xs12>
-                    <VTooltip v-if="btn_show_2" left>
+                    <VTooltip v-if="$route.meta.btns.new_post" left>
                         <template v-slot:activator="{ on }">
                             <VBtn @click="toEditor"
                                   v-on="on"
@@ -37,7 +37,7 @@
                     </VTooltip>
                 </VFlex>
                 <VFlex xs12>
-                    <VTooltip v-if="btn_show_3" left>
+                    <VTooltip v-if="$route.meta.btns.refresh" left>
                         <template v-slot:activator="{ on }">
                             <VBtn @click="refresh"
                                   v-on="on"
@@ -54,23 +54,6 @@
                     </VTooltip>
                 </VFlex>
 
-                <VFlex xs12>
-                    <VTooltip v-if="btn_show_3" left>
-                        <template v-slot:activator="{ on }">
-                            <VBtn @click="loadMore"
-                                  v-on="on"
-                                  fab
-                                  dark
-                                  color="blue"
-                            >
-                                <YIcon style="font-size: 30px;">
-                                    dianji
-                                </YIcon>
-                            </VBtn>
-                        </template>
-                        <span>我要更多！</span>
-                    </VTooltip>
-                </VFlex>
             </VLayout>
         </div>
         <YDialog v-model="show_helper" width="500">
@@ -108,30 +91,7 @@
             }
         },
         computed : {
-            btn_show_1(){
-                let list = ['login','signin','index'];
-                return !list.some(item => {
-                    return item === this.$route.name;
-                });
-            },
-            btn_show_2(){
-                let list = ['login','signin','index','editor','history'];
-                return !list.some(item => {
-                    return item === this.$route.name;
-                });
-            },
-            btn_show_3(){
-                let list = ['index','editor','login','signin','history','visit','search'];
-                return !list.some(item => {
-                    return item === this.$route.name;
-                });
-            },
-            btn_show_4(){
-                let list = ['index','editor','login','signin','history','visit','search'];
-                return !list.some(item => {
-                    return item === this.$route.name;
-                });
-            },
+
         },
         methods : {
             toEditor(){
@@ -140,9 +100,6 @@
             refresh() {
                 communicate.$emit('refreshHome');
             },
-            loadMore(){
-                communicate.$emit('loadMoreHome');
-            }
         }
     }
 </script>
