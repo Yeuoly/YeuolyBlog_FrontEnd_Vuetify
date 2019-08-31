@@ -1,4 +1,4 @@
-<template>
+<template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
     <div>
         <PopDialog v-model="dialog_show"
                    :pop-type="dialog_type"
@@ -6,6 +6,24 @@
                    :text="dialog_text"
                    :subtext="dialog_subtext"
         />
+        <VContainer v-if="$vuetify.breakpoint.smAndDown" class="pb-0 px-0">
+            <VCard>
+                <VList>
+                    <VListGroup v-model="openSelection">
+                        <VCard class="px-3 py-3">
+                            <PostCardFilter :tags="tags" v-model="postFilter" />
+                        </VCard>
+                        <template v-slot:activator>
+                            <VListTileTitle>
+                                <YIcon class="px-2">shaixuan</YIcon>
+                                筛选
+                            </VListTileTitle>
+                        </template>
+                    </VListGroup>
+                </VList>
+            </VCard>
+
+        </VContainer>
         <VLayout class="mt-4"
                  :class=" $vuetify.breakpoint.mdAndUp ? 'mx-5' : 'mx-0' "
                  :style="'min-height:' + ( $vuetify.breakpoint.height - 75 ) +'px'"
@@ -14,6 +32,7 @@
         >
             <VFlex sm12 xs12 md8 lg8>
                 <HomePostCard v-for="(t , key) in postCollections"
+                              v-show="selected(t.tags) && dateAllowed(t.time)"
                               :key="key"
                               :title="t.title"
                               :avatar="avatarUrl(t.poster_uid)"
@@ -24,6 +43,15 @@
                               :tags="t.tags"
                               class="mb-3"
                 />
+            </VFlex>
+            <VFlex md4 lg4 sm12 xs12 v-if="$vuetify.breakpoint.mdAndUp">
+                <VContainer>
+                    <VCard class="px-3 py-3">
+                        <div v-if="$vuetify.breakpoint.mdAndUp">
+                            <PostCardFilter :tags="tags" v-model="postFilter" />
+                        </div>
+                    </VCard>
+                </VContainer>
             </VFlex>
         </VLayout>
         <MugenScroll :handler="getRecent"
@@ -40,11 +68,38 @@
     import MugenScroll from 'vue-mugen-scroll';
 
     import { communicate } from "../../communicate";
+    import { filter } from "../common/PostCardFilter";
+    import YIcon from "../common/YIcon";
+    import PostCardFilter from "../common/PostCardFilter";
+
+    export const homePageBaseLoader = {
+        data(){
+            return {
+                tags : [],
+                postCollections : [],
+                page : 0,
+                firstLoaded : false,
+                end : false,
+                loading : false,
+                openSelection : false,
+            }
+        },
+        methods : {
+            load(dist){
+                dist.forEach( item => {
+                    let tags = this.$utils.array_drop(item['tags'].split(/[\r\n ]/),'');
+                    item['tags'] = tags;
+                    this.$utils.array_merge(this.tags,tags);
+                });
+                this.postCollections = [...this.postCollections,...dist];
+            },
+        }
+    };
 
     export default {
         name: "ViewHome",
-        components: { HomePostCard,MugenScroll},
-        mixins : [popdialog],
+        components: {PostCardFilter, YIcon, HomePostCard,MugenScroll},
+        mixins : [popdialog,filter,homePageBaseLoader],
         methods : {
             deleteLocalCard(post_id){
                 this.axios.post('v1/post/private/delete',this.$qs.stringify({
@@ -111,9 +166,6 @@
                     },500);
                 });
             },
-            load(dist){
-                this.postCollections = [...this.postCollections,...dist];
-            },
             refresh(){
                 this.postCollections = [];
                 this.page = 0;
@@ -122,25 +174,14 @@
                 this.getRecent();
             }
         },
-        data(){
-            return{
-                postCollections : [],
-                page : 0,
-                firstLoaded : false,
-                end : false,
-                loading : false,
-            }
-        },
         mounted(){
             communicate.$on('HomeDelete',this.deleteLocalCard);
             communicate.$on('refreshHome',this.refresh);
-            communicate.$on('loadMoreHome',this.getRecent);
             this.getRecent();
         },
         destroyed(){
             communicate.$off('HomeDelete',this.deleteLocalCard);
             communicate.$off('refreshHome',this.refresh);
-            communicate.$off('loadMoreHome',this.getRecent);
         }
     }
 </script>

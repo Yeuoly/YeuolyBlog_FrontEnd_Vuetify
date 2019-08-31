@@ -107,7 +107,7 @@
                 this.title = dist['title'];
                 this.content = dist['content'];
                 this.post_id = dist['post_id'];
-                this.tags = dist['tags'].split(/[\r\n ]/);
+                this.tags = this.$utils.array_drop(dist['tags'].split(/[\r\n ]/),'');
                 this.disabled_edit = false;
             },
             get(post_id){

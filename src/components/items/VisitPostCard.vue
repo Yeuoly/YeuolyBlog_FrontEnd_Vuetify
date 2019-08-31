@@ -22,23 +22,28 @@
             <VFlex xs12>
                 <YHtmlCompiler class="px-3" :html="text"></YHtmlCompiler>
             </VFlex>
+            <VFlex xs12>
+                <CategoryBox v-model="tags" />
+            </VFlex>
         </VLayout>
     </VCard>
 </template>
 
 <script>
     import YHtmlCompiler from "../common/YHtmlCompiler";
+    import CategoryBox from "../common/CategoryBox";
 
     export default {
         name: "VisitPostCard",
-        components: {YHtmlCompiler},
+        components: {CategoryBox, YHtmlCompiler},
         props : {
             post_id: String,
             title : String,
             avatar : String,
             user : String,
             text : String,
-            time : Number
+            time : Number,
+            tags : Array
         },
         computed : {
             date(){

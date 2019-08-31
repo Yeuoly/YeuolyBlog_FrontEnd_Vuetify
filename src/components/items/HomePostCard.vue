@@ -37,7 +37,7 @@
                 <YHtmlCompiler class="px-3" :html="text" />
             </VFlex>
             <VFlex xs12>
-                <CategoryBox v-model="tags_array" />
+                <CategoryBox v-model="tags" />
             </VFlex>
         </VLayout>
     </VCard>
@@ -63,22 +63,12 @@
             user : String,
             text : String,
             time : Number,
-            tags : String
+            tags : Array
         },
         computed : {
             date(){
                 return this.$utils.date('M-D',this.time);
             },
-            tags_array(){
-                let temp = this.tags.split(/[\r\n ]/);
-                let ary = [];
-                temp.forEach( item => {
-                    if (item !== ' '){
-                        ary.push(item);
-                    }
-                });
-                return ary;
-            }
         },
         methods : {
             deletePost () {

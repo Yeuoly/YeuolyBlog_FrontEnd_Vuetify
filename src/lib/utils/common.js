@@ -21,4 +21,29 @@ export default {
         }
         return res;
     },
+    array_push(dist,item){
+        if(dist.indexOf(item)){
+            dist.push(item);
+        }
+    },
+    array_merge(dist1,dist2){
+        dist2.forEach( item => {
+            this.array_push(dist1,item);
+        });
+        return dist1;
+    },
+    array_drop(dist,item){
+        let ary = [];
+        dist.forEach( _item => {
+            if(_item !== item){
+                ary.push(_item);
+            }
+        });
+        return ary;
+    },
+    array_intersection(dist1,dist2){
+        return dist1.filter( v => {
+            return dist2.indexOf(v) !== -1
+        });
+    }
 }
