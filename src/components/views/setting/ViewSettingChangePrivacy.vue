@@ -2,8 +2,7 @@
     <VCard flat>
         <VLayout class="px-2" colnum wrap>
             <VFlex xs12 v-for="( t , index ) in tips" :key="index">
-                <VSwitch :disabled="locked" v-model="settings[index]" :label="t.title"></VSwitch>
-                <span class="caption grey"> {{t.detail}}</span>
+                <VSwitch :disabled="locked" v-model="settings[index]" :label="t.title + '：' + t.detail"></VSwitch>
             </VFlex>
             <VFlex>
                 <VBtn color="primary" @click="upload">保存设置</VBtn>

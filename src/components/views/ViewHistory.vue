@@ -35,6 +35,13 @@
                 history :  [
                     {
                         title   : '新功能',
+                        version : '2.0.7.00-α',
+                        content : '新增隐私功能，可以在设置内更改',
+                        date    : '2019/9/7',
+                        color   : 'green'
+                    },
+                    {
+                        title   : '新功能',
                         version : '2.0.6.00-α',
                         content : '新增博客筛选功能，可以根据标签和日期筛选博客',
                         date    : '2019/8/31',

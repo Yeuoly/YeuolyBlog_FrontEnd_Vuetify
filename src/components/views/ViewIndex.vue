@@ -1,54 +1,68 @@
 <template>
-    <VCarousel hide-controls :height="carouselHeight" :cycle="false">
-        <VCarouselItem v-for="t in items"
-                       :key="t.src"
-                       :src="t.src"
-                       class="position-relative"
-        >
-            <div class="index-items__box">
-                <VCard class="mx-5 index-items__card">
-                    <VLayout row wrap>
-                        <p class="index-items__spacer"></p>
-                        <VFlex xs12 class="index-items__title">
-                            <VFlex xs12>
-                                <h2>
-                                    {{t.detail.title}}
-                                </h2>
+    <div>
+        <VCarousel hide-controls :height="carouselHeight" :cycle="false">
+            <VCarouselItem v-for="t in items"
+                           :key="t.src"
+                           :src="t.src"
+                           class="position-relative"
+            >
+                <div class="index-items__box">
+                    <VCard class="mx-5 index-items__card">
+                        <VLayout row wrap>
+                            <p class="index-items__spacer"></p>
+                            <VFlex xs12 class="index-items__title">
+                                <VFlex xs12>
+                                    <h2>
+                                        {{t.detail.title}}
+                                    </h2>
+                                </VFlex>
+                                <VFlex xs12>
+                                    <h3>
+                                        {{t.detail.subtext}}
+                                    </h3>
+                                </VFlex>
                             </VFlex>
-                            <VFlex xs12>
-                                <h3>
-                                    {{t.detail.subtext}}
-                                </h3>
+                            <VFlex v-for="( btn , key ) in t.detail.buttons"
+                                   :key="key"
+                                   xs12
+                                   sm4
+                                   md3
+                                   lg2
+                            >
+                                <div class="mr-3 mb-1 index-items__btn">
+                                    <VBtn block
+                                          flat
+                                          @click="btn.event"
+                                          class="index-items__btn"
+                                          :color="btn.color ? btn.color : ''"
+                                    >
+                                        {{btn.text}}
+                                    </VBtn>
+                                </div>
                             </VFlex>
-                        </VFlex>
-                        <VFlex v-for="( btn , key ) in t.detail.buttons"
-                               :key="key"
-                               xs12
-                               sm4
-                               md3
-                               lg2
-                        >
-                            <div class="mr-3 mb-1 index-items__btn">
-                                <VBtn block
-                                      flat
-                                      @click="btn.event"
-                                      class="index-items__btn"
-                                      :color="btn.color ? btn.color : ''"
-                                >
-                                    {{btn.text}}
-                                </VBtn>
-                            </div>
-                        </VFlex>
-                    </VLayout>
-                </VCard>
-            </div>
-        </VCarouselItem>
-    </VCarousel>
+                        </VLayout>
+                    </VCard>
+                </div>
+            </VCarouselItem>
+        </VCarousel>
+        <VContainer>
+            <MaterialCard title="最新动态">
+                更新：
+                <li>2019/9/7 更新了隐私功能</li>
+                <li>有了隐私功能之后，大家就可以设置自己的空间是否可以被访问啦~</li>
+                说起来站长自己的账号一直都有隐私功能的说，这个人好坏哦x
+                <li>然后呢，这差不多就是最后一次更新啦~除非出现了致命的漏洞，否则就不会再有新的更新啦</li>
+                <li>最后一件事，有关YeuolyBlog的消息将会更新在<a href="/visit?uid=8">YeuolyBlog</a>这个账号里，有兴趣的同学可以康一康~</li>
+            </MaterialCard>
+        </VContainer>
+    </div>
 </template>
 
 <script>
+    import MaterialCard from "../material/Card";
     export default {
         name: "ViewIndex",
+        components: {MaterialCard},
         computed : {
             carouselHeight(){
                 let height = 0;
