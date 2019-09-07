@@ -45,5 +45,5 @@ export default {
         return dist1.filter( v => {
             return dist2.indexOf(v) !== -1
         });
-    }
+    },
 }

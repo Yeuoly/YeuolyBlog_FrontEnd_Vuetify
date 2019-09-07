@@ -1,11 +1,5 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
     <div>
-        <PopDialog v-model="dialog_show"
-                   :pop-type="dialog_type"
-                   :title="dialog_title"
-                   :text="dialog_text"
-                   :subtext="dialog_subtext"
-        />
         <VContainer v-if="$vuetify.breakpoint.smAndDown" class="pb-0 px-0">
             <VCard>
                 <VList>
@@ -71,11 +65,10 @@
      *
      * */
 
-    import PopDialog from "../common/PopDialog";
-    import popdialog from "../../mixins/popdialog";
     import VisitPostCard from "../items/VisitPostCard";
     import MugenScroll from "vue-mugen-scroll";
 
+    import { communicate } from "../../communicate";
     import { homePageBaseLoader } from "./ViewHome";
     import { filter } from "../common/PostCardFilter";
     import PostCardFilter from "../common/PostCardFilter";
@@ -83,8 +76,8 @@
 
     export default {
         name: "ViewVisit",
-        components: {YIcon, PostCardFilter, VisitPostCard, PopDialog, MugenScroll},
-        mixins : [popdialog,homePageBaseLoader,filter],
+        components: {YIcon, PostCardFilter, VisitPostCard, MugenScroll},
+        mixins : [homePageBaseLoader,filter],
         data(){
             return{
                 uid : Number,
@@ -105,11 +98,11 @@
                             this.end = true;
                         }
                     }else{
-                        this.openDialog('发生了一些错误',_data['data']['error'],'','error');
+                        communicate.$emit('messageBox','发生了一些错误',_data['data']['error'],'','error');
                         this.end = true;
                     }
                 }).catch( () => {
-                    this.openDialog('发生了一些错误','服务器大姨妈了','','error');
+                    communicate.$emit('messageBox','发生了一些错误','服务器大姨妈了','','error');
                 }).finally( () => {
                     this.firstLoaded = true;
                     setTimeout(() => {
@@ -125,7 +118,7 @@
                 if(this.uid !== undefined){
                     this.get(this.page);
                 }else{
-                    this.openDialog('缺少请求参数','咱也不知道主人要访问谁的空间惹x','','error');
+                    communicate.$emit('messageBox','缺少请求参数','咱也不知道主人要访问谁的空间惹x','','error');
                 }
             }
         },

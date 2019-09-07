@@ -34,26 +34,21 @@
         },
         methods: {
             upload(){
-                let requestError = () => {
-                    alert('服务器大姨妈了');
-                };
-                this.axios.post('v2/53001474031784309d75cf8438fee8a2').then( response => {
-                    let csrf_token = response.data['data']['data']['jct'];
-                    let from_data = new FormData();
-                    from_data.append('img',this.file,'img');
-                    from_data.append('jct',csrf_token);
-                    this.axios.post('v1/account/change/avatar',from_data).then( response => {
+                let from_data = new FormData();
+                from_data.append('img',this.file,'img');
+                this.$utils.csrf_post(
+                    'v1/account/change/avatar',
+                    from_data,
+                    response => {
                         let _data = response.data;
-                        if(_data['data']['res'] === 666){
+                        if (_data['data']['res'] === 666) {
                             location.href = '/setting/avatar-change';
                         }
-                    }).catch(() => {
-                        requestError();
-                    });
-                }).catch(() => {
-                    requestError();
-                });
-
+                    },
+                    () => {
+                        alert('服务器大姨妈了');
+                    }
+                );
             },
             onclick(){
                 this.$refs.upload_handler.$emit('select');

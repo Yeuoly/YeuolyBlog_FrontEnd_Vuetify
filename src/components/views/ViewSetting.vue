@@ -10,7 +10,7 @@
                     >
                         <template v-slot:activator>
                             <div style="padding: 10px;position: relative">
-                                <YIcon style="font-size: 30px;padding-right: 30px;top: 5px;position: inherit">
+                                <YIcon style="font-size: 20px;padding-right: 20px;position: inherit">
                                     {{t.icon}}
                                 </YIcon>
                                 <span>
@@ -58,7 +58,15 @@
                         title : '编辑头像',
                         route : 'st-avt-et'
                     },]
-                }]
+                },{
+                    icon : 'fuwutiaokuanjiyinsi',
+                    title : '隐私',
+                    active : false,
+                    children : [{
+                        title: '隐私选项',
+                        route: 'st-pri-cg'
+                    }]
+                },]
             }
         },
         methods : {

@@ -13,6 +13,7 @@ const NotFound = () => import('../components/views/View404.vue');
 
 const ChangeAvatar = () => import('../components/views/setting/ViewSettingChangeAvatar.vue');
 const EditAvatar = () => import('../components/views/setting/ViewSettingEditAvatar.vue');
+const ChangePrivacy = () => import('../components/views/setting/ViewSettingChangePrivacy.vue');
 
 const setting_routes = [{
         name : 'st-avt-cg',
@@ -32,6 +33,20 @@ const setting_routes = [{
         name : 'st-avt-et',
         path : '/setting/avatar-edit',
         component : EditAvatar,
+        meta : {
+            login_required : true,
+            offline_required : false,
+            keepAlive : false,
+            btns : {
+                help : true,
+                new_post : true,
+                refresh : false
+            }
+        }
+},{
+        name : 'st-pri-cg',
+        path : '/setting/privacy-change',
+        component : ChangePrivacy,
         meta : {
             login_required : true,
             offline_required : false,
