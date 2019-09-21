@@ -6,10 +6,12 @@
         <VCard flat
                height="130"
                class="menu-header"
-               style="background-color: rgb(100,100,100) !important;"
+               style="background-color: rgb(100,100,100) !important;border-radius: 0"
         >
-            <VAvatar size="74"
+            <VAvatar @click="router('home')"
+                     size="74"
                      class="menu-avatar"
+                     style="cursor: pointer"
             >
                 <VImg :src="userAvatar"></VImg>
             </VAvatar>
@@ -18,106 +20,63 @@
             </VCardText>
         </VCard>
         <VList dense>
-            <VListTile class="nav-list"
-                       @click="router('index')"
-            >
-                <VListTileAvatar>
-                    <YIcon class="menu-icon">zhuye</YIcon>
-                </VListTileAvatar>
-                <VListTileContent>
-                    <VListTileTitle>
-                        网站主页
-                    </VListTileTitle>
-                </VListTileContent>
-            </VListTile>
-
-
-            <VListTile class="nav-list"
-                       @click="router('home')"
-            >
-                <VListTileAvatar>
-                    <YIcon class="menu-icon">MyHome</YIcon>
-                </VListTileAvatar>
-                <VListTileContent>
-                    <VListTileTitle>
-                        我的主页
-                    </VListTileTitle>
-                </VListTileContent>
-            </VListTile>
-
-            <VListTile class="nav-list"
-                       @click="router('search')"
-            >
-                <VListTileAvatar>
-                    <YIcon class="menu-icon">sousuo</YIcon>
-                </VListTileAvatar>
-                <VListTileContent>
-                    <VListTileTitle>
-                        搜索
-                    </VListTileTitle>
-                </VListTileContent>
-            </VListTile>
-
-            <VDivider />
-
             <div v-if="userOnline">
                 <VListTile class="nav-list"
-                           @click="router('editor')"
+                           v-for="( t , key ) in navs.online"
+                           :key="key"
+                           @click="router(t.route)"
                 >
                     <VListTileAvatar>
-                        <YIcon class="menu-icon">fawenzi</YIcon>
+                        <YIcon class="menu-icon">{{t.icon}}</YIcon>
                     </VListTileAvatar>
                     <VListTileContent>
                         <VListTileTitle>
-                            编辑
+                            {{t.name}}
                         </VListTileTitle>
                     </VListTileContent>
                 </VListTile>
                 <VDivider />
             </div>
 
-            <VListTile class="nav-list"
-                       @click="router('history')"
-            >
-                <VListTileAvatar>
-                    <YIcon class="menu-icon">iconset0142</YIcon>
-                </VListTileAvatar>
-                <VListTileContent>
-                    <VListTileTitle>
-                        开发日志
-                    </VListTileTitle>
-                </VListTileContent>
-            </VListTile>
-            <VDivider />
-
-            <VListTile class="nav-list"
-                       @click="router('login')"
-                       v-if="!userOnline"
-            >
-                <VListTileAvatar>
-                    <YIcon class="menu-icon">denglu</YIcon>
-                </VListTileAvatar>
-                <VListTileContent>
-                    <VListTileTitle>
-                        登录
-                    </VListTileTitle>
-                </VListTileContent>
-            </VListTile>
-
             <div v-else>
                 <VListTile class="nav-list"
-                           @click="router('setting')"
+                           v-for="( t , key ) in navs.offline"
+                           :key="key"
+                           @click="router(t.route)"
                 >
                     <VListTileAvatar>
-                        <YIcon class="menu-icon">shezhi</YIcon>
+                        <YIcon class="menu-icon">{{t.icon}}</YIcon>
                     </VListTileAvatar>
                     <VListTileContent>
                         <VListTileTitle>
-                            设置
+                            {{t.name}}
                         </VListTileTitle>
                     </VListTileContent>
                 </VListTile>
 
+                <VDivider />
+            </div>
+
+            <div>
+                <VListTile class="nav-list"
+                           v-for="( t , key ) in navs.ordinary"
+                           :key="key"
+                           @click="router(t.route)"
+                >
+                    <VListTileAvatar>
+                        <YIcon class="menu-icon">{{t.icon}}</YIcon>
+                    </VListTileAvatar>
+                    <VListTileContent>
+                        <VListTileTitle>
+                            {{t.name}}
+                        </VListTileTitle>
+                    </VListTileContent>
+                </VListTile>
+
+                <VDivider />
+            </div>
+
+            <div v-if="userOnline">
                 <VListTile class="nav-list"
                            @click="logout"
                 >
@@ -148,6 +107,39 @@
         data(){
             return {
                 open: false,
+                navs: {
+                    online: [{
+                        name: '我的主页',
+                        route: 'home',
+                        icon: 'MyHome'
+                    }, {
+                        name : '编辑',
+                        route : 'edit',
+                        icon : 'fawenzi'
+                    }, {
+                        name : '设置',
+                        route : 'setting',
+                        icon : 'shezhi'
+                    }],
+                    offline: [{
+                        name : '登录',
+                        route : 'login',
+                        icon : 'denglu'
+                    }],
+                    ordinary: [{
+                        name: '搜索',
+                        route: 'search',
+                        icon: 'sousuo'
+                    }, {
+                        name: '网站主页',
+                        route: 'index',
+                        icon: 'zhuye'
+                    }, {
+                        name: '开发日志',
+                        route : 'history',
+                        icon: 'iconset0142'
+                    }],
+                }
             }
         },
         methods : {

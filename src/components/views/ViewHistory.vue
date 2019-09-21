@@ -34,6 +34,13 @@
             return{
                 history :  [
                     {
+                        title   : '界面优化',
+                        version : '2.0.7.01-α',
+                        content : '主页去掉了那一堆没用的东西，更换了一些样式',
+                        date    : '2019/9/20',
+                        color   : 'blue'
+                    },
+                    {
                         title   : '新功能',
                         version : '2.0.7.00-α',
                         content : '新增隐私功能，可以在设置内更改',
