@@ -34,6 +34,13 @@
             return{
                 history :  [
                     {
+                        title   : '紧急修复',
+                        version : '2.0.7.02-β',
+                        content : '修复大量显示bug',
+                        date    : '2019/9/29',
+                        color   : 'orange'
+                    },
+                    {
                         title   : '优化，修复',
                         version : '2.0.7.02-α',
                         content : '优化前端代码结构，提升性能，修复导航栏无法导航到编辑界面的bug',

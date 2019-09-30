@@ -15,6 +15,8 @@ const ChangeAvatar = () => import('../components/views/setting/ViewSettingChange
 const EditAvatar = () => import('../components/views/setting/ViewSettingEditAvatar.vue');
 const ChangePrivacy = () => import('../components/views/setting/ViewSettingChangePrivacy.vue');
 
+const ViewTest = () => import('../components/items/Live2DGirl');
+
 const setting_routes = [{
         name : 'st-avt-cg',
         path : '/setting/avatar-change',
@@ -65,6 +67,19 @@ export default {
         name : 'index',
         path : '/',
         component : ViewIndex,
+        meta : {
+            keepAlive : true,
+            login_required : false,
+            btns : {
+                help : false,
+                new_post : false,
+                refresh : false
+            }
+        }
+    },{
+        name : 'test',
+        path : '/test',
+        component : ViewTest,
         meta : {
             keepAlive : true,
             login_required : false,

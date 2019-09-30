@@ -97,11 +97,11 @@
                         this.page++;
                         this.end = _data['data']['data'].length === 0;
                     }else{
-                        messageBox('messageBox','发生了一些错误',_data['data']['error'],'','error');
+                        messageBox('发生了一些错误',_data['data']['error'],'','error');
                         this.end = true;
                     }
                 }).catch( () => {
-                    messageBox('messageBox','发生了一些错误','服务器大姨妈了','','error');
+                    messageBox('发生了一些错误','服务器大姨妈了','','error');
                 }).finally( () => {
                     this.firstLoaded = true;
                     setTimeout(() => {
@@ -117,7 +117,7 @@
                 if(this.uid !== undefined){
                     this.get(this.page);
                 }else{
-                    messageBox('messageBox','缺少请求参数','咱也不知道主人要访问谁的空间惹x','','error');
+                    messageBox('缺少请求参数','咱也不知道主人要访问谁的空间惹x','','error');
                 }
             }
         },

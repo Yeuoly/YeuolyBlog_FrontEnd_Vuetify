@@ -55,6 +55,7 @@
                      scroll-container="noCharge"
                      v-if="useMugenScroll"
         ></MugenScroll>
+        <Live2DGirl />
     </div>
 </template>
 
@@ -67,6 +68,7 @@
     import { filter } from "../common/PostCardFilter";
     import YIcon from "../common/YIcon";
     import PostCardFilter from "../common/PostCardFilter";
+    import Live2DGirl from "../items/Live2DGirl";
 
     export const homePageBaseLoader = {
         data(){
@@ -94,7 +96,7 @@
 
     export default {
         name: "ViewHome",
-        components: {PostCardFilter, YIcon, HomePostCard,MugenScroll},
+        components: {Live2DGirl, PostCardFilter, YIcon, HomePostCard,MugenScroll},
         mixins : [filter,homePageBaseLoader],
         methods : {
             deleteLocalCard(post_id){
