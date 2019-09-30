@@ -34,6 +34,13 @@
             return{
                 history :  [
                     {
+                        title   : '优化，修复',
+                        version : '2.0.7.02-α',
+                        content : '优化前端代码结构，提升性能，修复导航栏无法导航到编辑界面的bug',
+                        date    : '2019/9/29',
+                        color   : 'blue'
+                    },
+                    {
                         title   : '界面优化',
                         version : '2.0.7.01-α',
                         content : '主页去掉了那一堆没用的东西，更换了一些样式',

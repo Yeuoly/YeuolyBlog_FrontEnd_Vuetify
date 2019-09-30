@@ -1,12 +1,5 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
     <VContainer class="position-relative passport__container register__container">
-        <PopDialog v-model="dialog_show"
-                   :pop-type="dialog_type"
-                   :title="dialog_title"
-                   :text="dialog_text"
-                   :subtext="dialog_subtext"
-                   @hook-success="afterSuccess"
-        ></PopDialog>
         <MaterialCard title="注册"
                       :width="cardWidth"
                       class="position-absolute passport__card"
@@ -130,13 +123,14 @@
 
 <script>
     import passportBase from './../../mixins/passport';
-    import popdialog from './../../mixins/popdialog';
     import MaterialCard from '../material/Card';
+
+    import { messageBox } from "../../communicate";
 
     export default {
         name: "ViewSignIn",
         components: { MaterialCard },
-        mixins : [passportBase,popdialog],
+        mixins : [passportBase],
         computed : {
             cardWidth(){
                 return this.$vuetify.breakpoint.smAndUp ? 400 : 300;
@@ -193,18 +187,13 @@
                     let _data = response.data;
                     if(_data['data']['res'] === 666){
                         this.successType = 'reg';
-                        this.openDialog(
-                            '注册成功！',
-                            '主人的账号已经准备就绪了哟~主人点击确认后0.5秒会跳转到登录界面哟~',
-                            '',
-                            'success'
-                        );
+                        messageBox('注册成功！', '主人的账号已经准备就绪了哟~主人点击确认后0.5秒会跳转到登录界面哟~', '', 'success');
 
                     }else{
-                        this.openDialog('失败惹',_data['data']['error']);
+                        messageBox('失败惹',_data['data']['error']);
                     }
                 }).catch(() => {
-                    this.openDialog('注册失败','与服务器的连接似乎出现了一些问题','','error');
+                    messageBox('注册失败','与服务器的连接似乎出现了一些问题','','error');
                 })
             },
             afterSuccess(){
@@ -221,7 +210,7 @@
                 })).then(response => {
                     let _data = response.data;
                     if(_data['data']['res'] === 666){
-                        this.openDialog('验证码发送成功','验证码已经发送到主人的邮箱啦~请注意查哦。如果很久很久没有收到的话' +
+                        messageBox('验证码发送成功','验证码已经发送到主人的邮箱啦~请注意查哦。如果很久很久没有收到的话' +
                             '请主人重新发送啦。','有可能在主人的垃圾箱了啦。。，还没有的话请联系咱哦~','success');
                         this.captcha_email_btn_text = '60 秒后再试';
                         let timer = setInterval(() => {
@@ -235,12 +224,7 @@
                             }
                         },1000);
                     }else{
-                        this.openDialog(
-                            '验证码发送失败',
-                            '嘤嘤嘤虽然不知道发送了什么，不过嘤就对了。',
-                            _data['data']['error'],
-                            'error'
-                        );
+                        messageBox('验证码发送失败', '嘤嘤嘤虽然不知道发送了什么，不过嘤就对了。', _data['data']['error'], 'error');
                         this.captcha_email_btn = true;
                     }
                 });

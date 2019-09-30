@@ -114,7 +114,7 @@
                         icon: 'MyHome'
                     }, {
                         name : '编辑',
-                        route : 'edit',
+                        route : 'editor',
                         icon : 'fawenzi'
                     }, {
                         name : '设置',

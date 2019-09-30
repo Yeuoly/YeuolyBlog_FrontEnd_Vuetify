@@ -1,6 +1,6 @@
 <template>
     <VToolbar dark color="rgb(68, 68, 68)" height="50">
-        <YIcon style="font-size: 30px;padding-right: 10px;margin-left: -43px">caidan</YIcon>
+        <YIcon class="__header-l-icon">caidan</YIcon>
         <VAvatar size="20">
             <VBtn small icon @click="openSideMenu">
                 <VImg :src="userAvatar"></VImg>
@@ -43,6 +43,18 @@
 
     .__header-btn{
         font-size: 25px;
+    }
+
+    .__header-l-icon{
+        font-size: 30px;
+        padding-right: 10px;
+        margin-left: -43px;
+    }
+
+    @media (max-width: 959px) {
+        .__header-l-icon{
+            margin-left: -35px;
+        }
     }
 
 </style>

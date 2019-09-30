@@ -1,11 +1,5 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
     <VContainer>
-        <PopDialog v-model="dialog_show"
-                   :pop-type="dialog_type"
-                   :title="dialog_title"
-                   :text="dialog_text"
-                   :subtext="dialog_subtext"
-        />
         <VTextField v-model="search_key_word"
                     :placeholder="`请输入关键词(${placeholder})`"
         >
@@ -58,13 +52,10 @@
 </template>
 
 <script>
-    import PopDialog from "../common/PopDialog";
-    import popdialog from "../../mixins/popdialog";
+    import { messageBox } from "../../communicate";
 
     export default {
         name: "ViewSearch",
-        components: {PopDialog},
-        mixins : [popdialog],
         data(){
             return{
                 search_type : 'user',
@@ -91,10 +82,10 @@
                     if(_data['data']['res'] === 666){
                         this.loadResult(_data['data']['data']);
                     }else{
-                        this.openDialog('发生了一些错误',_data['data']['error'],'','error');
+                        messageBox('发生了一些错误',_data['data']['error'],'','error');
                     }
                 }).catch( () => {
-                    this.openDialog('发生了一些错误','服务器错误，请联系管理员','','error');
+                    messageBox('发生了一些错误','服务器错误，请联系管理员','','error');
                 }).finally( () => {
                     setTimeout( () => {
                         this.clicked = true;
@@ -141,7 +132,3 @@
         }
     }
 </script>
-
-<style scoped>
-
-</style>

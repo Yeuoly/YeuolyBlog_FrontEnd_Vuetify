@@ -1,11 +1,5 @@
 <template>
     <VContainer :heigth="containerHeight" class="position-relative passport__container">
-        <PopDialog v-model="dialog_show"
-                   :pop-type="dialog_type"
-                   :title="dialog_title"
-                   :text="dialog_text"
-                   :subtext="dialog_subtext"
-        ></PopDialog>
         <MaterialCard title="登录" :width="cardWidth" class="position-absolute passport__card">
             <VCard>
                 <VCardText>
@@ -67,8 +61,9 @@
 
 <script>
     import passportBase from './../../mixins/passport';
-    import popdialog from './../../mixins/popdialog';
     import MaterialCard from '../material/Card';
+
+    import { messageBox } from "../../communicate";
 
     export default {
         name: "ViewLogin",
@@ -84,7 +79,7 @@
                 return this.$vuetify.breakpoint.mdAndUp;
             }
         },
-        mixins : [passportBase,popdialog],
+        mixins : [passportBase],
         methods : {
             login(){
                 let password = this.password;
@@ -97,20 +92,10 @@
                     if(_data['data']['res'] === 666){
                         location.href = process.env.VUE_APP_WEB_ROOT;
                     }else{
-                        this.openDialog(
-                            '登录失败',
-                            '阿拉啦好像出现了点什么(*╹▽╹*)',
-                            _data['data']['error'],
-                            'error'
-                        );
+                        messageBox('登录失败', '阿拉啦好像出现了点什么(*╹▽╹*)', _data['data']['error'], 'error');
                     }
                 }).catch( () => {
-                    this.openDialog(
-                        '服务器好像挂掉惹QAQ',
-                        '可能在维护，也有可能真坏惹',
-                        '',
-                        'error'
-                    );
+                    messageBox('服务器好像挂掉惹QAQ', '可能在维护，也有可能真坏惹', '', 'error');
                 });
             },
             signIn(){

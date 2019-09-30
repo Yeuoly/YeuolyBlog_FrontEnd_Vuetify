@@ -51,7 +51,7 @@
         <MugenScroll :handler="refresh"
                      :should-handle="!loading"
                      scroll-container="noCharge"
-                     v-if="firstLoaded && !end"
+                     v-if="useMugenScroll"
         ></MugenScroll>
     </div>
 </template>
@@ -71,6 +71,7 @@
     import { communicate } from "../../communicate";
     import { homePageBaseLoader } from "./ViewHome";
     import { filter } from "../common/PostCardFilter";
+    import { messageBox } from "../../communicate";
     import PostCardFilter from "../common/PostCardFilter";
     import YIcon from "../common/YIcon";
 
@@ -94,15 +95,13 @@
                     if(_data['data']['res'] === 666){
                         this.load(_data['data']['data']);
                         this.page++;
-                        if(_data['data']['data'].length === 0){
-                            this.end = true;
-                        }
+                        this.end = _data['data']['data'].length === 0;
                     }else{
-                        communicate.$emit('messageBox','发生了一些错误',_data['data']['error'],'','error');
+                        messageBox('messageBox','发生了一些错误',_data['data']['error'],'','error');
                         this.end = true;
                     }
                 }).catch( () => {
-                    communicate.$emit('messageBox','发生了一些错误','服务器大姨妈了','','error');
+                    messageBox('messageBox','发生了一些错误','服务器大姨妈了','','error');
                 }).finally( () => {
                     this.firstLoaded = true;
                     setTimeout(() => {
@@ -118,7 +117,7 @@
                 if(this.uid !== undefined){
                     this.get(this.page);
                 }else{
-                    communicate.$emit('messageBox','缺少请求参数','咱也不知道主人要访问谁的空间惹x','','error');
+                    messageBox('messageBox','缺少请求参数','咱也不知道主人要访问谁的空间惹x','','error');
                 }
             }
         },
@@ -127,6 +126,9 @@
                 return (uid) => {
                     return `${process.env.VUE_APP_API_ROOT}/v1/account/avatar?size=75&uid=${uid}`;
                 }
+            },
+            useMugenScroll(){
+                return this.firstLoaded && !this.end && this.$route.name === 'visit';
             }
         },
         mounted(){

@@ -18,18 +18,23 @@
             </VFlex>
             <VMenu offset-y left>
                 <template class="position-relative" v-slot:activator="{ on }">
-                    <VBtn class="home-items__dropdown_btn" v-on="on" small fab flat>
+                    <VBtn class="home- ===items__dropdown_btn" v-on="on" small fab flat>
                         <YIcon>
                             youcecaidan
                         </YIcon>
                     </VBtn>
                 </template>
-                <VList>
+                <VList v-if="usePrivateOperateBox(user_uid)">
                     <VBtn block flat @click="editPost">
                         编辑
                     </VBtn>
                     <VBtn block flat @click="deletePost">
                         删除
+                    </VBtn>
+                </VList>
+                <VList v-else>
+                    <VBtn block flat @click="removeFromFollowings">
+                        取消关注
                     </VBtn>
                 </VList>
             </VMenu>
@@ -51,11 +56,7 @@
 
     export default {
         name: "PostCard",
-        components : {
-            CategoryBox,
-            YHtmlCompiler,
-            YIcon
-        },
+        components : { CategoryBox, YHtmlCompiler, YIcon },
         props : {
             post_id: String,
             title : String,
@@ -63,22 +64,28 @@
             user : String,
             text : String,
             time : Number,
-            tags : Array
+            tags : Array,
+            user_uid : Number
         },
         computed : {
             date(){
                 return this.$utils.date('M-D',this.time);
             },
+            usePrivateOperateBox(){
+                return uid => uid === this.$store.getters.getUid;
+            }
         },
         methods : {
             deletePost () {
                 communicate.$emit('HomeDelete',this.post_id);
             },
-            //跳转编辑界面
             editPost () {
                 let post_id = this.post_id;
                 this.$router.push({ name : 'editor' , query : { post_id : post_id } });
             },
+            removeFromFollowings(){
+                this.$emit('removeFromFollowings',this.user_uid);
+            }
         }
     }
 </script>
