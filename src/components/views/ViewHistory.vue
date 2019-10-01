@@ -34,6 +34,13 @@
             return{
                 history :  [
                     {
+                        title   : '新功能！',
+                        version : '2.0.8.01-α',
+                        content : '可以开启可爱哒看板娘啦！',
+                        date    : '2019/10/1',
+                        color   : 'green'
+                    },
+                    {
                         title   : '紧急修复',
                         version : '2.0.7.02-β',
                         content : '修复大量显示bug',

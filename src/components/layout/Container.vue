@@ -14,6 +14,7 @@
             </div>
             <RouterView key="2" v-if="!$route.meta.keepAlive"></RouterView>
         </VSlideYTransition>
+        <Live2DGirl />
     </div>
 </template>
 
@@ -21,10 +22,11 @@
     import PopDialog from "../common/PopDialog";
     import { communicate } from "../../communicate";
     import popdialog from '../../mixins/popdialog';
+    import Live2DGirl from "../items/Live2DGirl";
 
     export default {
         name: "Container",
-        components: {PopDialog},
+        components: {Live2DGirl, PopDialog},
         mixins : [popdialog],
         mounted() {
             communicate.$on('messageBox',this.openDialog)

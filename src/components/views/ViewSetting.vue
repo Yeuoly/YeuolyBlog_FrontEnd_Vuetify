@@ -66,6 +66,14 @@
                         title: '隐私选项',
                         route: 'st-pri-cg'
                     }]
+                },{
+                    icon : 'nv',
+                    title : '看板娘',
+                    active : false,
+                    children : [{
+                        title: '看板娘设置',
+                        route: 'st-l2-cg'
+                    }]
                 },]
             }
         },

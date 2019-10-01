@@ -14,52 +14,65 @@ const NotFound = () => import('../components/views/View404.vue');
 const ChangeAvatar = () => import('../components/views/setting/ViewSettingChangeAvatar.vue');
 const EditAvatar = () => import('../components/views/setting/ViewSettingEditAvatar.vue');
 const ChangePrivacy = () => import('../components/views/setting/ViewSettingChangePrivacy.vue');
-
-const ViewTest = () => import('../components/items/Live2DGirl');
+const Live2DModel = () => import('../components/views/setting/ViewSettingLive2DModel.vue');
 
 const setting_routes = [{
-        name : 'st-avt-cg',
-        path : '/setting/avatar-change',
-        component : ChangeAvatar,
-        meta : {
-            login_required : true,
-            offline_required : false,
-            keepAlive : false,
-            btns : {
-                help : true,
-                new_post : true,
-                refresh : false
-            }
+    name : 'st-avt-cg',
+    path : '/setting/avatar-change',
+    component : ChangeAvatar,
+    meta : {
+        login_required : true,
+        offline_required : false,
+        keepAlive : false,
+        btns : {
+            help : true,
+            new_post : true,
+            refresh : false
         }
+    }
 },{
-        name : 'st-avt-et',
-        path : '/setting/avatar-edit',
-        component : EditAvatar,
-        meta : {
-            login_required : true,
-            offline_required : false,
-            keepAlive : false,
-            btns : {
-                help : true,
-                new_post : true,
-                refresh : false
-            }
+    name : 'st-avt-et',
+    path : '/setting/avatar-edit',
+    component : EditAvatar,
+    meta : {
+        login_required : true,
+        offline_required : false,
+        keepAlive : false,
+        btns : {
+            help : true,
+            new_post : true,
+            refresh : false
         }
+    }
 },{
-        name : 'st-pri-cg',
-        path : '/setting/privacy-change',
-        component : ChangePrivacy,
-        meta : {
-            login_required : true,
-            offline_required : false,
-            keepAlive : false,
-            btns : {
-                help : true,
-                new_post : true,
-                refresh : false
-            }
+    name : 'st-pri-cg',
+    path : '/setting/privacy-change',
+    component : ChangePrivacy,
+    meta : {
+        login_required : true,
+        offline_required : false,
+        keepAlive : false,
+        btns : {
+            help : true,
+            new_post : true,
+            refresh : false
         }
-},];
+    },
+},{
+    name : 'st-l2-cg',
+    path : '/setting/live2d',
+    component : Live2DModel,
+    meta : {
+        login_required : true,
+        offline_required : false,
+        keepAlive : false,
+        btns : {
+            help : true,
+            new_post : true,
+            refresh : false
+        }
+    },
+}];
 
 export default {
     mode : 'history',
@@ -67,19 +80,6 @@ export default {
         name : 'index',
         path : '/',
         component : ViewIndex,
-        meta : {
-            keepAlive : true,
-            login_required : false,
-            btns : {
-                help : false,
-                new_post : false,
-                refresh : false
-            }
-        }
-    },{
-        name : 'test',
-        path : '/test',
-        component : ViewTest,
         meta : {
             keepAlive : true,
             login_required : false,
