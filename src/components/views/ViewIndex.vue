@@ -20,13 +20,15 @@
             <li>然后呢，这差不多就是最后一次更新啦~除非出现了致命的漏洞，否则就不会再有新的更新啦</li>
             <li>最后一件事，有关YeuolyBlog的消息将会更新在<a href="/visit?uid=8">YeuolyBlog</a>这个账号里，有兴趣的同学可以康一康~</li>
         </MaterialCard>
+        <ThanksList />
     </VContainer>
 </template>
 
 <script>
     import MaterialCard from "../material/Card";
+    import ThanksList from "../items/ThanksList";
     export default {
         name: "ViewIndex",
-        components: {MaterialCard},
+        components: {ThanksList, MaterialCard},
     }
 </script>

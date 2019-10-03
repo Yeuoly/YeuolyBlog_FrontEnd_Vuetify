@@ -14,7 +14,8 @@
             </div>
             <RouterView key="2" v-if="!$route.meta.keepAlive"></RouterView>
         </VSlideYTransition>
-        <Live2DGirl />
+        <Live2DGirl v-if="$vuetify.breakpoint.mdAndUp" />
+        <Live2DGirl v-if="$vuetify.breakpoint.smAndDown" v-show="$route.name === 'maid-garden'" />
     </div>
 </template>
 
@@ -33,7 +34,3 @@
         }
     }
 </script>
-
-<style scoped>
-
-</style>

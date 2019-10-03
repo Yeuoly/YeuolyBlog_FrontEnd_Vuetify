@@ -17,8 +17,8 @@
                 </VCardTitle>
             </VFlex>
             <VMenu offset-y left>
-                <template class="position-relative" v-slot:activator="{ on }">
-                    <VBtn class="home- ===items__dropdown_btn" v-on="on" small fab flat>
+                <template v-slot:activator="{ on }">
+                    <VBtn class="home-items__dropdown_btn" v-on="on" small fab flat>
                         <YIcon>
                             youcecaidan
                         </YIcon>

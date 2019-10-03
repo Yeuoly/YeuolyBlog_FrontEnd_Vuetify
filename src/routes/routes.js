@@ -8,6 +8,7 @@ const ViewHistory = () => import('../components/views/ViewHistory.vue');
 const ViewSetting = () => import('../components/views/ViewSetting.vue');
 const ViewVisit = () => import('../components/views/ViewVisit.vue');
 const ViewSearch = () => import('../components/views/ViewSearch.vue');
+const ViewMaidGarden = () => import('../components/views/ViewMaidGarden.vue');
 
 const NotFound = () => import('../components/views/View404.vue');
 
@@ -211,6 +212,20 @@ export default {
             offline_required : false,
             btns : {
                 help : true,
+                new_post : false,
+                refresh : false
+            }
+        }
+    },{
+        name : 'maid-garden',
+        path : '/live2d-garden',
+        component : ViewMaidGarden,
+        meta : {
+            keepAlive : true,
+            login_required : true,
+            offline_required : false,
+            btns : {
+                help : false,
                 new_post : false,
                 refresh : false
             }

@@ -8,6 +8,9 @@
         <VCardText class="grey--text">
             更新换设置之后记得刷新界面哦~因为模型比较大，开启后第一次加载会很慢哒，请主人稍微等一下啦
         </VCardText>
+        <VCardText class="text-primary">
+            因为一些技术性问题，移动端的用户需要开启看板娘的情况下进入“纸片人乐园”才能与她互动哟
+        </VCardText>
     </VCard>
 </template>
 

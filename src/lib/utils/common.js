@@ -2,23 +2,23 @@ export default {
     date(format, timestamp){
         let date = new Date(timestamp * 1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
         let res = '';
-        for(let i in format){
-            if(format[i] === 'Y'){
+        format.split('').forEach( item => {
+            if(item === 'Y'){
                 res += date.getFullYear();
-            }else if(format[i]  === 'M'){
+            }else if(item  === 'M'){
                 res += (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1);
-            }else if(format[i]  === 'D'){
+            }else if(item  === 'D'){
                 res += date.getDate();
-            }else if(format[i]  === 'h'){
+            }else if(item  === 'h'){
                 res += date.getHours();
-            }else if(format[i]  === 'm'){
+            }else if(item  === 'm'){
                 res += date.getMinutes();
-            }else if(format[i]  === 's'){
+            }else if(item  === 's'){
                 res += date.getSeconds();
             }else{
-                res += format[i] ;
+                res += item;
             }
-        }
+        });
         return res;
     },
     array_push(dist,item){

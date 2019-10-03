@@ -34,6 +34,13 @@
             return{
                 history :  [
                     {
+                        title   : '完善，修复',
+                        version : '2.0.8.02-α',
+                        content : '加入看板娘互动，修复主页显示bug',
+                        date    : '2019/10/3',
+                        color   : 'blue'
+                    },
+                    {
                         title   : '新功能！',
                         version : '2.0.8.01-α',
                         content : '可以开启可爱哒看板娘啦！',
