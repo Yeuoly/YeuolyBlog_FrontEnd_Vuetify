@@ -49,12 +49,13 @@
                 this.disabled_edit = true;
             },
             save(){
-                let url = `v1/post/private/${ this.post_id ? 'modify' : 'send' }`;
+                let url = `v1/post/private/action`;
                 this.axios.post(url,this.$qs.stringify({
                     post_data : this.content,
                     post_title : this.title,
                     post_id : this.post_id,
-                    post_tags : `[${this.tags.join(' ')}]`
+                    post_tags : `[${this.tags.join(' ')}]`,
+                    act : this.post_id ? 2 : 1
                 })).then( response => {
                     let _data = response.data;
                     if(_data['data']['res'] === 666){
@@ -87,8 +88,9 @@
                 this.disabled_edit = false;
             },
             get(post_id){
-                this.axios.post('/v1/post/private/get',this.$qs.stringify({
-                    post_id : post_id
+                this.axios.post('/v1/post/private/action',this.$qs.stringify({
+                    post_id : post_id,
+                    act : 4
                 })).then( response => {
                     let _data = response.data;
                     if(_data['data']['res'] === 666){

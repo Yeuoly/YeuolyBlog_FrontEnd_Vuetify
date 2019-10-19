@@ -36,6 +36,7 @@
             upload(){
                 let from_data = new FormData();
                 from_data.append('img',this.file,'img');
+                from_data.append('act','0');
                 this.$utils.csrf_post(
                     'v1/account/change/avatar',
                     from_data,

@@ -84,9 +84,10 @@
             login(){
                 let password = this.password;
                 let email = this.email;
-                this.axios.post('v1/account/login', this.$qs.stringify({
-                        password : password,
-                        email : email
+                this.axios.post('v1/account/ordinary/action', this.$qs.stringify({
+                    password : password,
+                    email : email,
+                    act : 2
                 })).then( response => {
                     let _data = response.data;
                     if(_data['data']['res'] === 666){

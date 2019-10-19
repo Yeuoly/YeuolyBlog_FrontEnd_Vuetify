@@ -72,8 +72,8 @@
             click(){
                 this.p__show = false;
                 setTimeout(() => {
-                    this.$emit(`hook-${this.PopType}`);
-                },500);
+                    this.$emit('hook');
+                });
             }
         },
         computed : {

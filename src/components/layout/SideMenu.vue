@@ -157,7 +157,9 @@
                 this.$router.push({name : name});
             },
             logout(){
-                this.axios.post('v1/account/logout').then( response => {
+                this.axios.post('v1/account/online/action',this.$qs.stringify({
+                    act : 3
+                })).then( response => {
                     let _data = response.data;
                     if(_data['data']['res'] === 666){
                         location.href = '/';

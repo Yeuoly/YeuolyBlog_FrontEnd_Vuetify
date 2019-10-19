@@ -34,7 +34,9 @@
         },
         methods : {
             load(){
-                this.axios.post('v1/account/privacy/get').then( response => {
+                this.axios.post('v1/account/online/action',this.$qs.stringify({
+                    act : 1
+                })).then( response => {
                     let _data = response.data;
                     if(_data['data']['res'] === 666 ){
                         let settings = _data['data']['data'];
@@ -48,6 +50,7 @@
             upload(){
                 let form_data = new FormData();
                 form_data.append('settings',this.settings);
+                form_data.append('act','2');
                 this.$utils.csrf_post(
                     'v1/account/privacy/set',
                     form_data,

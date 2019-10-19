@@ -87,9 +87,10 @@
         methods : {
             get(page){
                 this.loading = true;
-                this.axios.post('v1/post/public/get/person',this.$qs.stringify({
+                this.axios.post('v1/post/public/action',this.$qs.stringify({
                     uid : this.uid,
-                    page : page + 1
+                    page : page + 1,
+                    act : 0
                 })).then( response => {
                     let _data = response.data;
                     if(_data['data']['res'] === 666){

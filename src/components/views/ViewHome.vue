@@ -98,8 +98,9 @@
         mixins : [filter,homePageBaseLoader],
         methods : {
             deleteLocalCard(post_id){
-                this.axios.post('v1/post/private/delete',this.$qs.stringify({
-                    post_id : post_id
+                this.axios.post('v1/post/private/action',this.$qs.stringify({
+                    post_id : post_id,
+                    act : 3
                 })).then( response => {
                     let _data = response.data;
                     if(_data['data']['res'] === 666)
@@ -126,8 +127,9 @@
                     return;
                 }
                 this.loading = true;
-                this.axios.post('v1/post/private/getrecent',this.$qs.stringify({
-                    page : this.page + 1
+                this.axios.post('v1/post/private/action',this.$qs.stringify({
+                    page : this.page + 1,
+                    act : 0
                 })).then( response => {
                     let _data = response.data;
                     if(_data['data']['res'] === 666){

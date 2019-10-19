@@ -38,7 +38,9 @@ import { state_user } from "./storage/userinfo";
 //初始化数据
 axios.defaults.baseURL = process.env.VUE_APP_API_ROOT;
 axios.defaults.withCredentials = true;
-axios.post('/v1/account/user').then( response => {
+axios.post('/v1/account/ordinary/action',qs.stringify({
+  act : 0
+})).then( response => {
   let _data = response.data;
   if(_data['data']['res'] === 666) {
     let data = _data['data']['data'];

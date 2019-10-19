@@ -179,16 +179,17 @@
                 this.$router.push({name : 'login'});
             },
             signIn(){
-                this.axios.post('v1/account/reg',this.$qs.stringify({
+                this.axios.post('v1/account/ordinary/action',this.$qs.stringify({
                     username : this.account,
                     password : this.password,
-                    captcha : this.captcha_email
+                    captcha : this.captcha_email,
+                    act : 1
                 })).then( response => {
                     let _data = response.data;
                     if(_data['data']['res'] === 666){
                         this.successType = 'reg';
-                        messageBox('注册成功！', '主人的账号已经准备就绪了哟~主人点击确认后0.5秒会跳转到登录界面哟~', '', 'success');
-
+                        messageBox('注册成功！', '主人的账号已经准备就绪了哟~主人点击确认后0.5秒会跳转到登录界面哟~'
+                            , '', 'success',this.afterSuccess);
                     }else{
                         messageBox('失败惹',_data['data']['error']);
                     }

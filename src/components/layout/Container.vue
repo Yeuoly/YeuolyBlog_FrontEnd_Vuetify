@@ -4,7 +4,9 @@
                    :pop-type="dialog_type"
                    :title="dialog_title"
                    :text="dialog_text"
-                   :subtext="dialog_subtext">
+                   :subtext="dialog_subtext"
+                   @hook="dialog_hook"
+        >
         </PopDialog>
         <VSlideYTransition group mode="out-in">
             <div key="1">
