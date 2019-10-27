@@ -1,25 +1,30 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
     <div>
-        <VContainer v-if="$vuetify.breakpoint.smAndDown" class="pb-0 px-0">
-            <VCard>
-                <VList>
-                    <VListGroup v-model="openSelection">
-                        <VCard class="px-3 py-3">
-                            <PostCardFilter :tags="tags" v-model="postFilter" />
-                        </VCard>
-                        <template v-slot:activator>
-                            <VListTileTitle>
-                                <YIcon class="px-2">shaixuan</YIcon>
-                                筛选
-                            </VListTileTitle>
-                        </template>
-                    </VListGroup>
-                </VList>
-            </VCard>
-
-        </VContainer>
+        <HomeTopBar :user_uid="user_uid"
+                    :user_name="user_id"
+                    :user_follow="user_follow"
+                    :user_class="user_class"
+                    @followed="user_follow = true"
+                    @unfollowed="user_follow = false"
+        />
+        <div v-if="$vuetify.breakpoint.smAndDown">
+            <VAvatar @click="open_filter_dialog = true"
+                     style="position: absolute; right: 110px;"
+            >
+                <YIcon style="font-size: 20px;">
+                    shaixuan
+                </YIcon>
+            </VAvatar>
+            <YDialog v-model="open_filter_dialog">
+                <MaterialCard class="px-2 py-2" slot="inner">
+                    <PostCardFilter :tags="tags"
+                                    v-model="postFilter"
+                    />
+                </MaterialCard>
+            </YDialog>
+        </div>
         <VLayout class="mt-4"
-                 :class=" $vuetify.breakpoint.mdAndUp ? 'mx-5' : 'mx-0' "
+                 :class="$vuetify.breakpoint.mdAndUp ? 'mx-5 pt-5' : 'mx-0 pt-4' "
                  :style="'min-height:' + ( $vuetify.breakpoint.height - 75 ) +'px'"
                  row
                  wrap
@@ -68,20 +73,25 @@
     import VisitPostCard from "../items/VisitPostCard";
     import MugenScroll from "vue-mugen-scroll";
 
-    import { communicate } from "../../communicate";
     import { homePageBaseLoader } from "./ViewHome";
     import { filter } from "../common/PostCardFilter";
     import { messageBox } from "../../communicate";
     import PostCardFilter from "../common/PostCardFilter";
     import YIcon from "../common/YIcon";
+    import HomeTopBar from "../items/HomeTopBar";
+    import YDialog from "../common/YDialog";
+    import MaterialCard from "../material/Card";
 
     export default {
         name: "ViewVisit",
-        components: {YIcon, PostCardFilter, VisitPostCard, MugenScroll},
+        components: {MaterialCard, YDialog, HomeTopBar, YIcon, PostCardFilter, VisitPostCard, MugenScroll},
         mixins : [homePageBaseLoader,filter],
         data(){
             return{
-                uid : Number,
+                uid : Number(),
+                user_id : String(),
+                user_class : Number(),
+                user_follow : Boolean(),
             }
         },
         methods : {
@@ -92,11 +102,14 @@
                     page : page + 1,
                     act : 0
                 })).then( response => {
-                    let _data = response.data;
+                    const _data = response.data;
                     if(_data['data']['res'] === 666){
-                        this.load(_data['data']['data']);
+                        this.load(_data['data']['data']['posts']);
+                        this.end = _data['data']['data']['posts'].length === 0;
+                        this.user_id = _data['data']['data']['user_id'];
+                        this.user_class = _data['data']['data']['user_class'];
+                        this.user_follow = _data['data']['data']['followed'];
                         this.page++;
-                        this.end = _data['data']['data'].length === 0;
                     }else{
                         messageBox('发生了一些错误',_data['data']['error'],'','error');
                         this.end = true;
@@ -130,6 +143,9 @@
             },
             useMugenScroll(){
                 return this.firstLoaded && !this.end && this.$route.name === 'visit';
+            },
+            user_uid(){
+                return parseInt(this.uid);
             }
         },
         mounted(){

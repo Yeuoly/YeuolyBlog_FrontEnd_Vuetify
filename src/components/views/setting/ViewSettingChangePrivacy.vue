@@ -37,7 +37,7 @@
                 this.axios.post('v1/account/online/action',this.$qs.stringify({
                     act : 1
                 })).then( response => {
-                    let _data = response.data;
+                    const _data = response.data;
                     if(_data['data']['res'] === 666 ){
                         let settings = _data['data']['data'];
                         settings.forEach( ( item , index )=> {
@@ -48,7 +48,7 @@
                 });
             },
             upload(){
-                let form_data = new FormData();
+                const form_data = new FormData();
                 form_data.append('settings',this.settings);
                 form_data.append('act','2');
                 this.$utils.csrf_post(

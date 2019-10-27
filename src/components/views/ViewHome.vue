@@ -1,25 +1,29 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
     <div>
-        <VContainer v-if="$vuetify.breakpoint.smAndDown" class="pb-0 px-0">
-            <VCard>
-                <VList>
-                    <VListGroup v-model="openSelection">
-                        <VCard class="px-3 py-3">
-                            <PostCardFilter :tags="tags" v-model="postFilter" />
-                        </VCard>
-                        <template v-slot:activator>
-                            <VListTileTitle>
-                                <YIcon class="px-2">shaixuan</YIcon>
-                                筛选
-                            </VListTileTitle>
-                        </template>
-                    </VListGroup>
-                </VList>
-            </VCard>
-
-        </VContainer>
+        <HomeTopBar :user_uid="$store.getters.getUid"
+                    :user_name="$store.getters.getUserName"
+                    :user_follow="false"
+                    :user_class="$store.getters.getClass"
+                    :disabled="true"
+        />
+        <div v-if="$vuetify.breakpoint.smAndDown">
+            <VAvatar @click="open_filter_dialog = true"
+                     style="position: absolute; right: 110px;"
+            >
+                <YIcon style="font-size: 20px;">
+                    shaixuan
+                </YIcon>
+            </VAvatar>
+            <YDialog v-model="open_filter_dialog">
+                <MaterialCard class="px-2 py-2" slot="inner">
+                    <PostCardFilter :tags="tags"
+                                    v-model="postFilter"
+                    />
+                </MaterialCard>
+            </YDialog>
+        </div>
         <VLayout class="mt-4"
-                 :class=" $vuetify.breakpoint.mdAndUp ? 'mx-5' : 'mx-0' "
+                 :class=" $vuetify.breakpoint.mdAndUp ? 'mx-5 pt-5' : 'mx-0 pt-4' "
                  :style="'min-height:' + ( $vuetify.breakpoint.height - 75 ) +'px'"
                  row
                  wrap
@@ -67,6 +71,9 @@
     import { filter } from "../common/PostCardFilter";
     import YIcon from "../common/YIcon";
     import PostCardFilter from "../common/PostCardFilter";
+    import HomeTopBar from "../items/HomeTopBar";
+    import YDialog from "../common/YDialog";
+    import MaterialCard from "../material/Card";
 
     export const homePageBaseLoader = {
         data(){
@@ -78,6 +85,7 @@
                 end : false,
                 loading : false,
                 openSelection : false,
+                open_filter_dialog : false
             }
         },
         methods : {
@@ -94,7 +102,7 @@
 
     export default {
         name: "ViewHome",
-        components: { PostCardFilter, YIcon, HomePostCard,MugenScroll},
+        components: {MaterialCard, YDialog, HomeTopBar, PostCardFilter, YIcon, HomePostCard,MugenScroll},
         mixins : [filter,homePageBaseLoader],
         methods : {
             deleteLocalCard(post_id){
@@ -157,13 +165,7 @@
                 this.getRecent();
             },
             removeFromFollowings(uid) {
-                this.axios.post('v1/account/follow/remove',this.$qs.stringify({
-                    uid : uid,
-                })).then( response => {
 
-                } ).catch( () => {
-
-                });
             }
         },
         computed : {

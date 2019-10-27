@@ -185,7 +185,7 @@
                     captcha : this.captcha_email,
                     act : 1
                 })).then( response => {
-                    let _data = response.data;
+                    const _data = response.data;
                     if(_data['data']['res'] === 666){
                         this.successType = 'reg';
                         messageBox('注册成功！', '主人的账号已经准备就绪了哟~主人点击确认后0.5秒会跳转到登录界面哟~'
@@ -214,7 +214,7 @@
                         messageBox('验证码发送成功','验证码已经发送到主人的邮箱啦~请注意查哦。如果很久很久没有收到的话' +
                             '请主人重新发送啦。','有可能在主人的垃圾箱了啦。。，还没有的话请联系咱哦~','success');
                         this.captcha_email_btn_text = '60 秒后再试';
-                        let timer = setInterval(() => {
+                        const timer = setInterval(() => {
                             this.lastTime++;
                             this.captcha_email_btn_text = ( 60 - this.lastTime ) + ' 秒后再试';
                             if(this.lastTime === 60){

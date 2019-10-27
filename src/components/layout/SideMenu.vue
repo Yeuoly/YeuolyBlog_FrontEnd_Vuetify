@@ -120,10 +120,6 @@
                         name : '设置',
                         route : 'setting',
                         icon : 'shezhi'
-                    },{
-                        name : '纸片人乐园',
-                        route : 'maid-garden',
-                        icon : 'nv'
                     }],
                     offline: [{
                         name : '登录',
