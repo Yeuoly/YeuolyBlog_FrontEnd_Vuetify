@@ -6,7 +6,6 @@
         <VCard flat
                height="130"
                class="menu-header"
-               style="background-color: rgb(100,100,100) !important;border-radius: 0"
         >
             <VAvatar @click="router('home')"
                      size="74"
@@ -178,6 +177,9 @@
 <style>
     .menu-header{
         position: relative;
+        background-image: url(http://i0.hdslb.com/bfs/album/80841ce0b27d582fc99c29c9dca228807640482b.jpg);
+        background-size: 100% 100%;
+        background-color: rgb(100,100,100) !important;border-radius: 0
     }
 
     .menu-avatar{

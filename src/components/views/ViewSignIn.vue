@@ -37,6 +37,7 @@
                                 :rules="[rule.required,rule.password_min,rule.password_max,rule.password_format]"
                                 @click:append="password_show = !password_show"
                                 v-model="password"
+                                @input="repeat_password = repeat_password.split('').join('')"
                     ></VTextField>
 
 
@@ -44,7 +45,7 @@
                                 counter="16"
                                 :type="repeat_password_show ? 'text' : 'password'"
                                 :append-icon="repeat_password_show ? 'visibility' : 'visibility_off'"
-                                :rules="[rule.required,rule.password_min,rule.password_max,rule.password_format]"
+                                :rules="[rule2.repeat_password]"
                                 @click:append="repeat_password_show = !repeat_password_show"
                                 v-model="repeat_password"
                     ></VTextField>
@@ -81,7 +82,7 @@
                                   :disabled="!captcha_email_btn"
                             >
                                 <span class="caption">
-                                    {{captcha_email_btn_text}}
+                                    {{ captcha_email_btn_text }}
                                 </span>
                             </VBtn>
                         </template>
@@ -164,7 +165,8 @@
                     captcha_l : v => v.length === 6 || '长度不对哦~',
                     account : v => !!v.match(/^[0-9a-zA-Z\u4E00-\u9FA5\u0800-\u4E00]*$/g) || '用户名怪怪的哦~',
                     account_max : v => v.length <= 16 || '好。。好长。。',
-                    account_min : v => v.length >= 6 || '好~短~喔~'
+                    account_min : v => v.length >= 6 || '好~短~喔~',
+                    repeat_password : v => v === this.password || '两次密码输入不一致'
                 },
                 dialog_title : '',
                 dialog_text : '',

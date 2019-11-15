@@ -1,5 +1,5 @@
 <template>
-    <div class="home-top-bar">
+    <div ref="host" class="home-top-bar">
         <div class="home-top-bar__avatar">
             <VAvatar :size="$vuetify.breakpoint.mdAndUp ? 90 : 70">
                 <VImg :src="userAvatar"></VImg>
@@ -16,14 +16,17 @@
             </span>
         </div>
         <div class="home-top-bar__follow">
-            <VBtn :color=" user_follow ? 'grey' : 'primary' " small round
+            <VBtn :color=" user_follow ? 'grey' : 'primary' "
+                  small
+                  round
                   v-if="$vuetify.breakpoint.smAndDown"
                   @click="follow"
                   :disabled="disabled"
             >
                 {{ user_follow ? '取消关注' : '关注' }}
             </VBtn>
-            <VBtn :color=" user_follow ? 'grey' : 'primary' " round
+            <VBtn :color=" user_follow ? 'grey' : 'primary' "
+                  round
                   v-else
                   @click="follow"
                   :disabled="disabled"
@@ -101,7 +104,7 @@
         height: 160px;
         background-color: #424242;
         position: relative;
-        background-image: url("https://i0.hdslb.com/bfs/album/44a23a025f6d31e90ba7a9d2e35773437c3e7be6.png");
+        background-image: url(http://i0.hdslb.com/bfs/album/44a23a025f6d31e90ba7a9d2e35773437c3e7be6.png);
         background-size: 100%;
         background-position: center;
     }

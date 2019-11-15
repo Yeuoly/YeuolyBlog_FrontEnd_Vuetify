@@ -1,24 +1,24 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
-    <VCard block>
+    <VCard class="position-relative" block>
         <VLayout wrap row>
-            <VFlex lg1 md2 sm2 xs3>
+            <div>
                 <VAvatar size="50" class="mx-2 mt-2">
                     <VImg :src="avatar"></VImg>
                 </VAvatar>
-            </VFlex>
-            <VFlex lg10 md9 sm9 xs8>
+            </div>
+            <div class="post-card-head">
                 <VCardTitle>
-                    <span class="mr-2">
+                    <span class="card-user">
+                        {{ user }}
+                    </span>
+                    <span class="card-date">
                         {{ date }}
                     </span>
-                    <span>
-                        {{ title }}
-                    </span>
                 </VCardTitle>
-            </VFlex>
+            </div>
             <VMenu offset-y left>
                 <template v-slot:activator="{ on }">
-                    <VBtn class="home-items__dropdown_btn" v-on="on" small fab flat>
+                    <VBtn class="post-card-menu" v-on="on" small fab flat>
                         <YIcon>
                             youcecaidan
                         </YIcon>
@@ -39,7 +39,10 @@
                 </VList>
             </VMenu>
             <VFlex xs12>
-                <YHtmlCompiler class="px-3" :html="text" />
+                <div class="card-title">
+                        {{ title }}
+                </div>
+                <YHtmlCompiler class=" pt-5 px-3" :html="text" />
             </VFlex>
             <VFlex xs12>
                 <CategoryBox v-model="tags" />
@@ -69,7 +72,7 @@
         },
         computed : {
             date(){
-                return this.$utils.date('M-D',this.time);
+                return this.$utils.date('M-D h:m:s',this.time);
             },
             usePrivateOperateBox(){
                 return uid => uid === this.$store.getters.getUid;
@@ -90,7 +93,7 @@
     }
 </script>
 
-<style scoped>
+<style>
 
     @media (max-width: 568px) {
         .extra-f-t{
@@ -98,9 +101,34 @@
         }
     }
 
-    .home-items__dropdown_btn{
+
+    .card-date{
         position: absolute;
-        right: 0px;
+        top: 40px;
+        font-size: 12px;
+        width: 120px;
+    }
+
+    .card-title{
+        position: absolute;
+        top: 70px;
+        left: 24px;
+    }
+
+    .card-user{
+        position: absolute;
+        top: 22px;
+    }
+
+    .post-card-head{
+        position: absolute;
+        left: 70px;
+        width: 120px;
+    }
+
+    .post-card-menu{
+        position: absolute !important;
+        right: 0 !important;
     }
 
 </style>

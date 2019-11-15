@@ -1,10 +1,11 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
     <div>
-        <HomeTopBar :user_uid="$store.getters.getUid"
-                    :user_name="$store.getters.getUserName"
-                    :user_follow="false"
-                    :user_class="$store.getters.getClass"
-                    :disabled="true"
+        <HomeTopBar :user_uid="uid"
+                    :user_name="user_id"
+                    :user_follow="user_follow"
+                    :user_class="user_class"
+                    :disabled="home_flag"
+
         />
         <div v-if="$vuetify.breakpoint.smAndDown">
             <VAvatar @click="open_filter_dialog = true"
@@ -32,16 +33,16 @@
                 <HomePostCard v-for="(t , key) in postCollections"
                               v-show="selected(t.tags) && dateAllowed(t.time)"
                               :key="key"
-                              :title="t.title"
-                              :avatar="avatarUrl(t.poster_uid)"
-                              :user="t.poster_id"
-                              :text="t.content"
-                              :post_id="t.post_id"
-                              :time="t.time"
-                              :tags="t.tags"
-                              :user_uid="t.poster_uid"
+                              :title="t['title']"
+                              :avatar="avatarUrl(t['poster_uid'])"
+                              :user="t['poster_id']"
+                              :text="t['content']"
+                              :post_id="t['post_id']"
+                              :time="t['time']"
+                              :tags="t['tags']"
+                              :user_uid="t['poster_uid']"
+                              :home_flag="home_flag"
                               class="mb-3"
-                              @removeFromFollowings="removeFromFollowings"
                 />
             </VFlex>
             <VFlex md4 lg4 sm12 xs12 v-if="$vuetify.breakpoint.mdAndUp">
@@ -75,7 +76,10 @@
     import YDialog from "../common/YDialog";
     import MaterialCard from "../material/Card";
 
-    export const homePageBaseLoader = {
+    export default {
+        name: "ViewHome",
+        components: {MaterialCard, YDialog, HomeTopBar, PostCardFilter, YIcon, HomePostCard,MugenScroll},
+        mixins : [filter],
         data(){
             return {
                 tags : [],
@@ -85,25 +89,14 @@
                 end : false,
                 loading : false,
                 openSelection : false,
-                open_filter_dialog : false
+                open_filter_dialog : false,
+                home_flag : false,
+                uid : Number(),
+                user_id : String(),
+                user_class : Number(),
+                user_follow : Boolean(),
             }
         },
-        methods : {
-            load(dist){
-                dist.forEach( item => {
-                    let tags = this.$utils.array_drop(item['tags'].split(/[\r\n ]/),'');
-                    item['tags'] = tags;
-                    this.$utils.array_merge(this.tags,tags);
-                });
-                this.postCollections = [...this.postCollections,...dist];
-            },
-        }
-    };
-
-    export default {
-        name: "ViewHome",
-        components: {MaterialCard, YDialog, HomeTopBar, PostCardFilter, YIcon, HomePostCard,MugenScroll},
-        mixins : [filter,homePageBaseLoader],
         methods : {
             deleteLocalCard(post_id){
                 this.axios.post('v1/post/private/action',this.$qs.stringify({
@@ -111,13 +104,10 @@
                     act : 3
                 })).then( response => {
                     let _data = response.data;
-                    if(_data['data']['res'] === 666)
-                    {
+                    if(_data['data']['res'] === 666) {
                         messageBox('成功啦', '已经删掉刚刚的那篇博客了哦~', '', 'success');
                         for(let i in this.postCollections) {
-                            if(this.postCollections[i].post_id === post_id) {
-                                this.postCollections.splice(i,1);
-                            }
+                            this.postCollections[i].post_id === post_id ? this.postCollections.splice(i,1) : {};
                         }
                     }else{
                         messageBox('哦呀，好像出了一点点事情', _data['data']['error'], '', 'error');
@@ -126,8 +116,13 @@
                     messageBox('哦呀，好像出了一点点事情', '服务器坏掉惹o(╥﹏╥)o', '', 'error');
                 });
             },
-            avatarUrl(uid){
-                return `${process.env.VUE_APP_API_ROOT}/v1/account/avatar?size=75&uid=${uid}`;
+            load(dist){
+                dist.forEach( item => {
+                    const tags = this.$utils.array_drop(item['tags'].split(/[\r\n ]/),'');
+                    item['tags'] = tags;
+                    this.$utils.array_merge(this.tags,tags);
+                });
+                this.postCollections = [...this.postCollections,...dist];
             },
             getRecent(){
                 if(this.end){
@@ -135,19 +130,28 @@
                     return;
                 }
                 this.loading = true;
-                this.axios.post('v1/post/private/action',this.$qs.stringify({
+                const url = `v1/post/${ this.home_flag ? 'private' : 'public' }/action`;
+                this.axios.post(url,this.$qs.stringify({
                     page : this.page + 1,
-                    act : 0
+                    act : 0,
+                    uid : this.uid
                 })).then( response => {
-                    let _data = response.data;
-                    if(_data['data']['res'] === 666){
-                        this.load(_data['data']['data']);
+                    const _data = response.data['data'];
+                    if(_data['res'] === 666){
+                        this.load(_data['data']['posts']);
+                        if(_data['data']['user_id']){
+                            this.user_id = _data['data']['user_id'];
+                            this.user_class = _data['data']['user_class'];
+                            this.user_follow = _data['data']['followed'];
+                        }else{
+                            this.user_id = this.$store.getters.getUserName;
+                            this.user_follow = false;
+                            this.user_class = this.$store.getters.getClass;
+                        }
                         this.page++;
-                        if(_data['data']['data'].length < 5){
+                        if(_data['data']['posts'].length < 5){
                             this.end = true;
-                            if(_data['data']['data'].length === 0){
-                                messageBox('消息','这就是主人的全部啦！','','info');
-                            }
+                            _data['data'].length === 0 ? messageBox('消息','这就是主人的全部啦！','','info') : {};
                         }
                     }
                 }).finally( () => {
@@ -164,19 +168,27 @@
                 this.firstLoaded = false;
                 this.getRecent();
             },
-            removeFromFollowings(uid) {
-
-            }
+            init(){
+                const uid = this.$route.query.uid;
+                this.uid = uid || this.$store.getters.getUid;
+                this.home_flag = uid === undefined;
+                uid === undefined && !this.$store.getters.getOnlineState
+                    ? this.$router.push({ name : 'index'})
+                    : this.getRecent();
+            },
         },
         computed : {
             useMugenScroll(){
                 return this.firstLoaded && !this.end && this.$route.name === 'home';
-            }
+            },
+            avatarUrl(){
+                return  uid => `${process.env.VUE_APP_API_ROOT}/v1/account/avatar?size=100&uid=${uid}`;
+            },
         },
         mounted(){
             communicate.$on('HomeDelete',this.deleteLocalCard);
             communicate.$on('refreshHome',this.refresh);
-            this.getRecent();
+            this.init();
         },
         destroyed(){
             communicate.$off('HomeDelete',this.deleteLocalCard);
