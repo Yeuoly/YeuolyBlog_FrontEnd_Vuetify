@@ -52,7 +52,7 @@
                 form_data.append('settings',this.settings);
                 form_data.append('act','2');
                 this.$utils.csrf_post(
-                    'v1/account/privacy/set',
+                    'v1/account/online/action',
                     form_data,
                     response => {
                         let _data = response.data;

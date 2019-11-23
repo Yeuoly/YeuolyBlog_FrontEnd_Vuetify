@@ -22,6 +22,9 @@
 <script>
     import MaterialCard from "../material/Card";
     import YFileInput from "../common/YFileInput";
+
+    import { messageBox } from "../../communicate";
+
     export default {
         name: 'UploadAvatarDialog',
         components: {YFileInput, MaterialCard},
@@ -38,7 +41,7 @@
                 from_data.append('img',this.file,'img');
                 from_data.append('act','0');
                 this.$utils.csrf_post(
-                    'v1/account/change/avatar',
+                    'v1/account/online/action',
                     from_data,
                     response => {
                         const _data = response.data;
@@ -47,7 +50,7 @@
                         }
                     },
                     () => {
-                        alert('服务器大姨妈了');
+                        messageBox('错误','服务器大姨妈了','','error');
                     }
                 );
             },

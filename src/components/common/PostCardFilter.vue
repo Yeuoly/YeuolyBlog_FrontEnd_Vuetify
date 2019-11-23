@@ -20,6 +20,7 @@
                             v-model="postFilter.dateSection.frontDate"
                             v-on="on"
                             @keydown.prevent
+                            @focus.prevent
                 >
                 </VTextField>
             </template>
@@ -43,6 +44,7 @@
                             v-model="postFilter.dateSection.backDate"
                             v-on="on"
                             @keydown.prevent
+                            @focus.prevent
                             :disabled="!postFilter.dateSection.bootBack"
                 >
                 </VTextField>

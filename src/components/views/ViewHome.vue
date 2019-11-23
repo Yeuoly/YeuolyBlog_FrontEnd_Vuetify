@@ -4,62 +4,72 @@
                     :user_name="user_id"
                     :user_follow="user_follow"
                     :user_class="user_class"
-                    :disabled="home_flag"
+                    :disabled="home_flag || !visitable"
+                    @followed="user_follow = true"
+                    @unfollowed="user_follow = false"
 
         />
-        <div v-if="$vuetify.breakpoint.smAndDown">
-            <VAvatar @click="open_filter_dialog = true"
-                     style="position: absolute; right: 110px;"
+        <div v-if="visitable" class="position-relative">
+            <div v-if="$vuetify.breakpoint.smAndDown">
+                <VAvatar @click="open_filter_dialog = true"
+                         class="filter_btn"
+                >
+                    <YIcon style="font-size: 20px;">
+                        shaixuan
+                    </YIcon>
+                </VAvatar>
+                <YDialog v-model="open_filter_dialog">
+                    <MaterialCard class="px-2 py-2" slot="inner">
+                        <PostCardFilter :tags="tags"
+                                        v-model="postFilter"
+                        />
+                    </MaterialCard>
+                </YDialog>
+            </div>
+            <VLayout class="mt-4"
+                     :class=" $vuetify.breakpoint.mdAndUp ? 'mx-5 pt-5' : 'mx-0 pt-4' "
+                     :style="'min-height:' + ( $vuetify.breakpoint.height - 75 ) +'px'"
+                     row
+                     wrap
             >
-                <YIcon style="font-size: 20px;">
-                    shaixuan
-                </YIcon>
-            </VAvatar>
-            <YDialog v-model="open_filter_dialog">
-                <MaterialCard class="px-2 py-2" slot="inner">
-                    <PostCardFilter :tags="tags"
-                                    v-model="postFilter"
+                <VFlex sm12 xs12 md8 lg8>
+                    <HomePostCard v-for="(t , key) in postCollections"
+                                  v-show="selected(t.tags) && dateAllowed(t.time)"
+                                  :key="key"
+                                  :title="t['title']"
+                                  :avatar="avatarUrl(t['poster_uid'])"
+                                  :user="t['poster_id']"
+                                  :text="t['content']"
+                                  :post_id="t['post_id']"
+                                  :time="t['time']"
+                                  :tags="t['tags']"
+                                  :user_uid="t['poster_uid']"
+                                  :home_flag="home_flag"
+                                  class="mb-1"
                     />
-                </MaterialCard>
-            </YDialog>
+                </VFlex>
+                <VFlex md4 lg4 sm12 xs12 v-if="$vuetify.breakpoint.mdAndUp">
+                    <VContainer>
+                        <VCard class="px-3 py-3">
+                            <div v-if="$vuetify.breakpoint.mdAndUp">
+                                <PostCardFilter :tags="tags" v-model="postFilter" />
+                            </div>
+                        </VCard>
+                    </VContainer>
+                </VFlex>
+            </VLayout>
+            <MugenScroll :handler="getRecent"
+                         :should-handle="!loading"
+                         scroll-container="noCharge"
+                         v-if="useMugenScroll"
+            ></MugenScroll>
         </div>
-        <VLayout class="mt-4"
-                 :class=" $vuetify.breakpoint.mdAndUp ? 'mx-5 pt-5' : 'mx-0 pt-4' "
-                 :style="'min-height:' + ( $vuetify.breakpoint.height - 75 ) +'px'"
-                 row
-                 wrap
-        >
-            <VFlex sm12 xs12 md8 lg8>
-                <HomePostCard v-for="(t , key) in postCollections"
-                              v-show="selected(t.tags) && dateAllowed(t.time)"
-                              :key="key"
-                              :title="t['title']"
-                              :avatar="avatarUrl(t['poster_uid'])"
-                              :user="t['poster_id']"
-                              :text="t['content']"
-                              :post_id="t['post_id']"
-                              :time="t['time']"
-                              :tags="t['tags']"
-                              :user_uid="t['poster_uid']"
-                              :home_flag="home_flag"
-                              class="mb-3"
-                />
-            </VFlex>
-            <VFlex md4 lg4 sm12 xs12 v-if="$vuetify.breakpoint.mdAndUp">
-                <VContainer>
-                    <VCard class="px-3 py-3">
-                        <div v-if="$vuetify.breakpoint.mdAndUp">
-                            <PostCardFilter :tags="tags" v-model="postFilter" />
-                        </div>
-                    </VCard>
-                </VContainer>
-            </VFlex>
-        </VLayout>
-        <MugenScroll :handler="getRecent"
-                     :should-handle="!loading"
-                     scroll-container="noCharge"
-                     v-if="useMugenScroll"
-        ></MugenScroll>
+        <div v-else>
+            <VContainer class="pt-5">
+                <p v-show="tips">CODE:403-这个界面是不被允许访问的哦</p>
+                <p>{{ tips }}</p>
+            </VContainer>
+        </div>
     </div>
 </template>
 
@@ -95,6 +105,8 @@
                 user_id : String(),
                 user_class : Number(),
                 user_follow : Boolean(),
+                visitable : false,
+                tips : String()
             }
         },
         methods : {
@@ -126,7 +138,7 @@
             },
             getRecent(){
                 if(this.end){
-                    messageBox('消息','这就是主人的全部啦！','','info');
+                    messageBox('消息','这就是的全部了哦','','info');
                     return;
                 }
                 this.loading = true;
@@ -138,6 +150,7 @@
                 })).then( response => {
                     const _data = response.data['data'];
                     if(_data['res'] === 666){
+                        this.visitable = true;
                         this.load(_data['data']['posts']);
                         if(_data['data']['user_id']){
                             this.user_id = _data['data']['user_id'];
@@ -151,8 +164,11 @@
                         this.page++;
                         if(_data['data']['posts'].length < 5){
                             this.end = true;
-                            _data['data'].length === 0 ? messageBox('消息','这就是主人的全部啦！','','info') : {};
+                            _data['data'].length === 0 ? messageBox('消息','这就是的全部了哦','','info') : {};
                         }
+                    }else{
+                        this.tips = _data['error'];
+                        this.visitable = false;
                     }
                 }).finally( () => {
                     this.firstLoaded = true;
@@ -198,5 +214,11 @@
 </script>
 
 <style>
+
+    .filter_btn{
+        position: absolute;
+        right: 110px;
+        top: -25px;
+    }
 
 </style>

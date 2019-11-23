@@ -39,6 +39,8 @@
 
 <script>
 
+    import { messageBox } from "../../communicate";
+
     export default {
         name: "HomeTopBar",
         props : {
@@ -74,6 +76,8 @@
                     const _data = response.data;
                     if(_data['data']['res'] === 666){
                         this.$emit(this.user_follow ? 'unfollowed' : 'followed');
+                    }else{
+                        messageBox('错误','',_data['data']['error'],'error');
                     }
                 });
             }
@@ -84,6 +88,8 @@
             },
             userClassColor(){
                 switch (this.user_class) {
+                    case 0:
+                        return 'grey';
                     case 1:
                         return 'rgb(149,211,178)';
                     case 2:

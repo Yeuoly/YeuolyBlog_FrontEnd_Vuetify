@@ -36,13 +36,14 @@
                                 :append-icon="password_show ? 'visibility' : 'visibility_off'"
                                 :rules="[rule.required,rule.password_min,rule.password_max,rule.password_format]"
                                 @click:append="password_show = !password_show"
+                                @input="refreshPasswordValidate"
                                 v-model="password"
-                                @input="repeat_password = repeat_password.split('').join('')"
                     ></VTextField>
 
 
                     <VTextField label="重复密码"
                                 counter="16"
+                                ref="repeatpassword"
                                 :type="repeat_password_show ? 'text' : 'password'"
                                 :append-icon="repeat_password_show ? 'visibility' : 'visibility_off'"
                                 :rules="[rule2.repeat_password]"
@@ -234,6 +235,9 @@
             },
             refreshCaptcha(){
                 this.p++;
+            },
+            refreshPasswordValidate(){
+                this.$refs.repeatpassword.$emit('input');
             }
         }
     }
