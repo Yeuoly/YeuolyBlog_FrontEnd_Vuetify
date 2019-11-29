@@ -7,6 +7,7 @@ const ViewEditor = () => import('../components/views/ViewEditor.vue');
 const ViewHistory = () => import('../components/views/ViewHistory.vue');
 const ViewSetting = () => import('../components/views/ViewSetting.vue');
 const ViewSearch = () => import('../components/views/ViewSearch.vue');
+const ViewAdminDashBoard = () => import('../components/views/ViewAdmin.vue');
 
 const NotFound = () => import('../components/views/View404.vue');
 
@@ -24,7 +25,7 @@ const setting_routes = [{
         offline_required : false,
         keepAlive : false,
         btns : {
-            help : true,
+            helper : true,
             new_post : true,
             refresh : false
         }
@@ -38,7 +39,7 @@ const setting_routes = [{
         offline_required : false,
         keepAlive : false,
         btns : {
-            help : true,
+            helper : true,
             new_post : true,
             refresh : false
         }
@@ -52,7 +53,7 @@ const setting_routes = [{
         offline_required : false,
         keepAlive : false,
         btns : {
-            help : true,
+            helper : true,
             new_post : true,
             refresh : false
         }
@@ -66,12 +67,14 @@ const setting_routes = [{
         offline_required : false,
         keepAlive : false,
         btns : {
-            help : true,
+            helper : true,
             new_post : true,
             refresh : false
         }
     },
 }];
+
+const admin_routes = [];
 
 export default {
     mode : 'history',
@@ -83,7 +86,7 @@ export default {
             keepAlive : true,
             login_required : false,
             btns : {
-                help : false,
+                helper : false,
                 new_post : false,
                 refresh : false
             }
@@ -97,7 +100,7 @@ export default {
             login_required : false,
             offline_required : true,
             btns : {
-                help : true,
+                helper : true,
                 new_post : false,
                 refresh : false
             }
@@ -111,7 +114,7 @@ export default {
             login_required : false,
             offline_required : false,
             btns : {
-                help : true,
+                helper : true,
                 new_post : false,
                 refresh : false
             }
@@ -125,7 +128,7 @@ export default {
             login_required : true,
             offline_required : false,
             btns : {
-                help : true,
+                helper : true,
                 new_post : true,
                 refresh : true
             }
@@ -139,7 +142,7 @@ export default {
             login_required : true,
             offline_required : false,
             btns : {
-                help : true,
+                helper : true,
                 new_post : false,
                 refresh : false
             }
@@ -153,7 +156,7 @@ export default {
             login_required : false,
             offline_required : false,
             btns : {
-                help : true,
+                helper : true,
                 new_post : true,
                 refresh : false
             }
@@ -167,7 +170,7 @@ export default {
             login_required : true,
             offline_required : false,
             btns : {
-                help : true,
+                helper : true,
                 new_post : true,
                 refresh : false
             }
@@ -182,7 +185,7 @@ export default {
             login_required : false,
             offline_required : false,
             btns : {
-                help : true,
+                helper : true,
                 new_post : true,
                 refresh : false
             }
@@ -196,11 +199,26 @@ export default {
             login_required : false,
             offline_required : false,
             btns : {
-                help : true,
+                helper : true,
                 new_post : false,
                 refresh : false
             }
         }
+    },{
+        name : 'admin-dash-board',
+        path : '/admin-dash-board',
+        component : ViewAdminDashBoard,
+        meta : {
+            keepAlive : true,
+            login_required : true,
+            offline_required : false,
+            btns : {
+                helper : false,
+                new_post : false,
+                refresh : false
+            }
+        },
+        children : admin_routes
     },{
         path : '*',
         component : NotFound,
@@ -209,7 +227,7 @@ export default {
             login_required : false,
             offline_required : false,
             btns : {
-                help : true,
+                helper : true,
                 new_post : false,
                 refresh : false
             }

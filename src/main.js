@@ -11,12 +11,6 @@ import App from './App.vue'
 import VueRouter from 'vue-router'
 Vue.use(VueRouter);
 
-//解决router的路径报错
-const originalPush = VueRouter.prototype.push;
-VueRouter.prototype.push = function push(location) {
-  return originalPush.call(this, location).catch(err => err)
-};
-
 //启用cookie
 import VueCookies from 'vue-cookies'
 Vue.use(VueCookies);
@@ -41,9 +35,9 @@ axios.defaults.withCredentials = true;
 axios.post('/v1/account/ordinary/action',qs.stringify({
   act : 0
 })).then( response => {
-  let _data = response.data;
+  const _data = response.data;
   if(_data['data']['res'] === 666) {
-    let data = _data['data']['data'];
+    const data = _data['data']['data'];
     store.commit('setOnlineState',true);
     store.commit('setUserName',data['user_id']);
     store.commit('setLoginTime',data['login_time']);
@@ -61,10 +55,7 @@ axios.post('/v1/account/ordinary/action',qs.stringify({
         _next = '/';
       }
     });
-    if(_next)
-      next(_next);
-    else
-      next();
+    if(_next) next(_next); else next();
   });
 
   //实例化Vue

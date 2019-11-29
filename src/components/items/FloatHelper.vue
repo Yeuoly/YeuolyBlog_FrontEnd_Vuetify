@@ -3,7 +3,7 @@
         <div class="helper-btn-group">
             <VLayout column wrap>
                 <VFlex xs12>
-                    <VTooltip v-if="$route.meta.btns.help" left>
+                    <VTooltip v-if="$route.meta.btns.helper" left>
                         <template v-slot:activator="{ on }">
                             <VBtn @click="show_helper = !show_helper"
                                   v-on="on"

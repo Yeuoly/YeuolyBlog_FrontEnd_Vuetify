@@ -21,7 +21,13 @@
         v-text="title"
       />
       <h3 class="title display-1 font-weight-light">
-        {{ value }} <small>{{ smallValue }}</small>
+        <VOdometer
+          v-if="isValueNum"
+          theme="minimal"
+          format=""
+          :value="value"
+        />
+        <span v-else>{{ value }}</span> <small>{{ smallValue }}</small>
       </h3>
     </div>
 
@@ -42,13 +48,21 @@
 </template>
 
 <script>
-import Card from "./Card";
+
+  import MaterialCard from './Card'
+  import VOdometer from "../common/Odometer";
 
 export default {
+  name : 'DashBoardStatsCard',
+  components: {VOdometer, MaterialCard},
   inheritAttrs: false,
 
   props: {
-    ...Card.props,
+    ...MaterialCard.props,
+    isValueNum : {
+      type: Boolean,
+      default: false
+    },
     icon: {
       type: String,
       required: true

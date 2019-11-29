@@ -1,6 +1,6 @@
 <template>
   <MaterialCard>
-    <Chart
+    <ECharts
       slot="header"
       theme="card"
       :auto-resize="true"
@@ -19,10 +19,12 @@
 <script>
 
   import MaterialCard from './Card'
+  import ECharts from "vue-echarts";
 
 export default {
+    name : 'DashBoardChart',
   inheritAttrs: false,
-  components : {MaterialCard},
+  components : {ECharts, MaterialCard},
   props: {
     options: {
       type: Object,

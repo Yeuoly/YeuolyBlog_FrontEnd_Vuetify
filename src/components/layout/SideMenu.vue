@@ -88,15 +88,34 @@
                         </VListTileTitle>
                     </VListTileContent>
                 </VListTile>
+                <VDivider />
             </div>
 
-            <VDivider />
+            <div v-if="isAdministrator">
+                <VListTile class="nav-list"
+                           v-for="( t , key ) in navs.admin"
+                           :key="key"
+                           @click="router(t.route)"
+                >
+                    <VListTileAvatar>
+                        <YIcon class="menu-icon">{{t.icon}}</YIcon>
+                    </VListTileAvatar>
+                    <VListTileContent>
+                        <VListTileTitle>
+                            {{t.name}}
+                        </VListTileTitle>
+                    </VListTileContent>
+                </VListTile>
+
+                <VDivider />
+            </div>
         </VList>
     </VNavigationDrawer>
 </template>
 
 <script>
     import { communicate } from "../../communicate"
+    import { messageBox } from "../../communicate";
     import base from '../../mixins/base'
     import YIcon from "../common/YIcon";
 
@@ -114,7 +133,7 @@
                     }, {
                         name : '编辑',
                         route : 'editor',
-                        icon : 'fawenzi'
+                        icon : 'edit'
                     }, {
                         name : '设置',
                         route : 'setting',
@@ -138,7 +157,18 @@
                         route : 'history',
                         icon: 'iconset0142'
                     }],
+                    admin : [{
+                        name : '系统管理',
+                        route : 'admin-dash-board',
+                        icon : 'manage'
+                    }]
                 }
+            }
+        },
+        computed : {
+            isAdministrator(){
+                const level = this.$store.getters.getClass;
+                return level !== 1 && level !== 0;
             }
         },
         methods : {
@@ -159,10 +189,10 @@
                     if(_data['data']['res'] === 666){
                         location.href = '/';
                     }else{
-                        alert('失败');
+                        messageBox('失败','获取服务端信息失败','','error');
                     }
                 }).catch( () => {
-                    alert('失败');
+                    messageBox('失败','获取服务端信息失败','','error');
                 })
             }
         },

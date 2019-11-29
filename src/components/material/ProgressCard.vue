@@ -106,8 +106,10 @@
 
 <script>
 import Card from "./Card";
+import CommonVOdometer from "../common/Odometer";
 
 export default {
+  components : { CommonVOdometer },
   props: {
     ...Card.props,
     subIcon: {
