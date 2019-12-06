@@ -1,4 +1,4 @@
-<template>
+<template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
     <MaterialCard
             color="green"
             :title="title"
@@ -20,7 +20,23 @@
                     slot="items"
                     slot-scope="{ item }"
             >
-                <td v-for="t in item">{{ t }}</td>
+                <td v-for="t in item">
+                    <span v-if="typeof t === 'string' || typeof t === 'number'">
+                        {{ t }}
+                    </span>
+                    <VMenu v-else>
+                        <template v-slot:activator="{ on }">
+                            <VBtn v-on="on" small flat>
+                                <VIcon>mdi-menu-open</VIcon>
+                            </VBtn>
+                        </template>
+                        <VList>
+                            <VBtn small block flat v-for="p in t" @click="p.method">
+                                {{p.text}}
+                            </VBtn>
+                        </VList>
+                    </VMenu>
+                </td>
             </template>
         </v-data-table>
     </MaterialCard>
