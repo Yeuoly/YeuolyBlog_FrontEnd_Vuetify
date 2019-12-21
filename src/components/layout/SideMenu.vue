@@ -7,13 +7,12 @@
                height="130"
                class="menu-header"
         >
-            <VAvatar @click="router('home')"
+            <YAvatar @click="router('home')"
                      size="74"
                      class="menu-avatar"
                      style="cursor: pointer"
-            >
-                <VImg :src="userAvatar"></VImg>
-            </VAvatar>
+                     :uid="userUid"
+            />
             <VCardText class="menu-name">
                 {{ userName }}
             </VCardText>
@@ -118,10 +117,11 @@
     import { messageBox } from "../../communicate";
     import base from '../../mixins/base'
     import YIcon from "../common/YIcon";
+    import YAvatar from "../common/YAvatar";
 
     export default {
         name: "SideMenu",
-        components: {YIcon},
+        components: {YAvatar, YIcon},
         data(){
             return {
                 open: false,

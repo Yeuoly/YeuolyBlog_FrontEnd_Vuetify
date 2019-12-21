@@ -38,9 +38,7 @@
                         用户名:{{t.name}} | uid:{{t.uid}} | 职阶：{{level(t.class)}}
                     </VCardTitle>
                     <VResponsive class="ml-2 pb-2">
-                        <VAvatar size="75">
-                            <VImg :src="avatar(t.uid)"></VImg>
-                        </VAvatar>
+                        <YAvatar :uid="t.uid" size="75" />
                     </VResponsive>
                 </VCard>
                 <VCard v-else-if="t['type'] === 'post'">
@@ -53,9 +51,11 @@
 
 <script>
     import { messageBox } from "../../communicate";
+    import YAvatar from "../common/YAvatar";
 
     export default {
         name: "ViewSearch",
+        components: {YAvatar},
         data(){
             return{
                 search_type : 'user',

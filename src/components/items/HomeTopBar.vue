@@ -1,9 +1,7 @@
 <template>
     <div ref="host" class="home-top-bar">
         <div class="home-top-bar__avatar">
-            <VAvatar :size="$vuetify.breakpoint.mdAndUp ? 90 : 70">
-                <VImg :src="userAvatar"></VImg>
-            </VAvatar>
+            <YAvatar :size="$vuetify.breakpoint.mdAndUp ? 90 : 70" :uid="user_uid" />
         </div>
         <div class="home-top-bar__info">
             <span class="home-top-bar__class"
@@ -40,9 +38,11 @@
 <script>
 
     import { messageBox } from "../../communicate";
+    import YAvatar from "../common/YAvatar";
 
     export default {
         name: "HomeTopBar",
+        components: {YAvatar},
         props : {
             user_name : {
                 default : 'none',
@@ -83,9 +83,6 @@
             }
         },
         computed : {
-            userAvatar(){
-                return `${process.env.VUE_APP_API_ROOT}/v1/account/avatar?size=100&uid=${this.user_uid}`;
-            },
             userClassColor(){
                 switch (this.user_class) {
                     case 0:

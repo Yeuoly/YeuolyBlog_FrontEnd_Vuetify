@@ -39,7 +39,7 @@
       LayoutContainer,
       LayoutSideMenu,
       LayoutHeader,
-      BrowserVersionTooLow : BrowserVersionTooLow
+      BrowserVersionTooLow
     },
     data(){
       return{

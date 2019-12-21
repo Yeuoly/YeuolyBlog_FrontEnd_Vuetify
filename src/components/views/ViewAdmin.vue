@@ -27,8 +27,12 @@
                 </VTabs>
             </VFlex>
 
-            <VTabsItems v-model="tabs.tab">
-                <VTabItem v-for="t in tabs.items">
+            <VTabsItems
+                    v-model="tabs.tab"
+                    @change="load"
+                    touchless
+            >
+                <VTabItem v-for="t in tabs.items" >
                     <div v-for="p in t.col">
                         <DashBoardStatsCard
                                 v-if="p.type === 'stats'"

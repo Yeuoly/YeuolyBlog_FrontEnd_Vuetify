@@ -1,5 +1,3 @@
-import axios from "axios";
-
 //提供一个Vue以外我的访问接口
 export const state_user = {
     online : false,
@@ -9,8 +7,6 @@ export const state_user = {
     exp : Number(),
     login_time : Number()
 };
-
-axios.defaults.withCredentials = true;
 
 export default {
     state : state_user,

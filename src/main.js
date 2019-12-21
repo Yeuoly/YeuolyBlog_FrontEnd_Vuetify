@@ -71,4 +71,5 @@ Vue.use(VueAxios, axios);
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
 Vue.config.productionTip = false;
+axios.defaults.withCredentials = true;
 Vue.prototype.$qs = qs;

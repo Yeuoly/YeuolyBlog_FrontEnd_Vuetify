@@ -1,11 +1,7 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
     <VCard class="position-relative" block>
         <VLayout wrap row>
-            <div>
-                <VAvatar size="50" class="mx-2 mt-2">
-                    <VImg :src="avatar"></VImg>
-                </VAvatar>
-            </div>
+            <YAvatar size="50" class="mx-2 mt-2" :uid="user_uid" />
             <div class="post-card-head">
                 <VCardTitle>
                     <span class="card-user">
@@ -56,10 +52,11 @@
     import YIcon from "../common/YIcon";
     import YHtmlCompiler from "../common/YHtmlCompiler";
     import CategoryBox from "../common/CategoryBox";
+    import YAvatar from "../common/YAvatar";
 
     export default {
         name: "PostCard",
-        components : { CategoryBox, YHtmlCompiler, YIcon },
+        components : {YAvatar, CategoryBox, YHtmlCompiler, YIcon },
         props : {
             post_id: String,
             title : String,

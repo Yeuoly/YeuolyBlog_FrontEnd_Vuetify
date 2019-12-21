@@ -37,7 +37,6 @@
                                   v-show="selected(t.tags) && dateAllowed(t.time)"
                                   :key="key"
                                   :title="t['title']"
-                                  :avatar="avatarUrl(t['poster_uid'])"
                                   :user="t['poster_id']"
                                   :text="t['content']"
                                   :post_id="t['post_id']"
@@ -138,7 +137,6 @@
             },
             getRecent(){
                 if(this.end){
-                    messageBox('消息','这就是的全部了哦','','info');
                     return;
                 }
                 this.loading = true;
@@ -164,7 +162,6 @@
                         this.page++;
                         if(_data['data']['posts'].length < 5){
                             this.end = true;
-                            _data['data'].length === 0 ? messageBox('消息','这就是的全部了哦','','info') : {};
                         }
                     }else{
                         this.tips = _data['error'];
@@ -195,10 +192,7 @@
         },
         computed : {
             useMugenScroll(){
-                return this.firstLoaded && !this.end && this.$route.name === 'home';
-            },
-            avatarUrl(){
-                return  uid => `${process.env.VUE_APP_API_ROOT}/v1/account/avatar?size=100&uid=${uid}`;
+                return this.firstLoaded && !this.end && ( this.$route.name === 'home' || this.$route.name === 'visit' );
             },
         },
         mounted(){

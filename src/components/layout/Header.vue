@@ -1,11 +1,7 @@
 <template>
     <VToolbar dark color="rgb(68, 68, 68)" height="50">
         <YIcon class="__header-l-icon">caidan</YIcon>
-        <VAvatar size="20">
-            <VBtn small icon @click="openSideMenu">
-                <VImg :src="userAvatar"></VImg>
-            </VBtn>
-        </VAvatar>
+        <YAvatar size="35" @click="openSideMenu" :uid="userUid" />
         <VToolbarTitle>YeuolyBlog</VToolbarTitle>
         <VSpacer />
         <VBtn v-if="hasSearcher" flat small fab @click="router('search')">
@@ -18,11 +14,12 @@
     import { communicate } from "../../communicate";
     import base from '../../mixins/base';
     import YIcon from "../common/YIcon";
+    import YAvatar from "../common/YAvatar";
 
     export default {
         name: "Header",
         mixins : [base],
-        components: {YIcon},
+        components: {YAvatar, YIcon},
         methods : {
             router(name){
                 this.$router.push({name : name});
