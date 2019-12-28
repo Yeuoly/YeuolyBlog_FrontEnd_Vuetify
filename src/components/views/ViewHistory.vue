@@ -34,6 +34,13 @@
             return{
                 history :  [
                     {
+                        title   : '修改样式、结构',
+                        version : '2.0.9.00-α',
+                        content : '修改大量图层样式，改善用户体验，更换图标库为MaterialDesign官方图标库。更改前端代码结构、头像存储方式。',
+                        date    : '2019/12/28',
+                        color   : 'red'
+                    },
+                    {
                         title   : '完善，修复',
                         version : '2.0.8.02-α',
                         content : '加入看板娘互动，修复主页显示bug',

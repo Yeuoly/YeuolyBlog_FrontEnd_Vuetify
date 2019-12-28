@@ -10,7 +10,6 @@
             <YAvatar @click="router('home')"
                      size="74"
                      class="menu-avatar"
-                     style="cursor: pointer"
                      :uid="userUid"
             />
             <VCardText class="menu-name">
@@ -25,10 +24,10 @@
                            @click="router(t.route)"
                 >
                     <VListTileAvatar>
-                        <YIcon class="menu-icon">{{t.icon}}</YIcon>
+                        <VIcon class="menu-icon">mdi-{{t.icon}}</VIcon>
                     </VListTileAvatar>
                     <VListTileContent>
-                        <VListTileTitle>
+                        <VListTileTitle class="menu-text">
                             {{t.name}}
                         </VListTileTitle>
                     </VListTileContent>
@@ -43,10 +42,10 @@
                            @click="router(t.route)"
                 >
                     <VListTileAvatar>
-                        <YIcon class="menu-icon">{{t.icon}}</YIcon>
+                        <VIcon class="menu-icon">mdi-{{t.icon}}</VIcon>
                     </VListTileAvatar>
                     <VListTileContent>
-                        <VListTileTitle>
+                        <VListTileTitle class="menu-text">
                             {{t.name}}
                         </VListTileTitle>
                     </VListTileContent>
@@ -62,10 +61,10 @@
                            @click="router(t.route)"
                 >
                     <VListTileAvatar>
-                        <YIcon class="menu-icon">{{t.icon}}</YIcon>
+                        <VIcon class="menu-icon">mdi-{{t.icon}}</VIcon>
                     </VListTileAvatar>
                     <VListTileContent>
-                        <VListTileTitle>
+                        <VListTileTitle class="menu-text">
                             {{t.name}}
                         </VListTileTitle>
                     </VListTileContent>
@@ -79,10 +78,10 @@
                            @click="logout"
                 >
                     <VListTileAvatar>
-                        <YIcon class="menu-icon">-dengchu</YIcon>
+                        <VIcon class="menu-icon">mdi-logout-variant</VIcon>
                     </VListTileAvatar>
                     <VListTileContent>
-                        <VListTileTitle>
+                        <VListTileTitle class="menu-text">
                             登出
                         </VListTileTitle>
                     </VListTileContent>
@@ -97,10 +96,10 @@
                            @click="router(t.route)"
                 >
                     <VListTileAvatar>
-                        <YIcon class="menu-icon">{{t.icon}}</YIcon>
+                        <VIcon class="menu-icon">mdi-{{t.icon}}</VIcon>
                     </VListTileAvatar>
                     <VListTileContent>
-                        <VListTileTitle>
+                        <VListTileTitle class="menu-text">
                             {{t.name}}
                         </VListTileTitle>
                     </VListTileContent>
@@ -116,12 +115,11 @@
     import { communicate } from "../../communicate"
     import { messageBox } from "../../communicate";
     import base from '../../mixins/base'
-    import YIcon from "../common/YIcon";
     import YAvatar from "../common/YAvatar";
 
     export default {
         name: "SideMenu",
-        components: {YAvatar, YIcon},
+        components: {YAvatar},
         data(){
             return {
                 open: false,
@@ -129,38 +127,38 @@
                     online: [{
                         name: '我的主页',
                         route: 'home',
-                        icon: 'MyHome'
+                        icon : 'home-circle-outline'
                     }, {
                         name : '编辑',
                         route : 'editor',
-                        icon : 'edit'
+                        icon : 'circle-edit-outline'
                     }, {
                         name : '设置',
                         route : 'setting',
-                        icon : 'shezhi'
+                        icon : 'settings-outline'
                     }],
                     offline: [{
                         name : '登录',
                         route : 'login',
-                        icon : 'denglu'
+                        icon : 'login-variant'
                     }],
                     ordinary: [{
                         name: '搜索',
                         route: 'search',
-                        icon: 'sousuo'
+                        icon : 'magnify'
                     }, {
                         name: '网站主页',
                         route: 'index',
-                        icon: 'zhuye'
+                        icon : 'home-circle-outline'
                     }, {
                         name: '开发日志',
                         route : 'history',
-                        icon: 'iconset0142'
+                        icon : 'backup-restore'
                     }],
                     admin : [{
                         name : '系统管理',
                         route : 'admin-dash-board',
-                        icon : 'manage'
+                        icon : 'vector-circle'
                     }]
                 }
             }
@@ -217,6 +215,10 @@
         top: 10px;
         left: 113px;
         margin: 0 auto;
+    }
+
+    .menu-text{
+        color: grey;
     }
 
     .menu-name{

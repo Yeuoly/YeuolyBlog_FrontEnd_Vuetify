@@ -6,9 +6,7 @@
         <VLayout row wrap>
             <VFlex xs12>
                 <VCard flat height="170" class="text-xs-center">
-                    <VAvatar size="100" style="margin-top: 50px">
-                        <VImg :src="avatar"></VImg>
-                    </VAvatar>
+                    <YAvatar :uid="userUid" size="100" style="margin-top: 50px"></YAvatar>
                 </VCard>
                 <VCard flat class="text-xs-center">
                     <VBtn color="primary" round dark @click="show_change = true">更换头像</VBtn>
@@ -23,26 +21,17 @@
     import base from '../../../mixins/base';
     import YDialog from "../../common/YDialog";
     import UploadAvatarDialog from "../../items/UploadAvatarDialog";
+    import YAvatar from "../../common/YAvatar";
 
     export default {
         name: "ViewSettingChangeAvatar",
-        components: {UploadAvatarDialog, YDialog},
+        components: {YAvatar, UploadAvatarDialog, YDialog},
         mixins : [base],
         data(){
             return{
                 show_change : false
             }
         },
-        computed : {
-            avatar(){
-                return `${process.env.VUE_APP_API_ROOT}/v1/account/avatar?size=100&uid=${this.userUid}`;
-            }
-        },
-        methods : {
-            upload(){
-
-            }
-        }
     }
 </script>
 

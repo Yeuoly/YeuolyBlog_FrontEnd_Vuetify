@@ -2,21 +2,15 @@
     <VContainer>
         <VLayout row wrap>
             <VFlex xs12 sm4 md4 lg3>
-                <VList style="margin-right: 5px;background-color: transparent;box-shadow: rgba(0,0,0,.12) 0px 0px 1px;">
+                <VList style="background-color: transparent;box-shadow: rgba(0,0,0,.12) 0px 0px 1px;">
                     <VListGroup v-for="( t , key ) in items"
                                 :key="key"
                                 v-model="t.active"
+                                :prepend-icon="`mdi-${t.icon}`"
                                 no-action
                     >
                         <template v-slot:activator>
-                            <div style="padding: 10px;position: relative">
-                                <YIcon style="font-size: 20px;padding-right: 20px;position: inherit">
-                                    {{t.icon}}
-                                </YIcon>
-                                <span>
-                                    {{t.title}}
-                                </span>
-                            </div>
+                            <VListTileTitle class="list-name">{{t.title}}</VListTileTitle>
                         </template>
                         <VListTile v-for="i in t.children"
                                    :key="i.title"
@@ -41,14 +35,12 @@
 </template>
 
 <script>
-    import YIcon from "../common/YIcon";
     export default {
         name: "ViewSetting",
-        components: {YIcon},
         data(){
             return{
                 items : [{
-                    icon : 'touxiang',
+                    icon : 'face-outline',
                     title : '头像',
                     active : true,
                     children : [{
@@ -59,20 +51,12 @@
                         route : 'st-avt-et'
                     },]
                 },{
-                    icon : 'fuwutiaokuanjiyinsi',
+                    icon : 'folder-information-outline',
                     title : '隐私',
                     active : false,
                     children : [{
                         title: '隐私选项',
                         route: 'st-pri-cg'
-                    }]
-                },{
-                    icon : 'nv',
-                    title : '看板娘',
-                    active : false,
-                    children : [{
-                        title: '看板娘设置',
-                        route: 'st-l2-cg'
                     }]
                 },]
             }
@@ -86,5 +70,9 @@
 </script>
 
 <style scoped>
-
+    .list-name{
+        height: 50px;
+        padding-top: 13px;
+        color: grey;
+    }
 </style>

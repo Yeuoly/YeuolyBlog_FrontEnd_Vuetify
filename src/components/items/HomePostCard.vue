@@ -1,7 +1,7 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
     <VCard class="position-relative" block>
         <VLayout wrap row>
-            <YAvatar size="50" class="mx-2 mt-2" :uid="user_uid" />
+            <YAvatar :magic_door="true" size="50" class="mx-2 mt-2" :uid="user_uid" />
             <div class="post-card-head">
                 <VCardTitle>
                     <span class="card-user">
@@ -15,9 +15,7 @@
             <VMenu offset-y left>
                 <template v-slot:activator="{ on }">
                     <VBtn class="post-card-menu" v-on="on" small fab flat>
-                        <YIcon>
-                            youcecaidan
-                        </YIcon>
+                        <VIcon>mdi-dots-vertical</VIcon>
                     </VBtn>
                 </template>
                 <VList v-if="usePrivateOperateBox(user_uid)">
@@ -49,14 +47,13 @@
 
 <script>
     import { communicate } from "../../communicate";
-    import YIcon from "../common/YIcon";
     import YHtmlCompiler from "../common/YHtmlCompiler";
     import CategoryBox from "../common/CategoryBox";
     import YAvatar from "../common/YAvatar";
 
     export default {
         name: "PostCard",
-        components : {YAvatar, CategoryBox, YHtmlCompiler, YIcon },
+        components : {YAvatar, CategoryBox, YHtmlCompiler },
         props : {
             post_id: String,
             title : String,

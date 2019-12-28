@@ -1,60 +1,52 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
     <div class="position-relative" id="float-btn-group">
         <div class="helper-btn-group">
-            <VLayout column wrap>
-                <VFlex xs12>
-                    <VTooltip v-if="$route.meta.btns.helper" left>
-                        <template v-slot:activator="{ on }">
-                            <VBtn @click="show_helper = !show_helper"
-                                  v-on="on"
-                                  fab
-                                  dark
-                                  color="green"
-                            >
-                                <YIcon style="font-size: 30px">
-                                    iconset0143
-                                </YIcon>
-                            </VBtn>
-                        </template>
-                        <span>有事找我哦</span>
-                    </VTooltip>
+            <VLayout column wrap ref="holder">
+                <VFlex v-if="$route.meta.btns.helper" xs12>
+                    <VBtn @click="show_helper = !show_helper"
+                          fab
+                          small
+                          dark
+                          color="green"
+                          ref="btn_1"
+                          class="initial-btn"
+                    >
+                        <VIcon>mdi-help-circle-outline</VIcon>
+                    </VBtn>
                 </VFlex>
-                <VFlex xs12>
-                    <VTooltip v-if="$route.meta.btns.new_post" left>
-                        <template v-slot:activator="{ on }">
-                            <VBtn @click="toEditor"
-                                  v-on="on"
-                                  fab
-                                  dark
-                                  color="red"
-                            >
-                                <YIcon style="font-size: 30px;">
-                                    jia
-                                </YIcon>
-                            </VBtn>
-                        </template>
-                        <span>新建博客</span>
-                    </VTooltip>
+                <VFlex v-if="$route.meta.btns.new_post" xs12>
+                    <VBtn @click="toEditor"
+                          fab
+                          dark
+                          small
+                          color="red"
+                          ref="btn_2"
+                          class="initial-btn"
+                    >
+                        <VIcon>mdi-circle-edit-outline</VIcon>
+                    </VBtn>
                 </VFlex>
-                <VFlex xs12>
-                    <VTooltip v-if="$route.meta.btns.refresh" left>
-                        <template v-slot:activator="{ on }">
-                            <VBtn @click="refresh"
-                                  v-on="on"
-                                  fab
-                                  dark
-                                  color="#ecde60"
-                            >
-                                <YIcon style="font-size: 30px;">
-                                    shuaxin
-                                </YIcon>
-                            </VBtn>
-                        </template>
-                        <span>刷新</span>
-                    </VTooltip>
+                <VFlex v-if="$route.meta.btns.refresh" xs12>
+                    <VBtn @click="refresh"
+                          fab
+                          dark
+                          small
+                          color="#ecde60"
+                          ref="btn_3"
+                          class="initial-btn"
+                    >
+                        <VIcon>mdi-refresh</VIcon>
+                    </VBtn>
                 </VFlex>
-
             </VLayout>
+            <VBtn
+                    fab
+                    color="blue"
+                    dark
+                    @click="operateHelper"
+            >
+                <VIcon>{{ open ? 'mdi-menu-down' : 'mdi-menu-up' }}</VIcon>
+            </VBtn>
         </div>
         <YDialog v-model="show_helper" width="500">
             <MaterialCard slot="inner" title="有问题请联系我">
@@ -76,22 +68,17 @@
 </template>
 
 <script>
-    import YIcon from "../common/YIcon";
     import YDialog from "../common/YDialog";
     import MaterialCard from "../material/Card";
-
     import { communicate } from "../../communicate";
-
     export default {
         name : "FloatHelper",
-        components : {YDialog, YIcon, MaterialCard},
+        components : {YDialog, MaterialCard},
         data(){
             return{
                 show_helper : false,
+                open : false
             }
-        },
-        computed : {
-
         },
         methods : {
             toEditor(){
@@ -100,24 +87,51 @@
             refresh() {
                 communicate.$emit('refreshHome');
             },
+            operateHelper(){
+                this.open = !this.open;
+            },
+            handleMove(v){
+                const nodes = this.$refs.holder.children;
+                if(v){
+                    for(let i = 0; i < 3; i++){
+                        if(nodes[i]){
+                            nodes[i].children[0].style.transform = `translateY(-${ i  * 45 + 60}px)`;
+                        }
+                    }
+                }else{
+                    for(let i = 0; i < 3; i++){
+                        if(nodes[i]){
+                            nodes[i].children[0].style.transform = `translateY(0)`;
+                        }
+                    }
+                }
+            }
+        },
+        watch : {
+            open : {
+                handler(v){
+                    this.handleMove(v);
+                }
+            },
         }
     }
 </script>
 
 <style>
-
     #float-btn-group{
         z-index: 100 !important;
     }
-
+    .initial-btn{
+        position: absolute !important;
+        bottom: 7px;
+        right: 9px;
+    }
     .float-button {
         bottom: 48px;
     }
-
     .v-dialog{
         box-shadow: none !important;
     }
-
     .__overlay{
         background-color: rgba(0,0,0,.25);
         position: fixed;
@@ -127,7 +141,6 @@
         top: 0;
         left: 0;
     }
-
     .helper-btn-group{
         position: fixed;
         bottom: 40px;

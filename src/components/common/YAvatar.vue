@@ -1,7 +1,14 @@
 <template>
-    <VAvatar v-on="$listeners" v-bind="$attrs">
-        <VImg v-if="url" :src="url"></VImg>
-    </VAvatar>
+    <div v-if="magic_door">
+        <VAvatar class="clickable" v-on="$listeners" v-bind="$attrs" @click="to">
+            <VImg v-if="url" :src="url"></VImg>
+        </VAvatar>
+    </div>
+    <div v-else>
+        <VAvatar class="clickable" v-on="$listeners" v-bind="$attrs">
+            <VImg v-if="url" :src="url"></VImg>
+        </VAvatar>
+    </div>
 </template>
 
 <script>
@@ -16,6 +23,10 @@
             uid : {
                 required : true,
                 type : [ String, Number ]
+            },
+            magic_door : {
+                default : false,
+                type : Boolean
             }
         },
         methods : {
@@ -30,6 +41,16 @@
                 }else{
                     this.url = url_cache;
                 }
+            },
+            to(){
+                if(this.$route.name !== 'visit' || this.uid !== parseInt(this.$route.query.uid)){
+                    this.$router.push({ name : 'visit' , query : { uid : this.uid } });
+                }
+            }
+        },
+        watch : {
+            uid(){
+                this.load();
             }
         },
         mounted(){

@@ -1,11 +1,11 @@
 <template>
     <VToolbar dark color="rgb(68, 68, 68)" height="50">
-        <YIcon class="__header-l-icon">caidan</YIcon>
+        <VIcon class="__header-l-icon">mdi-menu</VIcon>
         <YAvatar size="35" @click="openSideMenu" :uid="userUid" />
         <VToolbarTitle>YeuolyBlog</VToolbarTitle>
         <VSpacer />
         <VBtn v-if="hasSearcher" flat small fab @click="router('search')">
-            <YIcon style="font-size: 20px">sousuo</YIcon>
+            <VIcon style="font-size: 25px">mdi-magnify</VIcon>
         </VBtn>
     </VToolbar>
 </template>
@@ -13,13 +13,12 @@
 <script>
     import { communicate } from "../../communicate";
     import base from '../../mixins/base';
-    import YIcon from "../common/YIcon";
     import YAvatar from "../common/YAvatar";
 
     export default {
         name: "Header",
         mixins : [base],
-        components: {YAvatar, YIcon},
+        components: {YAvatar},
         methods : {
             router(name){
                 this.$router.push({name : name});
@@ -43,14 +42,14 @@
     }
 
     .__header-l-icon{
-        font-size: 30px;
+        font-size: 25px;
         padding-right: 10px;
-        margin-left: -43px;
+        margin-left: -39px;
     }
 
     @media (max-width: 959px) {
         .__header-l-icon{
-            margin-left: -35px;
+            margin-left: -33px;
         }
     }
 

@@ -14,9 +14,9 @@
                 <VAvatar @click="open_filter_dialog = true"
                          class="filter_btn"
                 >
-                    <YIcon style="font-size: 20px;">
-                        shaixuan
-                    </YIcon>
+                    <VIcon style="transform: translateY(-3px)">
+                        mdi-filter-variant
+                    </VIcon>
                 </VAvatar>
                 <YDialog v-model="open_filter_dialog">
                     <MaterialCard class="px-2 py-2" slot="inner">
@@ -79,7 +79,6 @@
     import { communicate } from "../../communicate";
     import { messageBox } from "../../communicate";
     import { filter } from "../common/PostCardFilter";
-    import YIcon from "../common/YIcon";
     import PostCardFilter from "../common/PostCardFilter";
     import HomeTopBar from "../items/HomeTopBar";
     import YDialog from "../common/YDialog";
@@ -87,7 +86,7 @@
 
     export default {
         name: "ViewHome",
-        components: {MaterialCard, YDialog, HomeTopBar, PostCardFilter, YIcon, HomePostCard,MugenScroll},
+        components: {MaterialCard, YDialog, HomeTopBar, PostCardFilter, HomePostCard,MugenScroll},
         mixins : [filter],
         data(){
             return {
@@ -174,11 +173,15 @@
                     },500);
                 });
             },
-            refresh(){
+            clear(){
                 this.postCollections = [];
+                this.tags = [];
                 this.page = 0;
                 this.end = false;
                 this.firstLoaded = false;
+            },
+            refresh(){
+                this.clear();
                 this.getRecent();
             },
             init(){
@@ -192,12 +195,19 @@
         },
         computed : {
             useMugenScroll(){
-                return this.firstLoaded && !this.end && ( this.$route.name === 'home' || this.$route.name === 'visit' );
+                return this.firstLoaded && !this.end &&
+                     ( this.$route.name === 'home' || this.$route.name === 'visit' );
             },
         },
         mounted(){
             communicate.$on('HomeDelete',this.deleteLocalCard);
             communicate.$on('refreshHome',this.refresh);
+            if(this.$route.name === 'visit'){
+                this.$watch('$route.query.uid',() => {
+                    this.clear();
+                    this.init();
+                })
+            }
             this.init();
         },
         destroyed(){
