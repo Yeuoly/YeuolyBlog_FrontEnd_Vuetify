@@ -50,9 +50,13 @@
                 <VFlex md4 lg4 sm12 xs12 v-if="$vuetify.breakpoint.mdAndUp">
                     <VContainer>
                         <VCard class="px-3 py-3">
-                            <div v-if="$vuetify.breakpoint.mdAndUp">
-                                <PostCardFilter :tags="tags" v-model="postFilter" />
+                            <div class="grey--text caption lighten-1">
+                                粉丝数：{{subscribe.be_num}}
                             </div>
+                            <div class="grey--text caption lighten-1">
+                                关注数：{{subscribe.do_num}}
+                            </div>
+                            <PostCardFilter :tags="tags" v-model="postFilter" />
                         </VCard>
                     </VContainer>
                 </VFlex>
@@ -104,7 +108,11 @@
                 user_class : Number(),
                 user_follow : Boolean(),
                 visitable : false,
-                tips : String()
+                tips : String(),
+                subscribe : {
+                    be_num : 0,
+                    do_num : 0
+                }
             }
         },
         methods : {
@@ -188,16 +196,27 @@
                 const uid = this.$route.query.uid;
                 this.uid = uid || this.$store.getters.getUid;
                 this.home_flag = uid === undefined;
-                uid === undefined && !this.$store.getters.getOnlineState
-                    ? this.$router.push({ name : 'index'})
-                    : this.getRecent();
+                if(uid === undefined && !this.$store.getters.getOnlineState){
+                    this.$router.push({ name : 'login'})
+                }else{
+                    this.getRecent();
+                    this.getSubscribeInfo();
+                }
             },
+            getSubscribeInfo(){
+                this.axios.get(`v1/account/info?uid=${this.uid}&filter=be_num|do_num`).then( response => {
+                    const _data = response.data['data']['data'];
+                    this.subscribe.be_num = _data[0];
+                    this.subscribe.do_num = _data[1];
+                });
+            }
         },
         computed : {
             useMugenScroll(){
                 return this.firstLoaded && !this.end &&
                      ( this.$route.name === 'home' || this.$route.name === 'visit' );
             },
+
         },
         mounted(){
             communicate.$on('HomeDelete',this.deleteLocalCard);

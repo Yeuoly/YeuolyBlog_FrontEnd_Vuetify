@@ -13,6 +13,16 @@
                 {{ user_name }}
             </span>
         </div>
+        <!--<div class="home-top-bar__subscribes"
+             v-if="$vuetify.breakpoint.mdAndUp"
+        >
+            <div class="x-w-half left">
+                <span class="caption grey&#45;&#45;text">关注数：</span>
+            </div>
+            <div class="x-w-half right">
+                <span class="caption">粉丝数：</span>
+            </div>
+        </div>-->
         <div class="home-top-bar__follow">
             <VBtn :color=" user_follow ? 'grey' : 'primary' "
                   small
@@ -96,12 +106,20 @@
                     case 4:
                         return 'rgb(255,0,0)';
                 }
+            },
+            useFollowBtn(){
+                return this.$store.getters.getOnlineState &&
+                    this.user_uid !== this.$store.getters.getUid;
             }
         }
     }
 </script>
 
 <style scoped>
+
+    .x-w-half{
+        width: 50%;
+    }
 
     .home-top-bar{
         height: 160px;
@@ -151,6 +169,17 @@
         position: absolute;
         bottom: -50px;
         right: 60px;
+    }
+
+    .home-top-bar__subscribes{
+        padding: 5px;
+        position: absolute;
+        right: 60px;
+        width: 160px;
+        height: 40px;
+        bottom: 10px;
+        border-radius: 10px;
+        background-color: white;
     }
 
     @media (max-width: 959px) {

@@ -147,9 +147,9 @@
                         route: 'search',
                         icon : 'magnify'
                     }, {
-                        name: '网站主页',
-                        route: 'index',
-                        icon : 'home-circle-outline'
+                        name: '关于',
+                        route: 'info',
+                        icon : 'alert-circle-outline'
                     }, {
                         name: '开发日志',
                         route : 'history',

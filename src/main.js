@@ -19,7 +19,7 @@ Vue.use(VueCookies);
 import store from './storage'
 
 //加载路由
-import routes from './routes/routes';
+import routes from './router/router';
 
 //加载工具类
 import utils from './lib/utils';
@@ -27,6 +27,9 @@ Vue.prototype.$utils = utils;
 
 //
 import { state_user } from "./storage/userinfo";
+
+//
+import { beforeHook } from "./router/router";
 
 //使用axios
 //初始化数据
@@ -45,18 +48,9 @@ axios.post('/v1/account/ordinary/action',qs.stringify({
     store.commit('setUserClass',data['user_class']);
   }
 }).finally(() => {
-  let router = new VueRouter(routes);
-  router.beforeEach( (to , from , next) => {
-    let _next = null;
-    to.matched.some( item => {
-      if(!state_user.online && item.meta.login_required)
-        _next = '/login';
-      else if(state_user.online && item.meta.offline_required){
-        _next = '/';
-      }
-    });
-    if(_next) next(_next); else next();
-  });
+  //初始化router
+  const router = new VueRouter(routes);
+  router.beforeEach(beforeHook);
 
   //实例化Vue
   new Vue({

@@ -1,5 +1,7 @@
 //按需加载
-const ViewIndex = () => import('../components/views/ViewIndex.vue');
+import {state_user} from "../storage/userinfo";
+
+const ViewInfo = () => import('../components/views/ViewInfo.vue');
 const ViewLogin = () => import('../components/views/ViewLogin.vue');
 const ViewSignIn = () => import('../components/views/ViewSignIn.vue');
 const ViewHome = () => import('../components/views/ViewHome.vue');
@@ -9,7 +11,8 @@ const ViewSetting = () => import('../components/views/ViewSetting.vue');
 const ViewSearch = () => import('../components/views/ViewSearch.vue');
 const ViewAdminDashBoard = () => import('../components/views/ViewAdmin.vue');
 
-const NotFound = () => import('../components/views/View404.vue');
+import ViewIndex from '../components/views/ViewIndex';
+import ViewNotFound from '../components/views/View404.vue';
 
 const ChangeAvatar = () => import('../components/views/setting/ViewSettingChangeAvatar.vue');
 const EditAvatar = () => import('../components/views/setting/ViewSettingEditAvatar.vue');
@@ -72,7 +75,8 @@ const setting_routes = [{
             refresh : false
         }
     },
-}];
+}
+];
 
 const admin_routes = [];
 
@@ -82,6 +86,19 @@ export default {
         name : 'index',
         path : '/',
         component : ViewIndex,
+        meta : {
+            keepAlive : false,
+            login_required : false,
+            btns : {
+                helper : false,
+                new_post : false,
+                refresh : false
+            }
+        }
+    },{
+        name : 'info',
+        path : '/info',
+        component : ViewInfo,
         meta : {
             keepAlive : true,
             login_required : false,
@@ -221,7 +238,7 @@ export default {
         children : admin_routes
     },{
         path : '*',
-        component : NotFound,
+        component : ViewNotFound,
         meta : {
             keepAlive : false,
             login_required : false,
@@ -233,4 +250,16 @@ export default {
             }
         }
     }],
+};
+
+export const beforeHook = (to , from , next) => {
+    let _next = null;
+    to.matched.some( item => {
+        if(!state_user.online && item.meta.login_required)
+            _next = '/login';
+        else if(state_user.online && item.meta.offline_required){
+            _next = '/';
+        }
+    });
+    if(_next) next(_next); else next();
 };
