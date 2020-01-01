@@ -2,6 +2,7 @@
 export const state_user = {
     online : false,
     name : '游客',
+    email : String(),
     uid : Number(),
     class : Number(),
     exp : Number(),
@@ -28,6 +29,9 @@ export default {
         },
         setUserClass(state,userClass){
             state.class = userClass;
+        },
+        setEmail(state,email){
+            state.email = email;
         }
     },
     getters : {
@@ -48,6 +52,9 @@ export default {
         },
         getLoginTime(state){
             return state.login_time;
+        },
+        getEmail(state){
+            return state.email;
         }
     },
 }

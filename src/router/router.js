@@ -13,69 +13,86 @@ const ViewAdminDashBoard = () => import('../components/views/ViewAdmin.vue');
 
 import ViewIndex from '../components/views/ViewIndex';
 import ViewNotFound from '../components/views/View404.vue';
+import ViewSettingBaseInfo from "../components/views/setting/ViewSettingBaseInfo";
 
 const ChangeAvatar = () => import('../components/views/setting/ViewSettingChangeAvatar.vue');
 const EditAvatar = () => import('../components/views/setting/ViewSettingEditAvatar.vue');
 const ChangePrivacy = () => import('../components/views/setting/ViewSettingChangePrivacy.vue');
 const Live2DModel = () => import('../components/views/setting/ViewSettingLive2DModel.vue');
+const BaseInfoSetting = () => import('../components/views/setting/ViewSettingBaseInfo.vue');
 
-const setting_routes = [{
-    name : 'st-avt-cg',
-    path : '/setting/avatar-change',
-    component : ChangeAvatar,
-    meta : {
-        login_required : true,
-        offline_required : false,
-        keepAlive : false,
-        btns : {
-            helper : true,
-            new_post : true,
-            refresh : false
+const setting_routes = [
+    {
+        name : 'st-avt-cg',
+        path : '/setting/avatar-change',
+        component : ChangeAvatar,
+        meta : {
+            login_required : true,
+            offline_required : false,
+            keepAlive : false,
+            btns : {
+                helper : true,
+                new_post : true,
+                refresh : false
+            }
         }
+    },{
+        name : 'st-avt-et',
+        path : '/setting/avatar-edit',
+        component : EditAvatar,
+        meta : {
+            login_required : true,
+            offline_required : false,
+            keepAlive : false,
+            btns : {
+                helper : true,
+                new_post : true,
+                refresh : false
+            }
+        }
+    },{
+        name : 'st-pri-cg',
+        path : '/setting/privacy-change',
+        component : ChangePrivacy,
+        meta : {
+            login_required : true,
+            offline_required : false,
+            keepAlive : false,
+            btns : {
+                helper : true,
+                new_post : true,
+                refresh : false
+            }
+        },
+    }, {
+        name: 'st-l2-cg',
+        path: '/setting/live2d',
+        component: Live2DModel,
+        meta: {
+            login_required: true,
+            offline_required: false,
+            keepAlive: false,
+            btns: {
+                helper: true,
+                new_post: true,
+                refresh: false
+            }
+        },
+    },{
+        name : 'st-bi-et',
+        path : '/setting/base-info',
+        component : ViewSettingBaseInfo,
+        meta : {
+            login_required : true,
+            offline_required : false,
+            keepAlive : false,
+            btns : {
+                helper : true,
+                new_post : true,
+                refresh : false
+            }
+        },
     }
-},{
-    name : 'st-avt-et',
-    path : '/setting/avatar-edit',
-    component : EditAvatar,
-    meta : {
-        login_required : true,
-        offline_required : false,
-        keepAlive : false,
-        btns : {
-            helper : true,
-            new_post : true,
-            refresh : false
-        }
-    }
-},{
-    name : 'st-pri-cg',
-    path : '/setting/privacy-change',
-    component : ChangePrivacy,
-    meta : {
-        login_required : true,
-        offline_required : false,
-        keepAlive : false,
-        btns : {
-            helper : true,
-            new_post : true,
-            refresh : false
-        }
-    },
-},{
-    name : 'st-l2-cg',
-    path : '/setting/live2d',
-    component : Live2DModel,
-    meta : {
-        login_required : true,
-        offline_required : false,
-        keepAlive : false,
-        btns : {
-            helper : true,
-            new_post : true,
-            refresh : false
-        }
-    },
-}
 ];
 
 const admin_routes = [];

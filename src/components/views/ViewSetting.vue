@@ -40,9 +40,17 @@
         data(){
             return{
                 items : [{
+                    icon : 'information-outline',
+                    title : '基本信息',
+                    active : true,
+                    children : [{
+                        title: '基本信息',
+                        route: 'st-bi-et'
+                    }]
+                },{
                     icon : 'face-outline',
                     title : '头像',
-                    active : true,
+                    active : false,
                     children : [{
                         title : '修改头像',
                         route : 'st-avt-cg'

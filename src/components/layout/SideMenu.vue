@@ -53,7 +53,6 @@
 
                 <VDivider />
             </div>
-
             <div>
                 <VListTile class="nav-list"
                            v-for="( t , key ) in navs.ordinary"

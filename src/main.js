@@ -46,6 +46,7 @@ axios.post('/v1/account/ordinary/action',qs.stringify({
     store.commit('setLoginTime',data['login_time']);
     store.commit('setUid',data['user_uid']);
     store.commit('setUserClass',data['user_class']);
+    store.commit('setEmail',data['user_email']);
   }
 }).finally(() => {
   //初始化router
