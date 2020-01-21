@@ -9,12 +9,12 @@
                     @unfollowed="user_follow = false"
 
         />
-        <div v-if="visitable" class="position-relative">
+        <div v-if="visitable">
             <div v-if="$vuetify.breakpoint.smAndDown">
                 <VAvatar @click="open_filter_dialog = true"
                          class="filter_btn"
                 >
-                    <VIcon style="transform: translateY(-3px)">
+                    <VIcon style="transform: translateY(150px)">
                         mdi-filter-variant
                     </VIcon>
                 </VAvatar>

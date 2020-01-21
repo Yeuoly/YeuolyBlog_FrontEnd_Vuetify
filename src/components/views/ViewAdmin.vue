@@ -96,7 +96,7 @@
                     items : {
                         basement : {
                             icon : 'mdi-align-horizontal-left',
-                            name : '总概',
+                            name : '总概（等级2）',
                             col : [{
                                 type : 'stats',
                                 beta : {
@@ -109,7 +109,7 @@
                         },
                         pre_list : {
                             icon : 'mdi-table',
-                            name : '近期博客',
+                            name : '近期博客（等级3）',
                             col : [{
                                 type : 'table',
                                 beta : {
@@ -143,7 +143,7 @@
                         },
                         user_manage : {
                             icon : 'mdi-account-details',
-                            name : '用户管理',
+                            name : '用户管理（等级4）',
                             col : [{
                                 type : 'search',
                                 method : [vm.loadUsers,vm.loadAllUsers],
