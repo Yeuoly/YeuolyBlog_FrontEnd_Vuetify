@@ -1,7 +1,7 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
     <VContainer>
         <VCardTitle>
-            基础信息（功能内测中）
+            基础信息（部分可用）
         </VCardTitle>
 
         <VTextField
@@ -9,13 +9,11 @@
                 label="用户名"
                 counter="16"
                 type="text"
-                disabled
         >
             <template v-slot:append-outer>
                 <VBtn
                         :disabled="info.nickname.modified === info.nickname.origin"
                         @click.stop="sendModifiedNickname"
-                        disabled
                 >
                     修改
                 </VBtn>
@@ -74,6 +72,8 @@
 </template>
 
 <script>
+    import { messageBox } from "../../../communicate";
+
     export default {
         name : "ViewSettingBaseInfo",
         data : () => ({
@@ -106,7 +106,17 @@
 
             },
             sendModifiedNickname(){
-
+                this.axios.post('v1/account/online/action',this.$qs.stringify({
+                    act : 5,
+                    name : this.info.nickname.modified
+                })).then( r => {
+                    const data = r.data;
+                    if(data['data']['res'] === 666){
+                        location.href = '/setting/base-info';
+                    }else{
+                        messageBox('错误',data['data']['error'],'','error');
+                    }
+                } )
             },
             toApplyPage(){
 

@@ -23,7 +23,7 @@
     import MaterialCard from "../material/Card";
     import YFileInput from "../common/YFileInput";
 
-    import { messageBox } from "../../communicate";
+    import { messageBox , openLoadingOverlay , closeLoadingOverlay } from "../../communicate";
 
     export default {
         name: 'UploadAvatarDialog',
@@ -37,6 +37,7 @@
         },
         methods: {
             upload(){
+                openLoadingOverlay();
                 const from_data = new FormData();
                 from_data.append('img',this.file,'img');
                 from_data.append('act','0');
@@ -47,10 +48,14 @@
                         const _data = response.data;
                         if (_data['data']['res'] === 666) {
                             location.href = '/setting/avatar-change';
+                        }else{
+                            messageBox('错误',_data['data']['error'],'','error');
                         }
+                        closeLoadingOverlay();
                     },
                     () => {
                         messageBox('错误','服务器大姨妈了','','error');
+                        closeLoadingOverlay();
                     }
                 );
             },

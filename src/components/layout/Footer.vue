@@ -14,7 +14,7 @@
         <VSpacer />
         <span class="font-weight-light copyright">
             &copy;
-            2018-
+            2018 -
             {{ (new Date()).getFullYear() }}
             <a
                     href="https://www.github.com/Yeuoly"

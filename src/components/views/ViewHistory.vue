@@ -34,6 +34,13 @@
             return{
                 history :  [
                     {
+                        title   : '优化，修复，新功能',
+                        version : '2.0.9.01-α',
+                        content : '优化后端结构，修复前端加载bug，支持单个博客的隐私保护',
+                        date    : '2020/1/23',
+                        color   : 'blue'
+                    },
+                    {
                         title   : '修改样式、结构',
                         version : '2.0.9.00-α',
                         content : '修改大量图层样式，改善用户体验，更换图标库为MaterialDesign官方图标库。更改前端代码结构、头像存储方式。',

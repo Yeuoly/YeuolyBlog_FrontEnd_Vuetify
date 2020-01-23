@@ -46,7 +46,7 @@
 </template>
 
 <script>
-    import { communicate } from "../../communicate";
+    import { communicate , messageBox } from "../../communicate";
     import YHtmlCompiler from "../common/YHtmlCompiler";
     import CategoryBox from "../common/CategoryBox";
     import YAvatar from "../common/YAvatar";
@@ -73,8 +73,10 @@
             }
         },
         methods : {
-            deletePost () {
-                communicate.$emit('HomeDelete',this.post_id);
+            deletePost() {
+                messageBox('警告','主人确定要删除这篇博客嘛？','不能恢复的哦，确定了的话点【我知道了】，摁错了的话就点周围空白的地方啦','info',() => {
+                    communicate.$emit('HomeDelete',this.post_id);
+                });
             },
             editPost () {
                 let post_id = this.post_id;

@@ -204,7 +204,7 @@
                 }
             },
             getSubscribeInfo(){
-                this.axios.get(`v1/account/info?uid=${this.uid}&filter=be_num|do_num`).then( response => {
+                this.axios.post(`v1/account/ordinary/action?act=4&uid=${this.uid}&filter=be_num|do_num`).then( response => {
                     const _data = response.data['data']['data'];
                     this.subscribe.be_num = _data[0];
                     this.subscribe.do_num = _data[1];
@@ -214,7 +214,7 @@
         computed : {
             useMugenScroll(){
                 return this.firstLoaded && !this.end &&
-                     ( this.$route.name === 'home' || this.$route.name === 'visit' );
+                     ( this.$route.name === 'home' && this.home_flag || this.$route.name === 'visit' && !this.home_flag );
             },
 
         },

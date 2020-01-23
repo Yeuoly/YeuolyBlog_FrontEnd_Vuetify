@@ -8,6 +8,7 @@
                    @hook="dialog_hook"
         >
         </PopDialog>
+        <LoadingOverlay/>
         <VSlideYTransition group mode="out-in">
             <div key="1">
                 <KeepAlive key="1">
@@ -26,10 +27,11 @@
     import { communicate } from "../../communicate";
     import popdialog from '../../mixins/popdialog';
     import Live2DGirl from "../items/Live2DGirl";
+    import LoadingOverlay from "../items/LoadingOverlay";
 
     export default {
         name: "Container",
-        components: {Live2DGirl, PopDialog},
+        components: {LoadingOverlay, Live2DGirl, PopDialog},
         mixins : [popdialog],
         mounted() {
             communicate.$on('messageBox',this.openDialog)

@@ -13,9 +13,28 @@
         </VFlex>
         <VFlex xs12 sm12 md4 lg4>
             <VContainer>
-                <ViewEditor_PostTips v-if="$vuetify.breakpoint.mdAndUp" />
                 <TagsBox class="my-2" v-model="tags" />
-                <ViewEditor_PostTips v-if="$vuetify.breakpoint.smAndDown" />
+                <VCard class="my-2">
+                    <VCardTitle>
+                        隐私设置
+                    </VCardTitle>
+                    <VCardActions>
+                        <VSwitch label="仅自己可见" v-model="privacy.onlyMe"></VSwitch>
+                    </VCardActions>
+                </VCard>
+                <VCard>
+                    <VCardTitle>
+                        须知
+                    </VCardTitle>
+                    <VCardText>
+                        <li>请勿发表/转发任何违反中华人民共和国法律的言论。</li>
+                        <li>小破站维护不容易，请各位大佬手下留情，感激不尽。</li>
+                        <li>我们对会对攻击者的输入内容进行多次过滤转译以确保网站的安全性，但仍存在有漏洞的可能。</li>
+                        <li>您的输入内容将会被按加密等级进行加密，默认加密等级为0，您可以向站长申请更高的加密等级。</li>
+                        <li>由于服务器比较烂，图片还是采用外链吧QAQ，暂时不支持上传图片哒，以后有更好的服务器了可能可以叭（</li>
+                        <li>在标签输入框按空格可以添加标签</li>
+                    </VCardText>
+                </VCard>
             </VContainer>
         </VFlex>
     </VLayout>
@@ -25,15 +44,12 @@
 
     import RichEditor from "../items/RichEditor";
     import base from '../../mixins/base';
-
     import TagsBox from "../items/TagsBox";
-    import ViewEditor_PostTips from "../items/ViewEditor_PostTips";
-
     import { messageBox } from "../../communicate";
 
     export default {
         name: "ViewEditor",
-        components: {ViewEditor_PostTips, TagsBox, RichEditor },
+        components: { TagsBox, RichEditor },
         mixins: [base],
         data(){
             return{
@@ -41,7 +57,10 @@
                 content : '',
                 post_id : '',
                 disabled_edit : true,
-                tags : []
+                tags : [],
+                privacy : {
+                    onlyMe : false
+                }
             }
         },
         methods : {
@@ -55,7 +74,8 @@
                     post_title : this.title,
                     post_id : this.post_id,
                     post_tags : `[${this.tags.join(' ')}]`,
-                    act : this.post_id ? 2 : 1
+                    act : this.post_id ? 2 : 1,
+                    private : this.privacy.onlyMe
                 })).then( response => {
                     let _data = response.data;
                     if(_data['data']['res'] === 666){
@@ -85,6 +105,7 @@
                 this.content = dist['content'];
                 this.post_id = dist['post_id'];
                 this.tags = this.$utils.array_drop(dist['tags'].split(/[\r\n ]/),'');
+                this.privacy.onlyMe = dist['private'];
                 this.disabled_edit = false;
             },
             get(post_id){
@@ -92,7 +113,7 @@
                     post_id : post_id,
                     act : 4
                 })).then( response => {
-                    let _data = response.data;
+                    const _data = response.data;
                     if(_data['data']['res'] === 666){
                         this.load(_data['data']['data']);
                     }else{

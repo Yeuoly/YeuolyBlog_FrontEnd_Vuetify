@@ -104,7 +104,7 @@ export default {
         path : '/',
         component : ViewIndex,
         meta : {
-            keepAlive : false,
+            keepAlive : true,
             login_required : false,
             btns : {
                 helper : false,

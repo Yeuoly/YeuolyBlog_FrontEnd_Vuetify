@@ -12,6 +12,8 @@
 </template>
 
 <script>
+    import { AvatarLoadingCenter } from "../../communicate";
+
     export default {
         name: "YAvatar",
         data(){
@@ -30,14 +32,15 @@
             }
         },
         methods : {
+            set(url){
+                this.url = url;
+                AvatarLoadingCenter.communicate.$off('on',this.set);
+            },
             load(){
                 const url_cache = this.$store.getters.getAvatar(this.uid);
                 if(!url_cache){
-                    this.axios.get(`v1/account/avatar&uid=${this.uid}`).then( r => {
-                        const url = r.data['data']['data']['face'];
-                        this.$store.commit('setAvatar',{ uid : this.uid , url : url });
-                        this.url = url;
-                    });
+                    AvatarLoadingCenter.communicate.$on('on', this.set);
+                    AvatarLoadingCenter.get(this.uid);
                 }else{
                     this.url = url_cache;
                 }
