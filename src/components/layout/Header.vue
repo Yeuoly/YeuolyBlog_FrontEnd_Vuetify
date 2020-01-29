@@ -1,7 +1,7 @@
 <template>
     <VToolbar dark color="rgb(68, 68, 68)" height="50">
         <VIcon class="__header-l-icon">mdi-menu</VIcon>
-        <YAvatar size="35" @click="openSideMenu" :uid="userUid" />
+        <YAvatar size="35" @click="openSideMenu" :uid="userUid" class="clickable" />
         <VToolbarTitle>YeuolyBlog</VToolbarTitle>
         <VSpacer />
         <VBtn v-if="hasSearcher" flat small fab @click="router('search')">

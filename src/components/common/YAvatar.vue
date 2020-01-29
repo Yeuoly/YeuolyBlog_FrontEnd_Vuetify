@@ -5,7 +5,7 @@
         </VAvatar>
     </div>
     <div v-else>
-        <VAvatar class="clickable" v-on="$listeners" v-bind="$attrs">
+        <VAvatar v-on="$listeners" v-bind="$attrs">
             <VImg v-if="url" :src="url"></VImg>
         </VAvatar>
     </div>
@@ -15,12 +15,10 @@
     import { AvatarLoadingCenter } from "../../communicate";
 
     export default {
-        name: "YAvatar",
-        data(){
-            return {
-                url : ''
-            }
-        },
+        name : "YAvatar",
+        data : () => ({
+            url : ''
+        }),
         props : {
             uid : {
                 required : true,
@@ -32,14 +30,14 @@
             }
         },
         methods : {
-            set(url){
-                this.url = url;
-                AvatarLoadingCenter.communicate.$off('on',this.set);
+            set(){
+                this.url = this.$store.getters.getAvatar(this.uid);
+                AvatarLoadingCenter.communicate.$off('load',this.set);
             },
             load(){
                 const url_cache = this.$store.getters.getAvatar(this.uid);
                 if(!url_cache){
-                    AvatarLoadingCenter.communicate.$on('on', this.set);
+                    AvatarLoadingCenter.communicate.$on('load', this.set);
                     AvatarLoadingCenter.get(this.uid);
                 }else{
                     this.url = url_cache;

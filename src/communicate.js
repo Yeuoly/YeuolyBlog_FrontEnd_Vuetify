@@ -24,11 +24,11 @@ export const AvatarLoadingCenter = {
         axios.post(`v1/account/ordinary/action?act=3&uid=${uid}`).then( r => {
             const url = r.data['data']['data']['face'];
             store.commit('setAvatar',{ uid : uid , url : url });
-            this.communicate.$emit('on',url);
+            this.communicate.$emit('load');
         });
     },
-    get(uid){
-        if(!this.cache[uid]){
+    get(uid) {
+        if (!this.cache[uid]) {
             this.load(uid);
         }
     }

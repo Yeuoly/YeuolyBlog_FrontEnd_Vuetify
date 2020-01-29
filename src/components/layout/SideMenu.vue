@@ -7,7 +7,7 @@
                height="130"
                class="menu-header"
         >
-            <YAvatar @click="router('home')"
+            <YAvatar :magic_door="true"
                      size="74"
                      class="menu-avatar"
                      :uid="userUid"

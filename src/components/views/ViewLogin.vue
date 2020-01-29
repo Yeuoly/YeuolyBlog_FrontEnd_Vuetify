@@ -13,6 +13,7 @@
                                 type="text"
                                 :rules="[rule.required,rule.email_max,rule.email_min,rule.email_format]"
                                 v-model="email"
+                                @keypress="inputEnter"
                     ></VTextField>
                     <VTextField label="密码"
                                 counter="16"
@@ -21,6 +22,7 @@
                                 :rules="[rule.required,rule.password_min,rule.password_max,rule.password_format]"
                                 @click:append="password_show = !password_show"
                                 v-model="password"
+                                @keypress="inputEnter"
                     ></VTextField>
 
                     <div v-if="mdAndUp" class="passport__btn-group pb-2">
@@ -101,8 +103,13 @@
             },
             signIn(){
                 this.$router.push({name : 'signin'});
+            },
+            inputEnter(e){
+                if(e.which === 13 && this.submit_valid){
+                    this.login();
+                }
             }
-        }
+        },
     }
 </script>
 
