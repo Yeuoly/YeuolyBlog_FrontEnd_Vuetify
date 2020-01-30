@@ -27,24 +27,30 @@
             magic_door : {
                 default : false,
                 type : Boolean
+            },
+            home : {
+                default : false,
+                type : Boolean
             }
         },
         methods : {
             set(){
                 this.url = this.$store.getters.getAvatar(this.uid);
-                AvatarLoadingCenter.communicate.$off('load',this.set);
+                AvatarLoadingCenter.communicate.$off('load-' + this.uid,this.set);
             },
             load(){
                 const url_cache = this.$store.getters.getAvatar(this.uid);
                 if(!url_cache){
-                    AvatarLoadingCenter.communicate.$on('load', this.set);
+                    AvatarLoadingCenter.communicate.$on('load-' + this.uid, this.set);
                     AvatarLoadingCenter.get(this.uid);
                 }else{
                     this.url = url_cache;
                 }
             },
             to(){
-                if(this.$route.name !== 'visit' || this.uid !== parseInt(this.$route.query.uid)){
+                if(this.home){
+                    this.$router.push({ name : 'home' });
+                } else if(this.$route.name !== 'visit' || this.uid !== parseInt(this.$route.query.uid)){
                     this.$router.push({ name : 'visit' , query : { uid : this.uid } });
                 }
             }

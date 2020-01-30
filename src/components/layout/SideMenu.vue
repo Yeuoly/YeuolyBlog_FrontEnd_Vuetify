@@ -8,6 +8,7 @@
                class="menu-header"
         >
             <YAvatar :magic_door="true"
+                     :home="true"
                      size="74"
                      class="menu-avatar"
                      :uid="userUid"

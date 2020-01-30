@@ -65,7 +65,7 @@
     import passportBase from './../../mixins/passport';
     import MaterialCard from '../material/Card';
 
-    import { messageBox } from "../../communicate";
+    import { messageBox , openLoadingOverlay , closeLoadingOverlay } from "../../communicate";
 
     export default {
         name: "ViewLogin",
@@ -86,6 +86,7 @@
             login(){
                 const password = this.password;
                 const email = this.email;
+                openLoadingOverlay();
                 this.axios.post('v1/account/ordinary/action', this.$qs.stringify({
                     password : password,
                     email : email,
@@ -99,6 +100,8 @@
                     }
                 }).catch( () => {
                     messageBox('服务器好像挂掉惹QAQ', '可能在维护，也有可能真坏惹', '', 'error');
+                }).finally( () => {
+                    closeLoadingOverlay();
                 });
             },
             signIn(){

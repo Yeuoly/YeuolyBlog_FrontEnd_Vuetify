@@ -34,6 +34,13 @@
             return{
                 history :  [
                     {
+                        title   : '优化，修复',
+                        version : '2.0.9.02-α',
+                        content : '优化用户体验：回车键登录、提速头像装载，修复：头像重复的bug',
+                        date    : '2020/1/30',
+                        color   : 'blue'
+                    },
+                    {
                         title   : '优化，修复，新功能',
                         version : '2.0.9.01-α',
                         content : '优化后端结构，修复前端加载bug，支持单个博客的隐私保护',
