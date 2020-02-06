@@ -34,6 +34,13 @@
             return{
                 history :  [
                     {
+                        title   : '新功能',
+                        version : '2.0.9.03-α',
+                        content : '支持图片上传',
+                        date    : '2020/2/6',
+                        color   : 'green'
+                    },
+                    {
                         title   : '优化，修复',
                         version : '2.0.9.02-α',
                         content : '优化用户体验：回车键登录、提速头像装载，修复：头像重复的bug',

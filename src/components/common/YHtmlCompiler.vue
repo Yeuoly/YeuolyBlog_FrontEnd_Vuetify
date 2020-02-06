@@ -77,4 +77,8 @@
         overflow-y: hidden !important;
     }
 
+    .y-html__controller .w-e-text img{
+        width: 50%;
+    }
+
 </style>

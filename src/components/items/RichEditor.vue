@@ -18,6 +18,9 @@
      * **/
 
     import E from 'wangeditor';
+    import { messageBox } from "../../communicate";
+    import { openLoadingOverlay } from "../../communicate";
+    import { closeLoadingOverlay } from "../../communicate";
 
     export default {
         name: 'editor',
@@ -57,10 +60,28 @@
             },
             locked(newVal){
                 if(!newVal && !this.handler){
-                    let editor = new E(this.$refs.editor);
+                    const editor = new E(this.$refs.editor);
                     editor.customConfig.onchange = html => {
                         this.editor_content = html;
                         this.$emit('change',html);
+                    };
+                    editor.customConfig.uploadImgMaxSize = 2 * 1024 * 1024;
+                    editor.customConfig.customUploadImg = (files,insert) => {
+                        const form_data = new FormData();
+                        form_data.append('img',files[0]);
+                        openLoadingOverlay();
+                        this.$utils.csrf_post('v1/upload/img',form_data, response => {
+                            const data = response.data['data'];
+                            if(data['res'] === 666){
+                                insert(data['data']['url']);
+                            }else{
+                                messageBox('失败',data['error'],'','error');
+                            }
+                            closeLoadingOverlay();
+                        },() => {
+                            messageBox('失败','与服务器的连接错误','','error');
+                            closeLoadingOverlay();
+                        });
                     };
                     editor.create();
                     this.handler = editor;
@@ -92,8 +113,16 @@
         z-index: 4 !important;
     }
 
+    .w-e-text img{
+        width: 50%;
+    }
+
     .v-overlay{
         z-index: 5;
+    }
+
+    .w-e-panel-tab-content input{
+        height: 33px !important;
     }
 
 </style>
