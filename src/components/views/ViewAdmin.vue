@@ -42,10 +42,12 @@
                                 :is-value-num="p.beta.isNum"
                         />
                         <DashBoardDataTable
+                                ref="datatable"
                                 v-else-if="p.type === 'table'"
                                 :headers="p.beta.data.headers"
                                 :items="p.beta.data.items"
-                        />
+                        >
+                        </DashBoardDataTable>
                         <div v-else-if="p.type === 'search'">
                             <VTextField
                                     v-model="p.keyword"
@@ -78,12 +80,12 @@
 </template>
 
 <script>
-
     import DashBoardStatsCard from "../material/StatsCard";
     import DashBoardDataTable from "../material/DataTable";
     import MaterialCard from "../material/Card";
 
     import { messageBox } from "../../communicate";
+    import { xss_filter } from '../../lib/utils';
 
     export default {
         name: "ViewAdmin",
@@ -213,6 +215,15 @@
                                 this.tabs.items.pre_list.col[0].beta.data.items = _data['data'][0];
                                 this.tabs.cache[1] = true;
                             }
+                            //这里有一个很蛋疼的事情，这个datatable好像不能插槽，我需要在底下自己改html=，=
+                            setTimeout(() => {
+                                const doms = this.$refs.datatable[0].$el.children[0].children[0].children[0].children[0].children[1].children;
+                                for(const i of doms){
+                                    const aim = i.children[0].children[0];
+                                    const pid = aim.innerHTML.replace(/[ ]/g, '');
+                                    aim.innerHTML = `<a href="/post-page?pid=${pid}">${pid}</a>`;
+                                }
+                            });
                         });
                         break;
                 }

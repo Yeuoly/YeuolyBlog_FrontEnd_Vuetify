@@ -46,6 +46,9 @@
                     children : [{
                         title: '基本信息',
                         route: 'st-bi-et'
+                    },{
+                        title : '看板娘',
+                        route: 'st-l2-cg'
                     }]
                 },{
                     icon : 'face-outline',

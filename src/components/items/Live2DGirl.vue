@@ -37,14 +37,16 @@
                 const node_3 = document.createElement('script');
                 const node_4 = document.createElement('link');
                 node_4.rel = 'stylesheet';
+                node_3.src = 'https://apps.bdimg.com/libs/jquery/1.7.1/jquery.min.js';
                 node_4.href = `${process.env.VUE_APP_WEB_ROOT}/live2dw/assets/live2d/css/live2d.css`;
                 node_1.src = `${process.env.VUE_APP_WEB_ROOT}/live2dw/assets/live2d/js/live2d.js`;
                 node_2.src = `${process.env.VUE_APP_WEB_ROOT}/live2dw/assets/live2d/js/message.js`;
-                node_3.src = 'https://apps.bdimg.com/libs/jquery/1.7.1/jquery.min.js';
                 document.head.appendChild(node_4);
                 document.body.appendChild(node_3);
-                document.body.appendChild(node_2);
-                document.body.appendChild(node_1);
+                setTimeout(() => {
+                    document.body.appendChild(node_2);
+                    document.body.appendChild(node_1);
+                }, 3000);
             },
             addRouteWatcher(){
                 this.$watch('$route.name', {

@@ -2,7 +2,7 @@
     <VCard class="position-relative" block>
         <VLayout wrap row>
             <YAvatar :magic_door="true" size="50" class="mx-2 mt-2" :uid="user_uid" />
-            <div class="post-card-head">
+            <div class="post-card-head clickable" @click="goDetail">
                 <VCardTitle>
                     <span class="card-user">
                         {{ user }}
@@ -33,7 +33,7 @@
                 </VList>
             </VMenu>
             <VFlex xs12>
-                <div class="card-title">
+                <div class="card-title clickable" @click="goDetail">
                         {{ title }}
                 </div>
                 <YHtmlCompiler class=" pt-5 px-3" :html="text" />
@@ -84,6 +84,9 @@
             },
             removeFromFollowings(){
                 this.$emit('removeFromFollowings',this.user_uid);
+            },
+            goDetail(){
+                this.$router.push({ name : 'post-page', query : { pid : this.post_id } });
             }
         }
     }

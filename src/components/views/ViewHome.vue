@@ -167,7 +167,7 @@
                             this.user_class = this.$store.getters.getClass;
                         }
                         this.page++;
-                        if(_data['data']['posts'].length < 5){
+                        if(_data['data']['posts'].length == 0){
                             this.end = true;
                         }
                     }else{
@@ -225,7 +225,7 @@
                 this.$watch('$route.query.uid',() => {
                     this.clear();
                     this.init();
-                })
+                });
             }
             this.init();
         },

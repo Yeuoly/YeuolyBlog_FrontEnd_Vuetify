@@ -10,6 +10,7 @@ const ViewHistory = () => import('../components/views/ViewHistory.vue');
 const ViewSetting = () => import('../components/views/ViewSetting.vue');
 const ViewSearch = () => import('../components/views/ViewSearch.vue');
 const ViewAdminDashBoard = () => import('../components/views/ViewAdmin.vue');
+const ViewPostPage = () => import('../components/views/ViewPostPage.vue');
 
 import ViewIndex from '../components/views/ViewIndex';
 import ViewNotFound from '../components/views/View404.vue';
@@ -254,6 +255,20 @@ export default {
         },
         children : admin_routes
     },{
+        name : 'post-page',
+        path : '/post-page',
+        component : ViewPostPage,
+        meta : {
+            keepAlive : false,
+            login_required : false,
+            offline_required : false,
+            btns : {
+                helper : true,
+                new_post : true,
+                refresh : false
+            }
+        }
+    },{
         path : '*',
         component : ViewNotFound,
         meta : {
@@ -278,5 +293,5 @@ export const beforeHook = (to , from , next) => {
             _next = '/';
         }
     });
-    if(_next) next(_next); else next();
+    _next ? next(_next) : next();
 };

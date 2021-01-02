@@ -1,6 +1,6 @@
 <template>
     <VCard flat>
-        <!--<VLayout class="px-2" colnum wrap>
+        <VLayout class="px-2" colnum wrap>
             <VFlex xs12 v-for="( t , index ) in settings" :key="index">
                 <VSwitch v-model="t.on" :label="t.title + '：' + t.detail"></VSwitch>
             </VFlex>
@@ -10,8 +10,7 @@
         </VCardText>
         <VCardText class="text-primary">
             因为一些技术性问题，移动端的用户需要开启看板娘的情况下进入“纸片人乐园”才能与她互动哟
-        </VCardText>-->
-        <h2>因技术问题暂时关闭该功能</h2>
+        </VCardText>
     </VCard>
 </template>
 
@@ -34,7 +33,7 @@
                 }
             }
         },
-        /*watch : {
+        watch : {
             'settings.on.on' : {
                 handler(newVal){
                     this.$cookies.set('live2dAll',newVal,1145141919);
@@ -45,7 +44,7 @@
                     this.$cookies.set('live2dHomeOnly',newVal,1145141919);
                 },
             }
-        },*/
+        },
         methods : {
             init(){
                 this.settings.on.on = this.$cookies.get('live2dAll') === 'true' || false;
@@ -53,7 +52,7 @@
             }
         },
         mounted() {
-            //this.init();
+            this.init();
         }
     }
 </script>
