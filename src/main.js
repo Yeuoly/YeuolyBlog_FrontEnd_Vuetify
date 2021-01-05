@@ -31,6 +31,10 @@ import { state_user } from "./storage/userinfo";
 //
 import { beforeHook } from "./router/router";
 
+//安装图片预览插件，由于YeuolyBlog的特殊性，这个插件最终选择了VuePreview的1.0.4，高版本不行
+import VuePreview from 'vue-preview';
+Vue.use(VuePreview);
+
 //使用axios
 //初始化数据
 axios.defaults.baseURL = process.env.VUE_APP_API_ROOT;

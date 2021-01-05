@@ -117,5 +117,5 @@
 </script>
 
 <style>
-    @import "./style/passport.css";
+    @import "../../style/passport.css";
 </style>

@@ -34,6 +34,20 @@
             return{
                 history :  [
                     {
+                        title   : '新功能',
+                        version : '2.2.1.00-α',
+                        content : '加入图片方法预览功能，添加Latex字号选择功能，添加编辑预览窗口',
+                        date    : '2020/1/5',
+                        color   : 'green'
+                    },
+                    {
+                        title   : '新功能',
+                        version : '2.2.0.00-α',
+                        content : '加入latex支持，暂时删除女仆',
+                        date    : '2021/1/3',
+                        color   : 'green'
+                    },
+                    {
                         title   : '修复，优化，新功能',
                         version : '2.1.0.00-α',
                         content : '修复访问界面只能加载部分博客的bug，添加单页博客浏览功能，修复部分无危害标签无法渲染的bug，修改部分代码结构，更新管理界面，修复部分越权漏洞',

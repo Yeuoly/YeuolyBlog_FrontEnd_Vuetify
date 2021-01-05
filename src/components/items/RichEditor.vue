@@ -18,6 +18,8 @@
      * **/
 
     import E from 'wangeditor';
+    import InsertLatex from '../../class/wangeditor/insert-latex';
+    import PreviewMenu from '../../class/wangeditor/preview';
     import { messageBox } from "../../communicate";
     import { openLoadingOverlay } from "../../communicate";
     import { closeLoadingOverlay } from "../../communicate";
@@ -60,13 +62,15 @@
             },
             locked(newVal){
                 if(!newVal && !this.handler){
+                    //注册组件
                     const editor = new E(this.$refs.editor);
-                    editor.customConfig.onchange = html => {
+                    editor.config.onchange = html => {
                         this.editor_content = html;
-                        this.$emit('change',html);
+                        this.$emit('change', html);
                     };
-                    editor.customConfig.uploadImgMaxSize = 2 * 1024 * 1024;
-                    editor.customConfig.customUploadImg = (files,insert) => {
+                    //设置文件上传
+                    editor.config.uploadImgMaxSize = 2 * 1024 * 1024;
+                    editor.config.customUploadImg = (files,insert) => {
                         const form_data = new FormData();
                         form_data.append('img',files[0]);
                         openLoadingOverlay();
@@ -83,7 +87,20 @@
                             closeLoadingOverlay();
                         });
                     };
+                    //注册latex扩展菜单
+                    editor.menus.extend('InsertLatexKey', InsertLatex);
+                    editor.config.menus = editor.config.menus.concat('InsertLatexKey');
+                    //注册预览扩展菜单，只有在屏幕够大时才允许预览
+                    if(this.$vuetify.breakpoint.mdAndUp){
+                        editor.menus.extend('PreviewBtnKey', PreviewMenu);
+                        editor.config.menus = editor.config.menus.concat('PreviewBtnKey');
+                    }
                     editor.create();
+                    if(this.$vuetify.breakpoint.mdAndUp){
+                        editor.config.onPreviewCallBack( res => {
+                            this.$emit('change-preview', res);
+                        });
+                    }
                     this.handler = editor;
                     if(typeof this.queue_fun === 'function'){
                         this.queue_fun();
@@ -96,6 +113,9 @@
 </script>
 
 <style>
+    /**
+        这里呢，主要是wangeditor的z-index，为了配合它，这里修改了一堆z-index
+    */
 
     .w-e-toolbar {
         /* display: -webkit-box; */
@@ -105,24 +125,34 @@
         flex-wrap: wrap !important;
     }
 
-    .w-e-text-container{
-        z-index: 3 !important;
+    .w-e-active button{
+        color: #1e88e5;
     }
 
-    .w-e-menu{
-        z-index: 4 !important;
+    .w-e-menu button{
+        outline: none;
     }
 
-    .w-e-text img{
-        width: 50%;
+    .w-e-droplist{
+        background-color: white;
+    }
+
+    @media (max-width: 700px) {
+        .w-e-text img{
+            width: 50%;
+        }
     }
 
     .v-overlay{
-        z-index: 5;
+        z-index: 10002 !important;
     }
 
     .w-e-panel-tab-content input{
         height: 33px !important;
+    }
+
+    .v-dialog__content--active{
+        z-index: 10003 !important;
     }
 
 </style>

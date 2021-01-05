@@ -41,7 +41,7 @@ const XSSFilterXSS = new XSS.FilterXSS({
         h6 : ['style','class'],
         span : ['style','class'],
         br : [],
-        img : ['src','class'],
+        img : ['src','class','preview'],
         a : ['href','target'],
         sup : ['class'],
         ol : ['class'],
@@ -63,6 +63,9 @@ const XSSFilterXSS = new XSS.FilterXSS({
         colgroup : [],
         col : ['width','span'],
         code : [],
+        pmicrosoft : [],
+        spanmicrosoft : [],
+        latexpression : ['size']
     }
 });
 

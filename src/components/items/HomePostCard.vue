@@ -36,7 +36,7 @@
                 <div class="card-title clickable" @click="goDetail">
                         {{ title }}
                 </div>
-                <YHtmlCompiler class=" pt-5 px-3" :html="text" />
+                <YHtmlCompiler class=" pt-5 px-3" :html="text" :has-latex="true" />
             </VFlex>
             <VFlex xs12>
                 <CategoryBox v-model="tags" />

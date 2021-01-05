@@ -2,6 +2,7 @@
     <VNavigationDrawer v-model="open"
                        fixed
                        temporary
+                       style="z-index:10003"
     >
         <VCard flat
                height="130"
