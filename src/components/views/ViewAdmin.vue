@@ -257,6 +257,7 @@
                     };
                     if(_data['res'] === 666){
                         _data['data'].forEach( ( item , index ) => {
+                            item['register_time'] = this.$utils.date('Y-M-D h:m:s', item['register_time']);
                             const menu = [];
                             for(let i = 1 ;i < 5 ;i++){
                                 menu.push({ text : i , method(){ operateClass(item['uid'],i,index) } })

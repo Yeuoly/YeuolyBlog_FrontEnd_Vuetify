@@ -53,7 +53,7 @@ const XSSFilterXSS = new XSS.FilterXSS({
         u : ['class'],
         strong : ['class'],
         pre : ['class','spellcheck'],
-        font : ['class'],
+        font : ['class','size'],
         table : ['border','width','cellpadding','cellspacing','style'],
         tbody : [],
         tr : ['height'],
@@ -65,7 +65,8 @@ const XSSFilterXSS = new XSS.FilterXSS({
         code : [],
         pmicrosoft : [],
         spanmicrosoft : [],
-        latexpression : ['size']
+        latexpression : ['size'],
+        blogpreview : ['pid']
     }
 });
 

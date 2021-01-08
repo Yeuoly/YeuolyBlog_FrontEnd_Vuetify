@@ -20,10 +20,11 @@
     import E from 'wangeditor';
     import InsertLatex from '../../class/wangeditor/insert-latex';
     import PreviewMenu from '../../class/wangeditor/preview';
+    import InsertBlogPreview from '../../class/wangeditor/insert-blog-preview';
+    import HLJS from 'highlight.js';
     import { messageBox } from "../../communicate";
     import { openLoadingOverlay } from "../../communicate";
     import { closeLoadingOverlay } from "../../communicate";
-
     export default {
         name: 'editor',
         model : {
@@ -64,6 +65,8 @@
                 if(!newVal && !this.handler){
                     //注册组件
                     const editor = new E(this.$refs.editor);
+                    //挂载HLJS插件
+                    editor.highlight = HLJS;
                     editor.config.onchange = html => {
                         this.editor_content = html;
                         this.$emit('change', html);
@@ -87,9 +90,14 @@
                             closeLoadingOverlay();
                         });
                     };
+                    //移除原生code
+                    //editor.config.excludeMenus = ['code'];
                     //注册latex扩展菜单
                     editor.menus.extend('InsertLatexKey', InsertLatex);
                     editor.config.menus = editor.config.menus.concat('InsertLatexKey');
+                    //博客预览扩展
+                    editor.menus.extend('InsertBlogPreview', InsertBlogPreview);
+                    editor.config.menus = editor.config.menus.concat('InsertBlogPreview');
                     //注册预览扩展菜单，只有在屏幕够大时才允许预览
                     if(this.$vuetify.breakpoint.mdAndUp){
                         editor.menus.extend('PreviewBtnKey', PreviewMenu);

@@ -6,7 +6,6 @@
 
 <script>
     import "wangeditor";
-    import { analysisLatex } from '../../class/wangeditor/insert-latex';
     import cache from '../../storage/cache';
 
     export default {
@@ -40,7 +39,7 @@
             //初始化latex公式，需要遍历一遍holder，找latexpression标签，并且初始化img标签事件
             initLatex(){
                 //这个true表示处理latex的同时处理img
-                analysisLatex(this.$refs.holder, true);
+                this.$utils.analysisRichContent(this.$refs.holder, true);
             },
             addListener(){
                 if(this.timer) return;

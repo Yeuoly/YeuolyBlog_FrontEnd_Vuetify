@@ -16,6 +16,13 @@ export const closeLoadingOverlay = () => {
     communicate.$emit('closeLoadingOverlay');
 };
 
+export const router = () => {
+    //这里的逻辑可能比较科幻，所以也写一下，其实就是创建一个空对象，利用引用传参去主根里取$router
+    const container = {};
+    communicate.$emit('getRouter', container);
+    return container.router;
+};
+
 export const AvatarLoadingCenter = {
     communicate : new Vue(),
     cache : Array(10000),

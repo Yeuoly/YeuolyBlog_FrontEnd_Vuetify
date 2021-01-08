@@ -31,6 +31,9 @@
   import LayoutFooter from "./components/layout/Footer";
   import FloatHelper from "./components/items/FloatHelper";
   import BrowserVersionTooLow from './components/views/ViewBrowserTooLow';
+
+  import { communicate } from './communicate';
+
   export default {
     name: 'App',
     components: {
@@ -72,10 +75,14 @@
         }).finally(() => {
           this.checking = false;
         });
-      }
+      },
+      
     },
     mounted() {
       this.getApiState();
+      communicate.$on('getRouter', contanier => {
+        contanier.router = this.$router;
+      });
     }
   }
 </script>

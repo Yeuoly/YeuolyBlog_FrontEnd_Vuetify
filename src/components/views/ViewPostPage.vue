@@ -31,6 +31,7 @@ import TopBar from '../items/HomeTopBar';
 import axios from 'axios';
 import { stringify } from 'querystring';
 import { messageBox } from '../../communicate';
+import { loadBlog } from '../../lib/async/post';
 
 export default {
     name : 'ViewPostPage',
@@ -50,40 +51,31 @@ export default {
         }
     },
     methods : {
-        async init(pid){
-            try{
-                const { data } = await axios.post('v1/post/public/action', stringify({
-                    post_id : pid,
-                    act : 4
-                }));
-                if(data['data']['res'] === 666){
-                    const _ = data['data']['data'];
-                    this.html = _['content'];
-                    this.user_id = _['user_id'];
-                    this.user_uid = _['user_uid'];
-                    this.post_tags = _['tags'].split(/[\s]/g);
-                    this.post_time = _['time'];
-                    this.title = _['title'];
-                    this.user_followed = _['followed'];
-                    this.user_class = _['user_class'];
-                    this.over = true;
-                }else{
-                    messageBox('发生了一点小错误', data['data']['error'],'','error');
-                }
-            }catch(e){
-                messageBox('发生了一点小错误', '与服务器的连接似乎出现了一点小问题','','error');
+        async init(){
+            const pid = this.$route.query.pid;
+            if(!/^([a-f0-9]{32,32})$/g.test(pid)){
+                messageBox('发生了一点小错误', 'pid格式错误', '', 'error');
+                return;
             }
+            const post = await loadBlog(pid);
+            this.html = post['content'];
+            this.user_id = post['user_id'];
+            this.user_uid = post['user_uid'];
+            this.post_tags = post['tags'].split(/[\s]/g);
+            this.post_time = post['time'];
+            this.title = post['title'];
+            this.user_followed = post['followed'];
+            this.user_class = post['user_class'];
+            this.over = true;
         }
     },
-    mounted(){
-        setTimeout(() => {
-            const pid = this.$route.query.pid;
-            if(/^([a-f0-9]{32,32})$/g.test(pid)){
-                this.init(pid);
-            }else{
-                messageBox('发生了一点小错误', 'pid格式错误', '', 'error');
-            }
-        });
+    watch : {
+        '$route.query.pid' : {
+            handler(){
+                this.init();
+            },
+            immediate : true
+        }
     }
 }
 </script>
