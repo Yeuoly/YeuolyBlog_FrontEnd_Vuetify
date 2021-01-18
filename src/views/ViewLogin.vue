@@ -62,10 +62,11 @@
 </template>
 
 <script>
-    import passportBase from './../../mixins/passport';
-    import MaterialCard from '../material/Card';
+    import passportBase from './../mixins/passport';
+    import MaterialCard from '../components/material/Card';
 
-    import { messageBox , openLoadingOverlay , closeLoadingOverlay } from "../../communicate";
+    import { messageBox , openLoadingOverlay , closeLoadingOverlay } from "../communicate";
+    import { api_login } from '../lib/static/api';
 
     export default {
         name: "ViewLogin",
@@ -87,10 +88,10 @@
                 const password = this.password;
                 const email = this.email;
                 openLoadingOverlay();
-                this.axios.post('v1/account/ordinary/action', this.$qs.stringify({
+                this.axios.post(api_login.route, this.$qs.stringify({
                     password : password,
                     email : email,
-                    act : 2
+                    act : api_login.act
                 })).then( response => {
                     const _data = response.data;
                     if(_data['data']['res'] === 666){
@@ -117,5 +118,5 @@
 </script>
 
 <style>
-    @import "../../style/passport.css";
+    @import "../style/passport.css";
 </style>

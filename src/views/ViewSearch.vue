@@ -50,8 +50,9 @@
 </template>
 
 <script>
-    import { messageBox } from "../../communicate";
-    import YAvatar from "../common/YAvatar";
+    import { messageBox } from "../communicate";
+    import { api_search } from '../lib/static/api';
+    import YAvatar from "../components/common/YAvatar";
 
     export default {
         name: "ViewSearch",
@@ -75,7 +76,7 @@
         },
         methods : {
             search(){
-                this.axios.post(`v1/search/${this.search_type}`,this.$qs.stringify({
+                this.axios.post(api_search.route(this.search_type), this.$qs.stringify({
                     kw : this.search_key_word,
                 })).then( response => {
                     let _data = response.data;
@@ -111,7 +112,7 @@
                 }
             },
             level(){
-                return (num) => {
+                return num => {
                     switch (num) {
                         case 1:
                             return '普通用户';
@@ -124,11 +125,6 @@
                     }
                 }
             },
-            avatar(){
-                return (uid) => {
-                    return `${process.env.VUE_APP_API_ROOT}/v1/account/avatar?size=75&uid=${uid}`;
-                }
-            }
         }
     }
 </script>

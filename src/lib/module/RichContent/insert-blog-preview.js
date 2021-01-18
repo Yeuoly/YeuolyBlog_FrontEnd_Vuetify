@@ -1,6 +1,7 @@
 import  E from 'wangeditor';
-import { communicate, messageBox } from '../../communicate';
-const { $, BtnMenu, Panel, PanelMenu } = E;
+import { messageBox } from '../../../communicate';
+import { pid_format_all } from '../../pattern';
+const { $, Panel, PanelMenu } = E;
 
 const createPanel = (editor, active) => {
     const insertBlogPreview = pid => {
@@ -10,7 +11,7 @@ const createPanel = (editor, active) => {
     const selection = editor.selection.getSelectionContainerElem();
     const dom = selection.seletcor;
     //获取pid，如果非激活状态，就说明是新建的，那就给个空的pid
-    let pid = active && /[a-z0-9]{32}/g.test(dom.innerText) ? dom.innerText : '';
+    let pid = active && pid_format_all.test(dom.innerText) ? dom.innerText : '';
 
     const conf = {
         width: 500,
@@ -39,7 +40,7 @@ const createPanel = (editor, active) => {
                 fn : v => {
                     //获取输入的pid，判断格式，然后再修改pid
                     const _pid = v.target.value;
-                    if(!/^[a-f0-9]{0,32}$/g.test(_pid))
+                    if(!pid_format_all.test(_pid))
                         v.target.value = pid;
                     else
                         pid = _pid;
@@ -48,7 +49,7 @@ const createPanel = (editor, active) => {
                 selector : '#btn-insert-blog',
                 type : 'click',
                 fn : () => {
-                    if(!/^[a-f0-9]{32}$/g.test(pid))
+                    if(!pid_format_all.test(pid))
                         messageBox('警告', '您输入的pid不符合规范', '', 'error');
                     else{
                         //如果是激活状态，说明现在位于一个预览框上，则修改pid就好了，否则插入一个新的预览框

@@ -18,10 +18,10 @@
 </template>
 
 <script>
-    import base from '../../../mixins/base';
-    import YDialog from "../../common/YDialog";
-    import UploadAvatarDialog from "../../items/UploadAvatarDialog";
-    import YAvatar from "../../common/YAvatar";
+    import base from '../../mixins/base';
+    import YDialog from "../../components/common/YDialog";
+    import YAvatar from "../../components/common/YAvatar";
+    import UploadAvatarDialog from "../../components/common/UploadAvatarDialog";
 
     export default {
         name: "ViewSettingChangeAvatar",
@@ -34,7 +34,3 @@
         },
     }
 </script>
-
-<style>
-
-</style>

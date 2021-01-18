@@ -19,7 +19,8 @@
                     </span>
                     <VTab
                             class="mr-3"
-                            v-for="t in tabs.items"
+                            v-for="(t, key) in tabs.items"
+                            :key="key"
                     >
                         <VIcon class="mr-2">{{t.icon}}</VIcon>
                         {{t.name}}
@@ -32,8 +33,8 @@
                     @change="load"
                     touchless
             >
-                <VTabItem v-for="t in tabs.items" >
-                    <div v-for="p in t.col">
+                <VTabItem v-for="(t, key) in tabs.items" :key="key">
+                    <div v-for="(p, l) in t.col" :key="l">
                         <DashBoardStatsCard
                                 v-if="p.type === 'stats'"
                                 :title="p.beta.title"
@@ -80,12 +81,13 @@
 </template>
 
 <script>
-    import DashBoardStatsCard from "../material/StatsCard";
-    import DashBoardDataTable from "../material/DataTable";
-    import MaterialCard from "../material/Card";
+    import DashBoardStatsCard from "../components/material/StatsCard";
+    import DashBoardDataTable from "../components/material/DataTable";
+    import MaterialCard from "../components/material/Card";
 
-    import { messageBox } from "../../communicate";
-    import { xss_filter } from '../../lib/utils';
+    import { messageBox } from "../communicate";
+    import { xss_filter } from '../lib/utils';
+    import { space_format_has } from "../lib/pattern";
 
     export default {
         name: "ViewAdmin",
@@ -220,7 +222,7 @@
                                 const doms = this.$refs.datatable[0].$el.children[0].children[0].children[0].children[0].children[1].children;
                                 for(const i of doms){
                                     const aim = i.children[0].children[0];
-                                    const pid = aim.innerHTML.replace(/[ ]/g, '');
+                                    const pid = aim.innerHTML.replace(space_format_has, '');
                                     aim.innerHTML = `<a href="/post-page?pid=${pid}">${pid}</a>`;
                                 }
                             });

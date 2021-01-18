@@ -22,8 +22,8 @@
 <script>
     import MaterialCard from "../material/Card";
     import YFileInput from "../common/YFileInput";
-
     import { messageBox , openLoadingOverlay , closeLoadingOverlay } from "../../communicate";
+    import { api_change_avatar } from '../../lib/static/api';    
 
     export default {
         name: 'UploadAvatarDialog',
@@ -39,10 +39,10 @@
             upload(){
                 openLoadingOverlay();
                 const from_data = new FormData();
-                from_data.append('img',this.file,'img');
-                from_data.append('act','0');
+                from_data.append('img', this.file, 'img');
+                from_data.append('act', `${api_change_avatar.act}`);
                 this.$utils.csrf_post(
-                    'v1/account/online/action',
+                    api_change_avatar.route,
                     from_data,
                     response => {
                         const _data = response.data;

@@ -124,10 +124,12 @@
 </template>
 
 <script>
-    import passportBase from './../../mixins/passport';
-    import MaterialCard from '../material/Card';
+    import passportBase from '../mixins/passport';
+    import MaterialCard from '../components/material/Card';
 
-    import { messageBox } from "../../communicate";
+    import { messageBox } from "../communicate";
+    import { captcha_picture_format_all, username_format_all } from '../lib/pattern';
+    import { api_signin, api_create_captcha, api_verify_create_email } from '../lib/static/api';
 
     export default {
         name: "ViewSignIn",
@@ -138,7 +140,7 @@
                 return this.$vuetify.breakpoint.smAndUp ? 400 : 300;
             },
             getImageCaptcha(){
-                return process.env.VUE_APP_API_ROOT + '/v1/tool/verify/create/captcha?method=register&p=' + this.p;
+                return process.env.VUE_APP_API_ROOT + `/${api_create_captcha}?method=register&p=${this.p}`;
             },
             containerHeight(){
                 return 1300;
@@ -162,9 +164,9 @@
                 captcha_email_btn_text : '获取邮箱验证码',
                 lastTime : 0,
                 rule2 : {
-                    captcha : v => !!v.match(/^[0-9]*$/g) || '验证码可不长这样',
+                    captcha : v => !!v.match(captcha_picture_format_all) || '验证码可不长这样',
                     captcha_l : v => v.length === 6 || '长度不对哦~',
-                    account : v => !!v.match(/^[0-9a-zA-Z\u4E00-\u9FA5\u0800-\u4E00]*$/g) || '用户名怪怪的哦~',
+                    account : v => !!v.match(username_format_all) || '用户名怪怪的哦~',
                     account_max : v => v.length <= 16 || '好。。好长。。',
                     account_min : v => v.length >= 6 || '好~短~喔~',
                     repeat_password : v => v === this.password || '两次密码输入不一致'
@@ -182,11 +184,11 @@
                 this.$router.push({name : 'login'});
             },
             signIn(){
-                this.axios.post('v1/account/ordinary/action',this.$qs.stringify({
+                this.axios.post(api_signin.route, this.$qs.stringify({
                     username : this.account,
                     password : this.password,
                     captcha : this.captcha_email,
-                    act : 1
+                    act : api_signin.act
                 })).then( response => {
                     const _data = response.data;
                     if(_data['data']['res'] === 666){
@@ -207,7 +209,7 @@
             },
             getEmailCaptcha(){
                 this.captcha_email_btn = false;
-                this.axios.post('v1/tool/verify/create/email',this.$qs.stringify({
+                this.axios.post(api_verify_create_email.route ,this.$qs.stringify({
                     method : 'register',
                     email : this.email,
                     captcha : this.captcha_image
@@ -244,6 +246,6 @@
 </script>
 
 <style>
-    @import "../../style/passport.css";
+    @import "../style/passport.css";
 
 </style>

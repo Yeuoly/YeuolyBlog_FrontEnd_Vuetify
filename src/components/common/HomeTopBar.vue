@@ -48,6 +48,7 @@
 <script>
 
     import { messageBox } from "../../communicate";
+    import { api_follow } from '../../lib/static/api';
     import YAvatar from "../common/YAvatar";
 
     export default {
@@ -78,10 +79,10 @@
         methods : {
             follow(){
                 const form_data = new FormData();
-                form_data.append('act','4');
-                form_data.append('react',this.user_follow ? 'unfo' : 'fo');
-                form_data.append('uid',this.user_uid);
-                this.$utils.csrf_post(`${process.env.VUE_APP_API_ROOT}/v1/account/online/action`, form_data,
+                form_data.append('act', `${api_follow.act}`);
+                form_data.append('react', this.user_follow ? 'unfo' : 'fo');
+                form_data.append('uid', this.user_uid);
+                this.$utils.csrf_post(`${process.env.VUE_APP_API_ROOT}/${api_follow}`, form_data,
                 response => {
                     const _data = response.data;
                     if(_data['data']['res'] === 666){

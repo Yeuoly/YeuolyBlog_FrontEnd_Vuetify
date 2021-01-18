@@ -26,8 +26,8 @@
     import { communicate } from "../../communicate";
     import PopDialog from "../common/PopDialog";
     import popdialog from '../../mixins/popdialog';
-    import Live2DGirl from "../items/Live2DGirl";
-    import LoadingOverlay from "../items/LoadingOverlay";
+    import Live2DGirl from "../common/Live2DGirl";
+    import LoadingOverlay from "../common/LoadingOverlay";
 
     export default {
         name: "Container",

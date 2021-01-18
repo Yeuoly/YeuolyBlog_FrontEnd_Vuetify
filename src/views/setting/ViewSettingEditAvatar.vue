@@ -52,7 +52,7 @@
 
 <script>
     import { VueCropper } from 'vue-cropper';
-    import YFileInput from "../../common/YFileInput";
+    import YFileInput from "../../components/common/YFileInput";
 
     export default {
         name: "ViewSettingEditAvatar",

@@ -110,12 +110,14 @@
 </template>
 
 <script>
-    import RichEditor from "../items/RichEditor";
-    import base from '../../mixins/base';
-    import TagsBox from "../items/TagsBox";
-    import YHtmlCompiler from '../common/YHtmlCompiler';
-    import { messageBox } from "../../communicate";
-    import { analysisLatex, parseIntoSimple } from '../../class/wangeditor/insert-latex';
+    import RichEditor from "../components/common/RichEditor";
+    import base from '../mixins/base';
+    import TagsBox from "../components/common/TagsBox";
+    import YHtmlCompiler from '../components/common/YHtmlCompiler';
+    import { messageBox } from "../communicate";
+    import { analysisLatex, parseIntoSimple } from '../lib/module/RichContent/insert-latex';
+    import { enter_space_format_has } from '../lib/pattern';
+    import { api_save_post, api_private_post } from '../lib/static/api';
 
     export default {
         name: "ViewEditor",
@@ -146,18 +148,12 @@
                 this.disabled_edit = true;
             },
             save(){
-                let url = `v1/post/private/action`;
-                
-                //去除latex一大堆复杂的标签先=，=
-                //const html = parseIntoSimple(this.content).innerHTML;
-                //泻药，现在没有一大堆复杂的标签了
-                const html = this.content;
-                this.axios.post(url,this.$qs.stringify({
-                    post_data : html,
+                this.axios.post(api_save_post.route ,this.$qs.stringify({
+                    post_data : this.content,
                     post_title : this.title,
                     post_id : this.post_id,
                     post_tags : `[${this.tags.join(' ')}]`,
-                    act : this.post_id ? 2 : 1,
+                    act : api_save_post.act(this.post_id),
                     private : this.privacy.onlyMe
                 })).then( response => {
                     let _data = response.data;
@@ -190,14 +186,14 @@
                 //由于容易导致很操蛋的bug，这里去除latex解析
                 this.content = dist['content'];
                 this.post_id = dist['post_id'];
-                this.tags = this.$utils.array_drop(dist['tags'].split(/[\r\n ]/),'');
+                this.tags = this.$utils.array_drop(dist['tags'].split(enter_space_format_has),'');
                 this.privacy.onlyMe = dist['private'];
                 this.disabled_edit = false;
             },
             get(post_id){
-                this.axios.post('/v1/post/private/action',this.$qs.stringify({
+                this.axios.post(api_private_post.route ,this.$qs.stringify({
                     post_id : post_id,
-                    act : 4
+                    act : api_private_post.act
                 })).then( response => {
                     const _data = response.data;
                     if(_data['data']['res'] === 666){

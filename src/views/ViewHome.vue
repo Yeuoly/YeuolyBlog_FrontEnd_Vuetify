@@ -77,16 +77,17 @@
 </template>
 
 <script>
-    import HomePostCard from "../items/HomePostCard";
+    import HomePostCard from "../components/common/HomePostCard";
     import MugenScroll from 'vue-mugen-scroll';
-
-    import { communicate } from "../../communicate";
-    import { messageBox } from "../../communicate";
-    import { filter } from "../common/PostCardFilter";
-    import PostCardFilter from "../common/PostCardFilter";
-    import HomeTopBar from "../items/HomeTopBar";
-    import YDialog from "../common/YDialog";
-    import MaterialCard from "../material/Card";
+    import PostCardFilter from "../components/common/PostCardFilter";
+    import HomeTopBar from "../components/common/HomeTopBar";
+    import YDialog from "../components/common/YDialog";
+    import MaterialCard from "../components/material/Card";
+    import { communicate, messageBox } from "../communicate";
+    import { filter } from "../components/common/PostCardFilter";
+    import { enter_space_format_has } from "../lib/pattern";
+    import { api_private_del_post, api_get_recent, api_get_sapce_info } from '../lib/static/api';
+    import { loadBlogDirective } from '../lib/async/post';
 
     export default {
         name: "ViewHome",
@@ -117,9 +118,9 @@
         },
         methods : {
             deleteLocalCard(post_id){
-                this.axios.post('v1/post/private/action',this.$qs.stringify({
+                this.axios.post(api_private_del_post.route ,this.$qs.stringify({
                     post_id : post_id,
-                    act : 3
+                    act : api_private_del_post.act
                 })).then( response => {
                     let _data = response.data;
                     if(_data['data']['res'] === 666) {
@@ -136,21 +137,22 @@
             },
             load(dist){
                 dist.forEach( item => {
-                    const tags = this.$utils.array_drop(item['tags'].split(/[\r\n ]/),'');
+                    //先把博客加入缓存，避免多次加载的情况
+                    loadBlogDirective(item['post_id'], item);
+                    const tags = this.$utils.array_drop(item['tags'].split(enter_space_format_has),'');
                     item['tags'] = tags;
                     this.$utils.array_merge(this.tags,tags);
                 });
-                this.postCollections = [...this.postCollections,...dist];
+                this.postCollections = [...this.postCollections, ...dist];
             },
             getRecent(){
                 if(this.end){
                     return;
                 }
                 this.loading = true;
-                const url = `v1/post/${ this.home_flag ? 'private' : 'public' }/action`;
-                this.axios.post(url,this.$qs.stringify({
+                this.axios.post(api_get_recent.route(this.home_flag) ,this.$qs.stringify({
                     page : this.page + 1,
-                    act : 0,
+                    act : api_get_recent.act,
                     uid : this.uid
                 })).then( response => {
                     const _data = response.data['data'];
@@ -204,7 +206,7 @@
                 }
             },
             getSubscribeInfo(){
-                this.axios.post(`v1/account/ordinary/action?act=4&uid=${this.uid}&filter=be_num|do_num`).then( response => {
+                this.axios.post(`${api_get_sapce_info.route}?act=${api_get_sapce_info.act}&uid=${this.uid}&filter=be_num|do_num`).then( response => {
                     const _data = response.data['data']['data'];
                     this.subscribe.be_num = _data[0];
                     this.subscribe.do_num = _data[1];

@@ -12,7 +12,8 @@
 </template>
 
 <script>
-    import { communicate } from "../../../communicate";
+    import { communicate } from "../../communicate";
+    import { api_get_privacy_settings, api_change_privacy_settings } from '../../lib/static/api';
 
     export default {
         name: "ViewSettingChangePrivacy",
@@ -34,8 +35,8 @@
         },
         methods : {
             load(){
-                this.axios.post('v1/account/online/action',this.$qs.stringify({
-                    act : 1
+                this.axios.post(api_get_privacy_settings.route ,this.$qs.stringify({
+                    act : api_get_privacy_settings.act
                 })).then( response => {
                     const _data = response.data;
                     if(_data['data']['res'] === 666 ){
@@ -50,9 +51,9 @@
             upload(){
                 const form_data = new FormData();
                 form_data.append('settings',this.settings);
-                form_data.append('act','2');
+                form_data.append('act',`${api_change_privacy_settings.act}`);
                 this.$utils.csrf_post(
-                    'v1/account/online/action',
+                    api_change_privacy_settings.route,
                     form_data,
                     response => {
                         let _data = response.data;

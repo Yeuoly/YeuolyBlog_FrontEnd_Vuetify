@@ -1,0 +1,1 @@
+export const default_avatar = '//i0.hdslb.com/bfs/album/6389ef2f437a4b00d0dc863b44f4084bf6b4165a.jpg';

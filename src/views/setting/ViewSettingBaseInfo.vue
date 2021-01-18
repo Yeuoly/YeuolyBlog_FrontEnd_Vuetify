@@ -72,7 +72,8 @@
 </template>
 
 <script>
-    import { messageBox } from "../../../communicate";
+    import { messageBox } from "../../communicate";
+    import { api_change_nickname } from '../../lib/static/api';
 
     export default {
         name : "ViewSettingBaseInfo",
@@ -106,8 +107,8 @@
 
             },
             sendModifiedNickname(){
-                this.axios.post('v1/account/online/action',this.$qs.stringify({
-                    act : 5,
+                this.axios.post(api_change_nickname.route ,this.$qs.stringify({
+                    act : api_change_nickname.act,
                     name : this.info.nickname.modified
                 })).then( r => {
                     const data = r.data;

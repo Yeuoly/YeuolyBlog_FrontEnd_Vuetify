@@ -26,12 +26,13 @@
 </template>
 
 <script>
-import PostCard from '../items/HomePostCard';
-import TopBar from '../items/HomeTopBar';
+import PostCard from '../components/common/HomePostCard';
+import TopBar from '../components/common/HomeTopBar';
 import axios from 'axios';
 import { stringify } from 'querystring';
-import { messageBox } from '../../communicate';
-import { loadBlog } from '../../lib/async/post';
+import { messageBox } from '../communicate';
+import { loadBlog } from '../lib/async/post';
+import { pid_format_all, space_format_has } from '../lib/pattern';
 
 export default {
     name : 'ViewPostPage',
@@ -53,7 +54,7 @@ export default {
     methods : {
         async init(){
             const pid = this.$route.query.pid;
-            if(!/^([a-f0-9]{32,32})$/g.test(pid)){
+            if(!pid_format_all.test(pid)){
                 messageBox('发生了一点小错误', 'pid格式错误', '', 'error');
                 return;
             }
@@ -61,7 +62,7 @@ export default {
             this.html = post['content'];
             this.user_id = post['user_id'];
             this.user_uid = post['user_uid'];
-            this.post_tags = post['tags'].split(/[\s]/g);
+            this.post_tags = post['tags'].split(space_format_has);
             this.post_time = post['time'];
             this.title = post['title'];
             this.user_followed = post['followed'];

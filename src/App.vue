@@ -29,10 +29,11 @@
   import LayoutSideMenu from "./components/layout/SideMenu";
   import LayoutContainer from "./components/layout/Container";
   import LayoutFooter from "./components/layout/Footer";
-  import FloatHelper from "./components/items/FloatHelper";
-  import BrowserVersionTooLow from './components/views/ViewBrowserTooLow';
+  import FloatHelper from "./components/common/FloatHelper";
+  import BrowserVersionTooLow from './views/ViewBrowserTooLow';
 
   import { communicate } from './communicate';
+  import { api_status } from './lib/static/api';
 
   export default {
     name: 'App',
@@ -68,7 +69,7 @@
     },
     methods : {
       getApiState(){
-        this.axios.get('/v1/state/api').then( response => {
+        this.axios.get(api_status.route).then( response => {
           this.working = response.data !== 'OK' ;
         }).catch(() => {
           this.working = true;

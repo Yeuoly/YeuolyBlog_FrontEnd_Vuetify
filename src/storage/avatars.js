@@ -1,6 +1,6 @@
 export default {
     state : {
-        avatars : new Array(2000)
+        avatars : {}
     },
     mutations : {
         setAvatar(state,item){
@@ -8,8 +8,6 @@ export default {
         },
     },
     getters : {
-        getAvatar : state => uid => {
-            return state.avatars[uid];
-        }
+        getAvatar : state => uid => state.avatars[uid]
     }
 }

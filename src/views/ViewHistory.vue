@@ -26,13 +26,20 @@
 </template>
 
 <script>
-    import MaterialCard from "../material/Card";
+    import MaterialCard from "../components/material/Card";
     export default {
         name: "ViewHistory",
         components: {MaterialCard},
         data(){
             return{
                 history :  [
+                    {
+                        title   : '前端代码结构肃清1',
+                        version : '2.2.2.01-α',
+                        content : '解耦合、抽离api/正则、调整文件结构、引入解复加载类',
+                        date    : '2020/1/17',
+                        color   : 'red'
+                    },
                     {
                         title   : '新功能',
                         version : '2.2.1.00-α',
@@ -303,7 +310,3 @@
         }
     }
 </script>
-
-<style scoped>
-
-</style>

@@ -1,9 +1,10 @@
 //这个文件处理博客预览的异步加载问题
 import axios from 'axios';
 import store from '../../storage';
+import AsyncLoading from './index';
+import { api_public_post } from '../static/api';
 import { stringify } from 'querystring';
 
-const cache = [];
 const default_resolve = error => ({
     title : '加载错误',
     content : error,
@@ -15,39 +16,34 @@ const default_resolve = error => ({
     followed : false,
 });
 
-const insertBlog = (pid, post) => {
-    store.commit('insertPost', { pid, post });
-    for(const i of cache){
-        if(i.pid === pid){
-            i.resolve(post);
-        }
+class PostLoading extends AsyncLoading {
+    store(pid, post){
+        store.commit('insertPost', { pid, post });
     }
-}
 
-const loadBlogBase = async pid => {
-    try{
-        const { data } = await axios.post('v1/post/public/action', stringify({
+    exist(pid){
+        return store.getters.getPost(pid);
+    }
+
+    data(pid){
+        return store.getters.getPost(pid);
+    }
+
+    async load(pid, resolve, reject){
+        const { data } = await axios.post(api_public_post.route, stringify({
             post_id : pid,
-            act : 4
+            act : api_public_post.act
         }));
         if(data['data']['res'] === 666){
-            const post = data['data']['data'];
-            insertBlog(pid, post);
+            resolve(data['data']['data']);
         }else{
-            insertBlog(pid, default_resolve(data['data']['error']));
+            reject(default_resolve(data['data']['error']));
         }
-    }catch(e){
-        insertBlog(pid, default_resolve('未知原因'));
     }
 }
 
-export const loadBlog = pid => new Promise(async resolve => {
-    const post = store.getters.getPost(pid);
-    //如果已经加载过了，就直接返回，否则丢进队列
-    if(post){
-        resolve(post);
-    }else{
-        cache.push({ pid, resolve });
-        loadBlogBase(pid);
-    }
-});
+const loader = new PostLoading(default_resolve('未知错误'));
+
+export const loadBlog = (...args) => loader.get(...args);
+
+export const loadBlogDirective = (pid, blog) => loader.store(pid, blog);

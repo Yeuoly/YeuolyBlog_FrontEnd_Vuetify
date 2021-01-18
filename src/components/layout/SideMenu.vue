@@ -115,6 +115,7 @@
 <script>
     import { communicate } from "../../communicate"
     import { messageBox } from "../../communicate";
+    import { api_logout } from '../../lib/static/api';
     import base from '../../mixins/base'
     import YAvatar from "../common/YAvatar";
 
@@ -181,9 +182,7 @@
                 this.$router.push({name : name});
             },
             logout(){
-                this.axios.post('v1/account/online/action',this.$qs.stringify({
-                    act : 3
-                })).then( response => {
+                this.axios.post(`${api_logout.route}?act=${api_logout.act}`).then( response => {
                     let _data = response.data;
                     if(_data['data']['res'] === 666){
                         location.href = '/';

@@ -26,10 +26,9 @@ import utils from './lib/utils';
 Vue.prototype.$utils = utils;
 
 //
-import { state_user } from "./storage/userinfo";
-
-//
 import { beforeHook } from "./router/router";
+
+import { api_user } from './lib/static/api';
 
 //安装图片预览插件，由于YeuolyBlog的特殊性，这个插件最终选择了VuePreview的1.0.4，高版本不行
 import VuePreview from 'vue-preview';
@@ -39,8 +38,8 @@ Vue.use(VuePreview);
 //初始化数据
 axios.defaults.baseURL = process.env.VUE_APP_API_ROOT;
 axios.defaults.withCredentials = true;
-axios.post('/v1/account/ordinary/action',qs.stringify({
-  act : 0
+axios.post(api_user.route, qs.stringify({
+  act : api_user.act
 })).then( response => {
   const _data = response.data;
   if(_data['data']['res'] === 666) {

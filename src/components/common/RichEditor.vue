@@ -17,14 +17,16 @@
      *
      * **/
 
-    import E from 'wangeditor';
-    import InsertLatex from '../../class/wangeditor/insert-latex';
-    import PreviewMenu from '../../class/wangeditor/preview';
-    import InsertBlogPreview from '../../class/wangeditor/insert-blog-preview';
     import HLJS from 'highlight.js';
+    import E from 'wangeditor';
+    import InsertLatex from '../../lib/module/RichContent/insert-latex';
+    import PreviewMenu from '../../lib/module/RichContent/preview';
+    import InsertBlogPreview from '../../lib/module/RichContent/insert-blog-preview';
     import { messageBox } from "../../communicate";
     import { openLoadingOverlay } from "../../communicate";
     import { closeLoadingOverlay } from "../../communicate";
+    import { api_upload_img } from '../../lib/static/api';
+    
     export default {
         name: 'editor',
         model : {
@@ -77,7 +79,7 @@
                         const form_data = new FormData();
                         form_data.append('img',files[0]);
                         openLoadingOverlay();
-                        this.$utils.csrf_post('v1/upload/img',form_data, response => {
+                        this.$utils.csrf_post(api_upload_img.route, form_data, response => {
                             const data = response.data['data'];
                             if(data['res'] === 666){
                                 insert(data['data']['url']);

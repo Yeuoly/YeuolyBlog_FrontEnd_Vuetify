@@ -25,7 +25,7 @@
 </template>
 
 <script>
-    import MaterialCard from "../material/Card";
+    import MaterialCard from "../components/material/Card";
     export default {
         name: "ViewIndex",
         components: { MaterialCard},

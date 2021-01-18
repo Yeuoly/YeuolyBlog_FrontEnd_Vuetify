@@ -12,6 +12,8 @@
 
 <script>
     import CategoryBox from "../common/CategoryBox";
+    import { enter_space_format_has } from '../../lib/pattern';
+
     export default {
         name: "TagsBox",
         components: {CategoryBox},
@@ -36,9 +38,8 @@
         methods : {
             checkInput(e){
                 let key = e.key;
-                let regx = /[\n\r ]/;
-                if(regx.test(key)){
-                    let list = this.text.split(regx);
+                if(enter_space_format_has.test(key)){
+                    let list = this.text.split(enter_space_format_has);
                     this.text = '';
                     list.forEach( item => {
                         if(item !== '' && this.tags.indexOf(item) === -1){
