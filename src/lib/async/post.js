@@ -1,7 +1,7 @@
 //这个文件处理博客预览的异步加载问题
 import axios from 'axios';
 import store from '../../storage';
-import AsyncLoading from './index';
+import AsyncLoading from 'async_loading';
 import { api_public_post } from '../static/api';
 import { stringify } from 'querystring';
 

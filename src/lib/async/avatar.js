@@ -1,19 +1,19 @@
 import AsyncLoading from 'async_loading';
-import store from '../../storage';
 import axios from 'axios';
+import store from '../../storage';
 import { default_avatar } from '../static/value';
 import { api_avatar } from '../static/api';
 
 class AvatarLoading extends AsyncLoading {
     store(uid, url){
-        store.commit('setAvatar',{ uid, url });
-    }
-
-    exist(uid){
-        return store.getters.getAvatar(uid);
+        store.commit('setAvatar', { uid, url });
     }
 
     data(uid){
+        return store.getters.getAvatar(uid);
+    }
+
+    exist(uid){
         return store.getters.getAvatar(uid);
     }
 
@@ -29,4 +29,4 @@ class AvatarLoading extends AsyncLoading {
 
 const loader = new AvatarLoading(default_avatar);
 
-export const loadAvatar = (...args) => loader.get(...args);
+export const loadAvatar = uid => loader.get(uid);

@@ -20,7 +20,7 @@ export const RichContentRender = (dom, handle_img) => {
         }else if(i.tagName === 'BLOGPREVIEW'){
             //对于BlogPreview，我们使用先判断pid格式，我们需要新建一个Vue对象来处理它
             const pid = i.innerText;
-            if(!pid_format_all.test(pid))continue;
+            if(!pid.match(pid_format_all))continue;
             new Vue({
                 data : () => ({ pid }),
                 render : h => h(BlogPreviewer)

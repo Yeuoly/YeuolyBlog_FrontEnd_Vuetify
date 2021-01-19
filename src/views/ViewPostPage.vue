@@ -9,7 +9,7 @@
             @unfollowed="user_followed = false"
             :disabled="user_uid == $store.getters.getUid || !user_uid"
         />
-        <div class="pt-5 mb-2">
+        <div class="pt-5 mb-2 post-page-card">
             <PostCard
                 v-if="over"
                 :title="title"
@@ -52,22 +52,24 @@ export default {
         }
     },
     methods : {
-        async init(){
-            const pid = this.$route.query.pid;
-            if(!pid_format_all.test(pid)){
-                messageBox('发生了一点小错误', 'pid格式错误', '', 'error');
-                return;
-            }
-            const post = await loadBlog(pid);
-            this.html = post['content'];
-            this.user_id = post['user_id'];
-            this.user_uid = post['user_uid'];
-            this.post_tags = post['tags'].split(space_format_has);
-            this.post_time = post['time'];
-            this.title = post['title'];
-            this.user_followed = post['followed'];
-            this.user_class = post['user_class'];
-            this.over = true;
+        init(){
+            setTimeout(async () => {
+                const pid = this.$route.query.pid;
+                if(!pid.match(pid_format_all)){
+                    messageBox('错误', 'pid格式错误', '', 'error');
+                    return;
+                }
+                const post = await loadBlog(pid);
+                this.html = post['content'];
+                this.user_id = post['user_id'] || post['poster_id'];
+                this.user_uid = post['user_uid'] || post['poster_uid'];
+                this.post_tags = typeof post['tags'] === 'string' ? post['tags'].split(space_format_has) : post['tags'];
+                this.post_time = post['time'];
+                this.title = post['title'];
+                this.user_followed = post['followed'];
+                this.user_class = post['user_class'];
+                this.over = true;
+            }, 200);
         }
     },
     watch : {
@@ -82,5 +84,8 @@ export default {
 </script>
 
 <style>
-
+.post-page-card{
+    max-width: 1200px;
+    margin: 0 auto;
+}
 </style>

@@ -33,8 +33,9 @@ const createPanel = (editor, active) => {
                 type : 'input',
                 fn : v => {
                     const size = parseInt(v.target.value);
-                    if(size === NaN) return;
-                    dom.setAttribute('size', size);
+                    if(!isNaN(size)){
+                        dom.setAttribute('size', size);
+                    }
                 }
             }]
         }]

@@ -138,7 +138,7 @@
             load(dist){
                 dist.forEach( item => {
                     //先把博客加入缓存，避免多次加载的情况
-                    loadBlogDirective(item['post_id'], item);
+                    //loadBlogDirective(item['post_id'], item);
                     const tags = this.$utils.array_drop(item['tags'].split(enter_space_format_has),'');
                     item['tags'] = tags;
                     this.$utils.array_merge(this.tags,tags);
