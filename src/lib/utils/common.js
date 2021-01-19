@@ -66,7 +66,12 @@ const XSSFilterXSS = new XSS.FilterXSS({
         pmicrosoft : [],
         spanmicrosoft : [],
         latexpression : ['size'],
-        blogpreview : ['pid']
+        blogpreview : ['pid'],
+        b : [],
+        small : [],
+        big : [],
+        mark : [],
+        hr : []
     }
 });
 
