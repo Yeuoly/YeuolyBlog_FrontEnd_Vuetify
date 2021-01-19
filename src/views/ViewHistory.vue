@@ -34,6 +34,13 @@
             return{
                 history :  [
                     {
+                        title   : '修复、优化',
+                        version : '2.2.2.01-β',
+                        content : '修复上个版本pid正则错误判断的问题，添加博客详情页的最大宽度',
+                        date    : '2020/1/19',
+                        color   : 'blue'
+                    },
+                    {
                         title   : '前端代码结构肃清1',
                         version : '2.2.2.01-α',
                         content : '解耦合、抽离api/正则、调整文件结构、引入解复加载类',
