@@ -28,8 +28,6 @@
 <script>
 import PostCard from '../components/common/HomePostCard';
 import TopBar from '../components/common/HomeTopBar';
-import axios from 'axios';
-import { stringify } from 'querystring';
 import { messageBox } from '../communicate';
 import { loadBlog } from '../lib/async/post';
 import { pid_format_all, space_format_has } from '../lib/pattern';
@@ -60,6 +58,7 @@ export default {
                     return;
                 }
                 const post = await loadBlog(pid);
+                this.post_id = pid;
                 this.html = post['content'];
                 this.user_id = post['user_id'] || post['poster_id'];
                 this.user_uid = post['user_uid'] || post['poster_uid'];

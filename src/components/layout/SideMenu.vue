@@ -116,6 +116,7 @@
     import { communicate } from "../../communicate"
     import { messageBox } from "../../communicate";
     import { api_logout } from '../../lib/static/api';
+    import { stringify } from 'querystring';
     import base from '../../mixins/base'
     import YAvatar from "../common/YAvatar";
 
@@ -181,23 +182,25 @@
             router(name){
                 this.$router.push({name : name});
             },
-            logout(){
-                this.axios.post(`${api_logout.route}?act=${api_logout.act}`).then( response => {
-                    let _data = response.data;
-                    if(_data['data']['res'] === 666){
+            async logout(){
+                try{
+                    const { data } = await this.axios.post(api_logout.route, stringify({
+                        act : api_logout.act
+                    }));
+                    if(data['data']['res'] === 666){
                         location.href = '/';
                     }else{
-                        messageBox('失败','获取服务端信息失败','','error');
+                        messageBox('失败', '登出失败', data['data']['error'], 'error');
                     }
-                }).catch( () => {
-                    messageBox('失败','获取服务端信息失败','','error');
-                })
+                }catch(e){
+                    messageBox('失败', '服务器大姨妈惹', '', 'error');
+                }
             }
         },
-        mixins : [base],
+        mixins : [ base ],
         mounted() {
-            communicate.$on('openSideMenu',this.openSideMenu);
-            communicate.$on('closeSideMenu',this.closeSideMenu);
+            communicate.$on('openSideMenu', this.openSideMenu);
+            communicate.$on('closeSideMenu', this.closeSideMenu);
         }
     }
 </script>
@@ -205,7 +208,7 @@
 <style>
     .menu-header{
         position: relative;
-        background-image: url(http://i0.hdslb.com/bfs/album/80841ce0b27d582fc99c29c9dca228807640482b.jpg);
+        background-image: url(//yeuoly.oss-cn-beijing.aliyuncs.com/yeuolyblog/public/daily/20210127/ae69432b5d8a2e287e55147c3fff50e6b302c724.jpg);
         background-size: 100% 100%;
         background-color: rgb(100,100,100) !important;border-radius: 0
     }

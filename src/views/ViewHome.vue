@@ -87,7 +87,6 @@
     import { filter } from "../components/common/PostCardFilter";
     import { enter_space_format_has } from "../lib/pattern";
     import { api_private_del_post, api_get_recent, api_get_sapce_info } from '../lib/static/api';
-    import { loadBlogDirective } from '../lib/async/post';
 
     export default {
         name: "ViewHome",

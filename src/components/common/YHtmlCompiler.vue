@@ -1,12 +1,11 @@
 <template>
-    <div class="y-html__controller">
-        <div class="w-e-text" v-html="clean_html" ref="holder"></div>
+    <div class="y-html__controller" ref="holder">
+        <div class="w-e-text" v-html="clean_html"></div>
     </div>
 </template>
 
 <script>
     import "wangeditor";
-    import cache from '../../storage/cache';
 
     export default {
         name: "YHtmlCompiler",
@@ -22,11 +21,12 @@
         },
         data : () => ({
             flag : 0,
-            timer : null,
+            timer : false,
             cache_html : '',
             first_loaded : false,
             modified : null,
-            cache_lock : false
+            cache_lock : false,
+            lastest : '<div class="w-e-text"></div>'
         }),
         computed : {
             clean_html(){
@@ -42,19 +42,12 @@
                 this.$utils.analysisRichContent(this.$refs.holder, true);
             },
             addListener(){
-                if(this.timer) return;
-                this.timer = setInterval(() => {
-                    if(this.$refs.holder.innerHTML){
-                        this.initLatex();
-                        clearInterval(this.timer);
-                        this.timer = null;
-                    }
-                }, 200);
+                this.initLatex();
             },
             lazyUpdate(ms){
                 this.modified = false;
                 setTimeout(() => {
-                //如果在这ms毫秒秒后，发生了更改，说明此时键盘速度很快，所以不更改，等待下一个1s
+                //如果在这ms毫秒秒后，发生了更改，说明此时键盘速度很快，所以不更改，等待下一个ms
                     if(this.modified){
                         this.lazyUpdate(ms);
                     }else{
@@ -68,10 +61,11 @@
             flag : {
                 handler(){
                     if(this.hasLatex){
-                        this.addListener();
+                        setTimeout(() => {
+                            this.addListener();
+                        });
                     }
                 },
-                immediate : true
             },
             html : {
                 //做一个缓存，避免出现高频率渲染的情况

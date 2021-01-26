@@ -126,7 +126,7 @@
         height: 160px;
         background-color: #424242;
         position: relative;
-        background-image: url(http://i0.hdslb.com/bfs/album/44a23a025f6d31e90ba7a9d2e35773437c3e7be6.png);
+        background-image: url(//yeuoly.oss-cn-beijing.aliyuncs.com/yeuolyblog/public/daily/20210127/e1d73ecc5b9f932f8e4879a30ee890693d3ee429.png);
         background-size: 100%;
         background-position: center;
     }

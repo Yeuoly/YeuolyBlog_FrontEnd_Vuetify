@@ -125,5 +125,12 @@ export default {
     },
     xss_filter(html){
         return XSSFilterXSS.process(html);
+    },
+    sleep(misec){
+        return new Promise( resolve => {
+            setTimeout(function(){
+                resolve();
+            }, misec);
+        });
     }
 }
