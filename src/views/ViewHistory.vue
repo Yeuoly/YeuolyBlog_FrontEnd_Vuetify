@@ -33,6 +33,21 @@
         data(){
             return{
                 history :  [
+                    /*{
+                        title   : '新功能',
+                        version : '???',
+                        content : '添加直接ctrl+v上传图片的功能',
+                        date    : '???',
+                        color   : 'green',
+                        commnet : '已经想好这么个功能要加了，你猜我什么时候写QWQ'
+                    },*/
+                    {
+                        title   : '新功能',
+                        version : '2.2.3.00-α',
+                        content : '添加博客保存为pdf的功能',
+                        date    : '2021/1/31',
+                        color   : 'green'
+                    },
                     {
                         title   : '修复、优化',
                         version : '2.2.2.01-β',

@@ -25,6 +25,12 @@
                     <VBtn block flat @click="deletePost">
                         删除
                     </VBtn>
+                    <VBtn block flat @click="html2pdf(false)">
+                        PDF(小)
+                    </VBtn>
+                    <VBtn block flat @click="html2pdf(true)">
+                        PDF(大)
+                    </VBtn>
                 </VList>
                 <VList v-else>
                     <VBtn block flat @click="removeFromFollowings">
@@ -36,7 +42,7 @@
                 <div class="card-title clickable" @click="goDetail">
                         {{ title }}
                 </div>
-                <YHtmlCompiler class=" pt-5 px-3" :html="text" :has-latex="true" />
+                <YHtmlCompiler class=" pt-5 px-3" :html="text" :has-latex="true" ref="card" />
             </VFlex>
             <VFlex xs12>
                 <CategoryBox v-model="tags" />
@@ -46,7 +52,7 @@
 </template>
 
 <script>
-    import { communicate , messageBox } from "../../communicate";
+    import { communicate , messageBox, openLoadingOverlay, closeLoadingOverlay } from "../../communicate";
     import YHtmlCompiler from "../common/YHtmlCompiler";
     import CategoryBox from "../common/CategoryBox";
     import YAvatar from "../common/YAvatar";
@@ -74,7 +80,7 @@
         },
         methods : {
             deletePost() {
-                messageBox('警告','主人确定要删除这篇博客嘛？','不能恢复的哦，确定了的话点【我知道了】，摁错了的话就点周围空白的地方啦','info',() => {
+                messageBox('警告','主人确定要删除这篇博客嘛？','不能恢复的哦，确定了的话就点击【我知道了】吧~ 摁错了的话就点周围空白的地方就好啦','info',() => {
                     communicate.$emit('HomeDelete',this.post_id);
                 });
             },
@@ -87,6 +93,17 @@
             },
             goDetail(){
                 this.$router.push({ name : 'post-page', query : { pid : this.post_id } });
+            },
+            async html2pdf(quality){
+                openLoadingOverlay();
+                const el = this.$refs.card.$el;
+                try{
+                    const pdf = await this.$utils.html2pdf(el, quality ? 2 : 1);
+                    pdf.save(`YeuolyBlog-${ this.post_id }.pdf`);
+                }catch(e){
+                    messageBox('错误', '渲染html过程中出现错误，请检查博客格式是否正确', '', 'error');
+                }
+                closeLoadingOverlay();
             }
         }
     }
@@ -122,6 +139,7 @@
     .post-card-head{
         position: absolute;
         left: 70px;
+        top: 0px;
         width: 120px;
     }
 
