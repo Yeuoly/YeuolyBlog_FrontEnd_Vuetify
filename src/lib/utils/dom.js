@@ -17,7 +17,7 @@ export const RichContentRender = (dom, handle_img) => {
             i.style.fontSize = `${size}px`;
             katex.render(i.innerText, i, { throwOnError: false });
         }else if(handle_img && i.tagName === 'IMG'){
-            //为了解决跨域问题，我们需要给所有的img标签加上一个attr
+            //为了解决html2pdf的跨域问题，我们需要给所有的img标签加上一个attr
             i.setAttribute('crossorigin', 'anonymous');
             //初始化图片点击开大窗事件，先添加指令
             i.onclick = ev => {
