@@ -34,31 +34,17 @@ export const RichContentRender = (dom, handle_img) => {
         }else if(i.tagName === 'CODE'){
             //如果是code标签的，我们提前令code标签的width为一个很大的值，然后计算最大的offsetRight，并令width等于这个东西，这么做的目的是不让这个code标签里的东西wrap起来
             const width = computeDomMaxOffsetRight(i) - i.offsetLeft;
-            const p_w = i.parentElement.offsetWidth;
-            if(width > p_w){
+            const parent_width = i.parentElement.offsetWidth;
+            if(width > parent_width){
                 i.style.width = `${ width + 50 }px`;
             }else{
-                i.style.width = `${ p_w - 3 }px`;
+                i.style.width = `${ parent_width - 3 }px`;
             }
-            i.parentElement.style.width = `${ p_w }px`;
+            i.parentElement.style.width = `${ parent_width }px`;
             i.parentElement.style.overflow = 'scroll';
             i.parentElement.classList.add('y-code');
         }else if(i.children.length){
             RichContentRender(i, handle_img);
-        }
-    }
-}
-
-/**
- * 便利整个dom
- * @param {*} dom 
- * @param {*} hook 
- */
-export const walkThroughDom = (dom, hook) => {
-    hook(dom);
-    if(dom.children.length){
-        for(const i of dom.children){
-            walkThroughDom(i);
         }
     }
 }

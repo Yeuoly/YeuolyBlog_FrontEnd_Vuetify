@@ -129,38 +129,38 @@
                 navs: {
                     online: [{
                         name: '我的主页',
-                        route: 'home',
-                        icon : 'home-circle-outline'
+                        route: `/home/dynamic/${this.$store.getters.getUid}`,
+                        icon : 'home-circle-outline',
                     }, {
                         name : '编辑',
-                        route : 'editor',
+                        route : '/editor',
                         icon : 'circle-edit-outline'
                     }, {
                         name : '设置',
-                        route : 'setting',
+                        route : '/setting',
                         icon : 'settings-outline'
                     }],
                     offline: [{
                         name : '登录',
-                        route : 'login',
+                        route : '/login',
                         icon : 'login-variant'
                     }],
                     ordinary: [{
                         name: '搜索',
-                        route: 'search',
+                        route: '/search',
                         icon : 'magnify'
                     }, {
                         name: '关于',
-                        route: 'info',
+                        route: '/info',
                         icon : 'alert-circle-outline'
                     }, {
                         name: '开发日志',
-                        route : 'history',
+                        route : '/devlog',
                         icon : 'backup-restore'
                     }],
                     admin : [{
                         name : '系统管理',
-                        route : 'admin-dash-board',
+                        route : '/admin-dash-board',
                         icon : 'vector-circle'
                     }]
                 }
@@ -179,8 +179,8 @@
             closeSideMenu(){
                 this.open = false;
             },
-            router(name){
-                this.$router.push({name : name});
+            router(route){
+                this.$router.push(route);
             },
             async logout(){
                 try{

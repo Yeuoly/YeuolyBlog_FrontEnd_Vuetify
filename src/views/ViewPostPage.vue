@@ -52,7 +52,7 @@ export default {
     methods : {
         init(){
             setTimeout(async () => {
-                const pid = this.$route.query.pid;
+                const pid = this.$route.params.pid;
                 if(!pid.match(pid_format_all)){
                     messageBox('错误', 'pid格式错误', '', 'error');
                     return;
@@ -72,7 +72,7 @@ export default {
         }
     },
     watch : {
-        '$route.query.pid' : {
+        '$route.params.pid' : {
             handler(){
                 this.init();
             },

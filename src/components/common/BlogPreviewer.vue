@@ -34,7 +34,7 @@ export default {
                 $router.push({ query : { pid } });
                 communicate.$emit('update-post-page');
             }else{
-                $router.push({ name : 'post-page', query : { pid } });
+                $router.push(`/post-page/${pid}`);
             }
         },
         async init(){

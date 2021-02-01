@@ -97,7 +97,7 @@
                 this.result = res;
             },
             visit(uid){
-                this.$router.push({ name : 'visit' ,query : { uid : uid } });
+                this.$router.push(`/home/dynamic/${uid}`);
             }
         },
         computed : {

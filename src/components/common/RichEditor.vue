@@ -74,6 +74,9 @@
                         this.$emit('change', html);
                     };
                     //设置文件上传
+                    /**
+                     * 这里的csrf处理以后要大改了
+                     */
                     editor.config.uploadImgMaxSize = 2 * 1024 * 1024;
                     editor.config.customUploadImg = (files,insert) => {
                         const form_data = new FormData();

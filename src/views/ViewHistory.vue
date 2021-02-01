@@ -34,12 +34,12 @@
             return{
                 history :  [
                     /*{
-                        title   : '新功能',
+                        title   : '前端代码结构肃清2',
                         version : '???',
-                        content : '添加直接ctrl+v上传图片的功能',
+                        content : '重写一切csrf逻辑',
                         date    : '???',
                         color   : 'green',
-                        commnet : '已经想好这么个功能要加了，你猜我什么时候写QWQ'
+                        commnet : '我是真滴脑壳痛哦，以前没理解没什么是csrf，就导致写出了一堆憨批逻辑，以后准备清改了'
                     },*/
                     {
                         title   : '新功能',

@@ -1,6 +1,7 @@
 import { state_user } from "../storage/userinfo";
-import setting_routes from './setting_views';
-import admin_routes from './admin_views';
+import setting_routes from './views_settings';
+import admin_routes from './views_admin';
+import home_routes from './views_home';
 
 //按需加载
 const ViewInfo = () => import('../views/ViewInfo.vue');
@@ -78,14 +79,15 @@ export default {
         component : ViewHome,
         meta : {
             keepAlive : true,
-            login_required : true,
+            login_required : false,
             offline_required : false,
             btns : {
                 helper : true,
                 new_post : true,
                 refresh : true
             }
-        }
+        },
+        children : home_routes
     },{
         name : 'editor',
         path : '/editor',
@@ -174,7 +176,7 @@ export default {
         children : admin_routes
     },{
         name : 'post-page',
-        path : '/post-page',
+        path : '/post-page/:pid',
         component : ViewPostPage,
         meta : {
             keepAlive : false,

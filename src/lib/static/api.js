@@ -56,8 +56,8 @@ export const api_get_recent = {
     route : home => `v1/post/${ home ? 'private' : 'public' }/action`
 }
 
-export const api_get_sapce_info = {
-    act : 4,
+export const api_get_space_info = {
+    act : 5,
     route : 'v1/account/ordinary/action'
 }
 

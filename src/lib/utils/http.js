@@ -1,5 +1,8 @@
 import axios from 'axios';
 
+/**
+ * 这里以后要大改
+ */
 export default {
     csrf_post(url,params,then,_catch){
         axios.post('/v2/safe/csrf').then( response => {

@@ -21,3 +21,6 @@ export const email_format_all = /^([A-Za-z0-9_\-.])+@([A-Za-z0-9_\\.-])+\.([A-Za
 
 //是否同时包含空格与换行符
 export const enter_space_format_has = /[\n\r ]/g;
+
+//uid
+export const uid_all = /^([0-9]{1,9})$/g

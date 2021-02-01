@@ -34,6 +34,13 @@ import { api_user } from './lib/static/api';
 import VuePreview from 'vue-preview';
 Vue.use(VuePreview);
 
+
+const originalPush = VueRouter.prototype.push;
+VueRouter.prototype.push = function push (location) {
+  return originalPush.call(this, location).catch(err => err);
+}
+
+
 //使用axios
 //初始化数据
 axios.defaults.baseURL = process.env.VUE_APP_API_ROOT;

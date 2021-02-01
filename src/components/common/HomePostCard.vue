@@ -92,7 +92,7 @@
                 this.$emit('removeFromFollowings',this.user_uid);
             },
             goDetail(){
-                this.$router.push({ name : 'post-page', query : { pid : this.post_id } });
+                this.$router.push(`/post-page/${this.post_id}`);
             },
             async html2pdf(quality){
                 openLoadingOverlay();

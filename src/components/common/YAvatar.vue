@@ -40,7 +40,7 @@
             },
             to(){
                 if(this.home){
-                    this.$router.push({ name : 'home' });
+                    this.$router.push(`/home/dynamic/${this.uid}`);
                 }else if(this.$route.name !== 'visit' || this.uid !== parseInt(this.$route.query.uid)){
                     this.$router.push({ name : 'visit' , query : { uid : this.uid } });
                 }
