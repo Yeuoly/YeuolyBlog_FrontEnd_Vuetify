@@ -23,13 +23,12 @@
                 <span class="caption">粉丝数：</span>
             </div>
         </div>-->
-        <div class="home-top-bar__follow">
+        <div class="home-top-bar__follow" v-show="!disabled">
             <VBtn :color=" user_follow ? 'grey' : 'primary' "
                   small
                   round
                   v-if="$vuetify.breakpoint.smAndDown"
                   @click="follow"
-                  :disabled="disabled"
             >
                 {{ user_follow ? '取消关注' : '关注' }}
             </VBtn>
@@ -37,7 +36,6 @@
                   round
                   v-else
                   @click="follow"
-                  :disabled="disabled"
             >
                 {{ user_follow ? '取消关注' : '关注' }}
             </VBtn>
@@ -82,7 +80,7 @@
                 form_data.append('act', `${api_follow.act}`);
                 form_data.append('react', this.user_follow ? 'unfo' : 'fo');
                 form_data.append('uid', this.user_uid);
-                this.$utils.csrf_post(`${process.env.VUE_APP_API_ROOT}/${api_follow}`, form_data,
+                this.$utils.csrf_post(`${process.env.VUE_APP_API_ROOT}/${api_follow.route}`, form_data,
                 response => {
                     const _data = response.data;
                     if(_data['data']['res'] === 666){
@@ -168,8 +166,8 @@
 
     .home-top-bar__follow{
         position: absolute;
-        bottom: -50px;
-        right: 60px;
+        bottom: 5px;
+        right: 10px;
     }
 
     .home-top-bar__subscribes{
@@ -194,11 +192,6 @@
 
         .home-top-bar__avatar{
             left: 15px;
-        }
-
-        .home-top-bar__follow{
-            bottom: -40px;
-            right: 10px;
         }
     }
 

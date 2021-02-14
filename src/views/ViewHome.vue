@@ -14,9 +14,12 @@
             <div class="home-tab-link" v-for="(t, index) in links" :key="index" :ref="t.route_name" 
                  :style="`z-index: ${ 10 - index};`"
                  @click="jumpTo(t.route)"
+                 @mouseenter="onMouseOverTab(t.index)"
+                 @mouseleave="onMouseLeaveTab()"
             >
                 <span>{{ t.name }}</span>
             </div>
+            <div class="home-tab-movement" ref="movement" :style="tab_style"></div>
         </div>
         <div v-if="visiable">
             <RouterView></RouterView>
@@ -53,7 +56,11 @@
                 user_class : 1,
                 public : false
             },
-            active_el : null
+            active_el : null,
+            tab_index : {
+                reality : 0,
+                display : 0
+            }
         }),
         watch : {
             '$route.name' : {
@@ -78,6 +85,8 @@
                             if(el){
                                 el.classList.add('home-tab-active');
                                 this.active_el = el;
+                                //来切换一下滑块位置
+                                this.tab_index.reality = this.getRouteIndexByName(v);
                             }
                         });
                     }
@@ -102,12 +111,28 @@
                 return [{
                     name : '动态',
                     route : `/home/dynamic/${this.space.user_uid}`,
-                    route_name : 'home-dynamic'
+                    route_name : 'home-dynamic',
+                    index : 0
                 },{
                     name : '收藏夹',
                     route : `/home/category/${this.space.user_uid}`,
-                    route_name : 'home-category'
+                    route_name : 'home-category',
+                    index : 1
+                },{
+                    name : '喜欢',
+                    route : `/home/likes/${this.space.user_uid}`,
+                    route_name : 'home-likes',
+                    index : 2
                 }];
+            },
+            tab_style(){
+                const size = this.links[this.tab_index.display].name.length;
+                const width = size * 16;
+                const offset = 99 * this.tab_index.display + 66;
+                return {
+                    transform : `translateX(${offset - width + 4}px)`,
+                    width : `${width - 4}px`
+                }
             }
         },
         methods : {
@@ -134,6 +159,22 @@
             },
             jumpTo(route){
                 this.$router.push(route);
+            },
+            getRouteIndexByName(name){
+                for(const i of this.links){
+                    if(i.route_name === name){
+                        return i.index;
+                    }
+                }
+                return 0;
+            },
+            onMouseOverTab(index){
+                setTimeout(() => {
+                    this.tab_index.display = index;
+                });
+            },
+            onMouseLeaveTab(){
+                this.tab_index.display = this.tab_index.reality;
             }
         }
     }
@@ -150,17 +191,21 @@
         display: flex;
         flex-wrap: wrap;
         flex-direction: row;
+        background-color: white;
+        padding-bottom: 12px;
+        box-shadow: 0px 1px 1px 0px rgb(0 0 0 / 9%);
+        position: relative;
     }
 
     .home-tab-link{
         padding-right: 10px;
         transition: all .2s;
         cursor: pointer;
-        background-color: #eee;
+        background-color: white;
     }
 
     .home-tab-link:hover{
-        background-color: #dfdfdf;
+        background-color: #eee;
         color: #23ade5;
     }
 
@@ -168,18 +213,17 @@
         color: #23ade5;
     }
 
-    @media (max-width: 959px) {
-        .home-tab-links{
-            padding-left: 80px;
-        }
-
-        .home-tab-link{
-            display: block;
-            width: 200px;
-        }
+    .home-tab-movement{
+        background-color: #00a1d6;
+        height: 2px;
+        width: 10px;
+        top: 30px;
+        margin-top: 10px;
+        position: absolute;
+        transition: all 0.3s ease 0s;
     }
 
-    @media (min-width: 959px){
+
         .home-tab-links{
             padding-left: 100px;
         }
@@ -193,6 +237,5 @@
             border-radius: 0 0 40px 0;
             margin-left: -31px;
         }
-    }
 
 </style>
